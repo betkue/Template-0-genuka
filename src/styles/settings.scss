@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Birthstone&family=Poppins:wght@300;400;500;600;700&family=Grey+Qo&family=Parisienne&family=Roboto:wght@300;400&family=Ubuntu:wght@400;500;700&display=swap');
+
+$dark: #151515;
+$green: #17bebb;
+$red: #d72638;
+$blue: #246dff;
+$orange: #ff7f0f;
+$yellow: #FDE74C;
+$white: #fcfcfc;
+
+*,
+::before,
+::after {
+    box-sizing: border-box;
+    font-family: 'Ubuntu', sans-serif;
+    color: $dark;
+    font-weight: 300;
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+li {
+    list-style: none;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+body {
+    position: relative;
+    background-color: $white;
+}
+
+body::-webkit-scrollbar {
+    background: none;
+    width: 5px;
+}
+
+body::-webkit-scrollbar-thumb {
+    background: $dark;
+    border-radius: 10px;
+}
