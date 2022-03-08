@@ -1,12 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Birthstone&family=Poppins:wght@300;400;500;600;700&family=Grey+Qo&family=Parisienne&family=Roboto:wght@300;400&family=Ubuntu:wght@400;500;700&display=swap');
 
-$dark: #151515;
-$green: #17bebb;
-$red: #d72638;
-$blue: #246dff;
-$orange: #ff7f0f;
-$yellow: #FDE74C;
-$white: #fcfcfc;
+$dark: #000;
+$darker: #122d36;
+$orange: #e18b75;
+$gray: #8a9892;
+$lighter: #eff3f1;
+$light: #fff;
 
 *,
 ::before,
@@ -36,7 +35,7 @@ img {
 
 body {
     position: relative;
-    background-color: $white;
+    background-color: $light;
 }
 
 body::-webkit-scrollbar {
