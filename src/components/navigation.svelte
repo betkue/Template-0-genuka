@@ -1,11 +1,23 @@
 <script>
-  
+  import { onMount } from "svelte";
+  let name;
+  let logo;
+
+  const url = "https://dashboard.genuka.com/api/2021-10/companies/details/468";
+
+  onMount(async function () {
+    const response = await fetch(url);
+    const data = await response.json();
+    name = data.name;
+    logo = data.logo;
+  });
 </script>
 
 <nav class="navigation">
   <div class="cards">
     <div class="navigation-left">
-      LOGO
+      <img src={logo} alt="logo">
+      <h2>{name}</h2>
     </div>
     <ul class="navigation-center">
       <li><a href="/">Acceuil</a></li>

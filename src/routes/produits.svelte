@@ -4,7 +4,7 @@
 
   let produits = [];
 
-  const url = "https://dashboard.genuka.com/api/2021-10/companies/489/products";
+  const url = "https://dashboard.genuka.com/api/2021-10/companies/468/products";
 
   onMount(async function () {
     const response = await fetch(url);
@@ -20,7 +20,7 @@
 <main>
   <h1>Produits</h1>
   {#each produits as produit}
-    <Produit photo={produit.medias[0].link} name={produit.name} price={produit.price} description={produit.description} />
+    <Produit photo={produit.medias[0].link} name={produit.name} price={produit.price} description={produit.description} collections={produit.collections} />
     {:else}
     <p> Loading ... </p>
   {/each}
