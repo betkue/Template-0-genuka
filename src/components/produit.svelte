@@ -3,6 +3,7 @@
     export let name;
     export let price;
     export let description;
+    export let collections;
 </script>
 
 <div>
