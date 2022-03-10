@@ -4,7 +4,7 @@
   let description;
 
   const url = "https://dashboard.genuka.com/api/2021-10/companies/details/468";
-
+    //const url = "https://dashboard.genuka.com/api/2021-10/companies/byurl?url=http://localhost:2974"
   onMount(async function () {
     const response = await fetch(url);
     const data = await response.json();

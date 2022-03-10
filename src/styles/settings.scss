@@ -12,7 +12,7 @@ $light: #fff;
 ::after {
     box-sizing: border-box;
     font-family: 'Ubuntu', sans-serif;
-    color: $dark;
+    color: $darker;
     font-weight: 300;
     margin: 0;
     padding: 0;
@@ -44,6 +44,6 @@ body::-webkit-scrollbar {
 }
 
 body::-webkit-scrollbar-thumb {
-    background: $dark;
+    background: $darker;
     border-radius: 10px;
 }
