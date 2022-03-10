@@ -2,6 +2,7 @@
 
 $dark: #000;
 $darker: #122d36;
+$blueDark: #0f272f;
 $orange: #e18b75;
 $gray: #8a9892;
 $lighter: #eff3f1;
@@ -36,6 +37,7 @@ img {
 body {
     position: relative;
     background-color: $light;
+    height: 100vh;
 }
 
 body::-webkit-scrollbar {

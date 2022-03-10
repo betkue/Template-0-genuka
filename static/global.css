@@ -26,6 +26,7 @@ img {
 body {
   position: relative;
   background-color: #fff;
+  min-height: 100vh;
 }
 
 body::-webkit-scrollbar {

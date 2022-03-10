@@ -5,13 +5,32 @@
   <title>Acceuil</title>
 </svelte:head>
 
-<h1>Acceuil</h1>
-
-<a href="/produits"><button>Voir les produits</button></a>
+<div class="container">
+  <a href="/produits"><button>Decouvrir nos produits</button></a>
+</div>
 
 <style lang="scss">
   @import "./../styles/settings";
-  h1 {
-    color: $dark;
+
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  a {
+    margin: 1rem;
+    button {
+      cursor: pointer;
+      border: none;
+      background: $orange;
+      color: $light;
+      border-radius: 50px;
+      padding: 14px 24px;
+      text-transform: uppercase;
+      transition: 0.3s ease;
+      &:hover {
+        background: $darker;
+      }
+    }
   }
 </style>

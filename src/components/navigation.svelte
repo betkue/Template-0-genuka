@@ -111,6 +111,11 @@
             margin-bottom: 0.5rem;
             background: $orange;
             color: $light;
+            border: 1px solid $orange;
+            &:hover{
+              background: $light;
+              color: $orange;
+            }
           }
         }
       }
