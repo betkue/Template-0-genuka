@@ -1,11 +1,9 @@
 <script>
   import Footer from "../components/footer.svelte";
-import Navigation from "../components/navigation.svelte";
-
-  export let segment;
+  import Navigation from "../components/navigation.svelte";
 </script>
 
-<Navigation {segment} />
+<Navigation/>
 
 <main>
   <slot />
