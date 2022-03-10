@@ -1,26 +1,42 @@
 <script>
-    export let photo;
-    export let name;
-    export let price;
-    export let description;
-    export let collections;
+  export let photo;
+  export let name;
+  export let price;
+  export let collections;
 </script>
 
-<div>
-    <img src={photo} alt="">
+<div class="card">
+  <img src={photo} alt="produit" />
+  <button>{collections}</button>
+  <div class="card-footer">
     <h2>{name}</h2>
-    <h3>{price}</h3>
-    <h4>{description}</h4>
-    <button>{collections}</button>
+    <h3>{price} FCFA</h3>
+  </div>
 </div>
 
 <style lang="scss">
   @import "./../styles/settings";
-  img{
-      width: 300px;
+
+  .card {
+    width: 33%;
+    img {
+      width: 100%;
+      border-radius: 10px;
       height: 300px;
       object-fit: cover;
+    }
+    button {
+      color: $light;
+      background: $gray;
+    }
+    &-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      h3 {
+        color: $orange;
+        font-weight: bold;
+      }
+    }
   }
 </style>
-
-
