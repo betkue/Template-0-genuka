@@ -26,6 +26,7 @@ img {
 body {
   position: relative;
   background-color: #fff;
+  overflow-x: hidden;
   min-height: 100vh;
 }
 

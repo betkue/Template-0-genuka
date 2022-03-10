@@ -16,6 +16,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 2rem 0;
   }
   a {
     margin: 1rem;
