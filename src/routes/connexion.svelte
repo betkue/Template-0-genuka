@@ -1,4 +1,28 @@
 <script>
+  let email;
+  let password;
+  let company_id;
+  let fromApi;
+  let result;
+
+  async function connect() {
+    const res = await fetch(
+      "https://dashboard.genuka.com/api/2021-10/clients/login",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          email,
+          password,
+          company_id,
+          fromApi,
+        }),
+      }
+    );
+
+    const json = await res.json();
+    result = JSON.stringify(json);
+    console.log(result);
+  }
 </script>
 
 <div class="container">
@@ -23,7 +47,7 @@
           required
         />
       </div>
-      <button>Connexion</button>
+      <button on:click={connect}>Connexion</button>
       <a href="/password_forgotten">Mot de passe oublié ?</a>
       <a href="/inscription">Pas encore de compte ? Inscrivez-vous.</a>
     </form>
@@ -45,8 +69,8 @@
       justify-content: space-between;
     }
 
-     h1{
-        padding: 1rem;
+    h1 {
+      padding: 1rem;
     }
     form {
       padding: 1rem;
