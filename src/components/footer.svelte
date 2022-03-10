@@ -16,7 +16,7 @@
 </script>
 
 <div class="footer">
-  <div class="cards">
+  <div class="center">
     <div class="footer-left">
       <h2>HORAIRES DE TRAVAIL</h2>
     </div>
@@ -25,7 +25,9 @@
       <h2>{name}</h2>
       <p>{description}</p>
     </div>
-    <div class="footer-right" />
+    <div class="footer-right">
+      <h2>NEWSLETTER</h2>
+    </div>
   </div>
 </div>
 
@@ -39,7 +41,7 @@
     position: absolute;
     bottom: 0;
     width: 100%;
-    .cards {
+    .center {
       width: 80%;
       display: flex;
       align-items: center;

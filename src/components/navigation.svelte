@@ -14,7 +14,7 @@
 </script>
 
 <nav class="navigation">
-  <div class="cards">
+  <div class="center">
     <div class="navigation-left">
       <img src={logo} alt="logo" />
       <h2>{name}</h2>
@@ -46,7 +46,7 @@
     justify-content: center;
     align-items: center;
     box-shadow: 2px 0px 5px rgba($color: $darker, $alpha: 0.1);
-    .cards {
+    .center {
       width: 80%;
       display: flex;
       justify-content: space-between;
