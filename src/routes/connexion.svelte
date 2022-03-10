@@ -7,10 +7,11 @@
     <form action="">
       <div>
         <input
-          type="text"
-          placeholder="Votre adresse email ou numero de telephone *"
+          type="email"
+          placeholder="Votre adresse email *"
           id="email"
           name="email"
+          required
         />
       </div>
       <div>
@@ -18,10 +19,11 @@
           type="password"
           placeholder="Votre mot de passe *"
           id="password"
-          name="email"
+          name="password"
+          required
         />
       </div>
-      <a href="/"><button>Connexion</button></a>
+      <button>Connexion</button>
       <a href="/password_forgotten">Mot de passe oublié ?</a>
       <a href="/inscription">Pas encore de compte ? Inscrivez-vous.</a>
     </form>
@@ -34,12 +36,17 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 2rem 0;
     .center {
       width: 80%;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: space-between;
+    }
+
+     h1{
+        padding: 1rem;
     }
     form {
       padding: 1rem;
@@ -61,20 +68,24 @@
           padding: 1rem;
         }
       }
-      a {
+      button {
         margin: 1rem;
-        button {
-          cursor: pointer;
-          border: none;
-          background: $orange;
-          color: $light;
-          border-radius: 50px;
-          padding: 14px 24px;
-          text-transform: uppercase;
-          transition: 0.3s ease;
-          &:hover {
-            background: $darker;
-          }
+        cursor: pointer;
+        border: none;
+        background: $orange;
+        color: $light;
+        border-radius: 50px;
+        padding: 14px 24px;
+        text-transform: uppercase;
+        transition: 0.3s ease;
+        &:hover {
+          background: $darker;
+        }
+      }
+      a {
+        margin: 0.5rem;
+        &:hover {
+          color: $orange;
         }
       }
     }
