@@ -19,7 +19,7 @@
 </svelte:head>
 
 <div class="container">
-  <div class="cards">
+  <div class="center">
     <h1>Nos produits</h1>
     <button>Tout voir</button>
     <div class="container-products">
@@ -48,7 +48,7 @@
     justify-content: center;
     align-items: center;
     padding-bottom: 450px;
-    .cards {
+    .center {
       width: 80%;
       display: flex;
       align-items: center;
