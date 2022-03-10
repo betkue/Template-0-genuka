@@ -28,6 +28,10 @@
     button {
       color: $light;
       background: $gray;
+      border-radius: 15px;
+      border: none;
+      font-weight: bold;
+      padding: 0.5rem;
     }
     &-footer {
       display: flex;
