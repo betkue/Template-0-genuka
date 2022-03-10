@@ -3,6 +3,7 @@
   import Produit from "../components/produit.svelte";
 
   let produits = [];
+  let produitsFilter = produits;
   let collections = [];
   let loaders = [1, 2, 3, 4, 5];
 
@@ -14,6 +15,7 @@
     const response = await fetch(url);
     const data = await response.json();
     produits = data.data;
+    produitsFilter = produits;
   });
 
   onMount(async function () {
@@ -21,6 +23,17 @@
     const data = await response.json();
     collections = data.data;
   });
+
+ function showAllProduct(e) {
+    produitsFilter = produits;
+  }
+
+  function showCollection(e) {
+    let currentCollection = e.target.textContent;
+    const produitsCollections = produits.filter((produit) => produit.collections.includes(currentCollection));
+    produitsFilter = produitsCollections;
+    console.log(produitsCollections);
+  }
 </script>
 
 <svelte:head>
@@ -31,18 +44,19 @@
   <div class="center">
     <h1>Nos produits</h1>
     <div class="container-collections">
+      <button on:click={showAllProduct}>Tout voir</button>
       {#each collections as collection}
-        <button>{collection.name}</button>
+        <button on:click={showCollection}>{collection.name}</button>
       {/each}
     </div>
     <div class="container-products">
-      {#each produits as produit}
+      {#each produitsFilter as produit}
         <Produit
-          photo={produit.medias[0].link}
           name={produit.name}
           price={produit.price}
           collections={produit.collections}
         />
+        <!-- photo={produit.medias[0].link} -->
       {:else}
         {#each loaders as loader}
           <div class="loader" />
@@ -83,10 +97,10 @@
         color: $darker;
         border: none;
         border-radius: 10px;
-        &:hover{
+        &:hover {
           background: $light;
         }
-        & + button{
+        & + button {
           margin-left: 5px;
         }
       }
