@@ -47,6 +47,7 @@
     align-items: center;
     box-shadow: 2px 0px 5px rgba($color: $darker, $alpha: 0.1);
     .center {
+      padding: 17.5px 0 ;
       width: 80%;
       display: flex;
       justify-content: space-between;
@@ -70,6 +71,7 @@
       align-items: center;
       justify-content: center;
       li {
+
         a {
           text-transform: uppercase;
           padding: 1rem;
@@ -90,6 +92,7 @@
         align-items: center;
         padding: 1rem;
         cursor: pointer;
+        gap: 2.5px;
         &:hover .auth {
           opacity: 1;
           transform: translate(0);

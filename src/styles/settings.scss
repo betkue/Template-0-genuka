@@ -13,11 +13,13 @@ $light: #fff;
 ::after {
     box-sizing: border-box;
     font-family: 'Ubuntu', sans-serif;
-    color: $darker;
+    color: inherit; 
     font-weight: 300;
     margin: 0;
     padding: 0;
     scroll-behavior: smooth;
+    outline: none;
+    border: none;
 }
 
 a {
