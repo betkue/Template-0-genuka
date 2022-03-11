@@ -24,13 +24,15 @@
     collections = data.data;
   });
 
- function showAllProduct(e) {
+  function showAllProduct(e) {
     produitsFilter = produits;
   }
 
   function showCollection(e) {
     let currentCollection = e.target.textContent;
-    const produitsCollections = produits.filter((produit) => produit.collections.includes(currentCollection));
+    const produitsCollections = produits.filter((produit) =>
+      produit.collections.includes(currentCollection)
+    );
     produitsFilter = produitsCollections;
     console.log(produitsCollections);
   }
@@ -52,18 +54,18 @@
     <div class="container-products">
       {#each produitsFilter as produit}
         <Produit
+          photo={produit.medias[0].link}
           name={produit.name}
           price={produit.price}
           collections={produit.collections}
         />
-        <!-- photo={produit.medias[0].link} -->
       {:else}
         {#each loaders as loader}
           <div class="loader" />
         {/each}
       {/each}
     </div>
-    <h3>{produits.length} produits affichés</h3>
+    <h3>{produitsFilter.length} produits affichés</h3>
   </div>
 </div>
 
@@ -107,6 +109,7 @@
     }
 
     &-products {
+      width: 100%;
       display: flex;
       justify-content: flex-start;
       flex-wrap: wrap;
