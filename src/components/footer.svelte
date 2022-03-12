@@ -46,10 +46,19 @@
   </div>
   <div class="attribution">
     <strong>
-      created by <a
+      created by 
+      <a
+        rel="noopener"
+        href="https://twitter.com/ln_dev7"
+        target="_blank"
+        ><span>@LN</span></a
+      >
+      X
+      <a
         rel="noopener"
         href="https://twitter.com/la2spaille?t=DKdFp3xhoD0HMBn9TGa6Rw&amp;s=09"
-        ><span>@La2spaille X @Ln</span></a
+        target="_blank"
+        ><span>@La2spaille</span></a
       >
       - Boutique propulsée par<a
         rel="noopener"
