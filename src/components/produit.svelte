@@ -1,11 +1,12 @@
 <script>
+  import { fade } from "svelte/transition";
   export let photo;
   export let name;
   export let price;
   export let collections;
 </script>
 
-<div class="card">
+<div class="card" transition:fade>
   <img src={photo} alt="produit" />
   <button>{collections}</button>
   <div class="card-footer">
@@ -18,7 +19,9 @@
   @import "./../styles/settings";
 
   .card {
-    width: 33%;
+    width: 30%;
+    cursor: pointer;
+    margin: 1rem;
     img {
       width: 100%;
       border-radius: 10px;
