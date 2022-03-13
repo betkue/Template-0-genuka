@@ -47,21 +47,27 @@
   </div>
   <div class="attribution">
     <strong>
-      created by
-      <a rel="noopener" href="https://twitter.com/ln_dev7" target="_blank"
-        ><span>@LN</span></a
+      created by 
+      <a
+        rel="noopener"
+        href="https://twitter.com/ln_dev7"
+        target="_blank"
+        ><span> @LN </span></a
       >
       X
-      <a rel="noopener" href="https://twitter.com/la2spaille" target="_blank"
-        ><span>@La2spaille</span></a
-      >
-      - Boutique propulsée par<a
+      <a
         rel="noopener"
-        href="https://www.devchallenges.io"
+        href="https://twitter.com/la2spaille?t=DKdFp3xhoD0HMBn9TGa6Rw&amp;s=09"
+        target="_blank"
+        ><span> @La2spaille </span></a
+      >
+      - Boutique propulsée par <a
+        rel="noopener"
+        href="https://www.genuka.com"
         target="_blank"
       >
-        Genuka</a
-      >. Version 1.1.4
+        Genuka </a
+      > . Version 1.1.4
     </strong>
   </div>
 </div>
