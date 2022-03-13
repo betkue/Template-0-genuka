@@ -1,9 +1,6 @@
 <script>
   import { fade } from "svelte/transition";
-  export let photo;
-  export let name;
-  export let price;
-  export let collections;
+  export let photo,currency,name, price,collections;
 </script>
 
 <div class="card" transition:fade>
@@ -11,7 +8,7 @@
   <button>{collections}</button>
   <div class="card-footer">
     <h2>{name}</h2>
-    <h3>{price} FCFA</h3>
+    <h3>{price} {currency}</h3>
   </div>
 </div>
 
