@@ -1,5 +1,5 @@
-<div class="w-">
-
+<div class="w-mini-cart">
+    
 </div>
 
 <style lang="scss">

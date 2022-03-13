@@ -1,9 +1,5 @@
 <script>
-  let email;
-  let password;
-  let company_id;
-  let fromApi;
-  let result;
+  let email,password,company_id,fromApi,result;
 
   async function connect() {
     const res = await fetch(

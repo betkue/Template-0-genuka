@@ -1,12 +1,20 @@
 <script>
   import { onMount } from "svelte";
   import Produit from "../components/produit.svelte";
-
   let produits = [];
   let produitsFilter = produits;
   let collections = [];
   let loaders = [1, 2, 3, 4, 5];
+  let currency;
+    const urlCompagny =
+        "https://dashboard.genuka.com/api/2021-10/companies/details/468";
+    //const url = "https://dashboard.genuka.com/api/2021-10/companies/byurl?url=http://localhost:2974"
+    onMount(async function () {
+        const response = await fetch(urlCompagny);
+        const data = await response.json();
+        currency = data.currency.symbol;
 
+    });
   const url = "https://dashboard.genuka.com/api/2021-10/companies/468/products";
   const urlCollections =
     "https://dashboard.genuka.com/api/2021-10/companies/468/collections";
@@ -58,6 +66,7 @@
           name={produit.name}
           price={produit.price}
           collections={produit.collections}
+          currency ={currency}
         />
       {:else}
         {#each loaders as loader}
