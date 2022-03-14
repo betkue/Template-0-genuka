@@ -4,7 +4,7 @@
 </script>
 
 <div class="card" transition:fade>
-  <img src={photo} alt="produit" />
+  <!-- <img src={photo} alt="produit" /> -->
   <button>{collections}</button>
   <div class="card-footer">
     <h2>{name}</h2>

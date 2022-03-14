@@ -58,7 +58,7 @@
     align-items: center;
     padding: 2rem 0;
     .center {
-      width: 80%;
+      width: 40%;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -107,6 +107,21 @@
         &:hover {
           color: $orange;
         }
+      }
+    }
+  }
+  @media only screen and (max-width: 1200px) {
+    .container{
+      .center{
+        width: 60%;
+      }
+    }
+  }
+
+   @media only screen and (max-width: 500px) {
+    .container{
+      .center{
+        width: 90%;
       }
     }
   }
