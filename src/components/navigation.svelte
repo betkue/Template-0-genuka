@@ -19,11 +19,15 @@
       <img src={logo} alt="logo" />
       <h2>{name}</h2>
     </div>
-    <ul class="navigation-center">
-      <li><a href="/">Acceuil</a></li>
-      <li><a href="/produits">Produits</a></li>
-      <li><a href="/contact">Contact</a></li>
-    </ul>
+    <div class="navigation-search">
+      <input
+        type="search"
+        name="search"
+        class="search"
+        placeholder="Cherchez un produit ... "
+      />
+      <div class="search-list" />
+    </div>
     <div class="navigation-right">
       <div class="right-account">
         <img src="./icons/account.svg" alt="cart" /><span>Mon compte</span>
@@ -37,6 +41,11 @@
       <a href="/panier"><img src="./icons/cart.svg" alt="cart" /></a>
     </div>
   </div>
+  <ul class="navigation-center">
+    <li><a href="/">Acceuil</a></li>
+    <li><a href="/produits">Produits</a></li>
+    <li><a href="/contact">Contact</a></li>
+  </ul>
 </nav>
 
 <style lang="scss">
@@ -45,9 +54,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     box-shadow: 2px 0px 5px rgba($color: $darker, $alpha: 0.1);
     .center {
-      padding: 17.5px 0 ;
+      padding: 17.5px 0;
       width: 80%;
       display: flex;
       justify-content: space-between;
@@ -66,12 +76,35 @@
         border: 1px solid $darker;
       }
     }
+
+    &-search {
+      width: 40%;
+      position: relative;
+      .search {
+        width: 100%;
+        border: 1px solid $darker;
+        padding: 1rem 15px;
+        border-radius: 30px;
+        outline: none;
+        overflow: hidden;
+        color: $darker;
+      }
+      .search-list{
+        position: absolute;
+        width: 100%;
+        height: 300px;
+        z-index: 2;
+        display: none;
+      }
+    }
     &-center {
+      border-top: 1px solid $gray;
+      width: 100%;
+      padding: 1rem 0;
       display: flex;
       align-items: center;
       justify-content: center;
       li {
-
         a {
           text-transform: uppercase;
           padding: 1rem;
@@ -106,7 +139,7 @@
           // box-shadow: 2px 2px 5px rgba($color: $darker, $alpha: .1);
           // background: $light;
           transition: 0.3s ease;
-          button{
+          button {
             cursor: pointer;
             width: 100%;
             border: none;
@@ -115,7 +148,7 @@
             background: $orange;
             color: $light;
             border: 1px solid $orange;
-            &:hover{
+            &:hover {
               background: $light;
               color: $orange;
             }
