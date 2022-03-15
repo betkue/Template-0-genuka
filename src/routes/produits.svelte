@@ -29,6 +29,13 @@
     collections = data.data;
   });
 
+  onMount(async function () {
+    const url = `https://dashboard.genuka.com/api/2021-10/companies/details/468`;
+    const response = await fetch(url);
+    const data = await response.json();
+    currency = data.currency.symbol;
+  });
+
   function showAllProduct(e) {
     produitsFilter = produits;
   }
