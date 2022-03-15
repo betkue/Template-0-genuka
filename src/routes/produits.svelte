@@ -133,7 +133,16 @@
       display: flex;
       align-items: center;
       justify-content: flex-start;
+      overflow-x: scroll;
+      &::-webkit-scrollbar{
+        height: 2px;
+        background: transparent;
+      }
+      &::-webkit-scrollbar-thumb{
+        background: $gray;
+      }
       button {
+        min-width: 150px;
         cursor: pointer;
         padding: 0.5rem 1rem;
         margin: 1rem;
@@ -191,6 +200,13 @@
       }
       100% {
         opacity: 1;
+      }
+    }
+  }
+  @media only screen and (max-width: 1210px) {
+    .container{
+      .center{
+        width: 90%;
       }
     }
   }

@@ -1,6 +1,6 @@
 <script>
   import { onMount } from "svelte";
-  let name,logo
+  let name, logo, textSearch;
 
   const url = "https://dashboard.genuka.com/api/2021-10/companies/details/468";
 
@@ -10,6 +10,22 @@
     name = data.name;
     logo = data.logo;
   });
+
+  // const urlSearch = `https://dashboard.genuka.com/api/2021-10/companies/468/products?search=Mac`;
+
+  // async function search() {
+  //   const res = await fetch(urlSearch, {
+  //     method: "POST",
+  //     body: JSON.stringify({
+  //       textSearch,
+  //     }),
+  //   });
+
+  //   const json = await res.json();
+  //   result = JSON.stringify(json);
+  //   console.log(result);
+  // }
+
 </script>
 
 <nav class="navigation">
@@ -87,13 +103,13 @@
         outline: none;
         overflow: hidden;
         color: $darker;
-        transition: .3s ease;
-        &:focus{
+        transition: 0.3s ease;
+        &:focus {
           background: $light;
           border: 1px solid $darker;
         }
       }
-      .search-list{
+      .search-list {
         position: absolute;
         width: 100%;
         height: 300px;

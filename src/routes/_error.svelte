@@ -1,39 +1,46 @@
 <script>
-	export let status,error;
-
-	const dev = process.env.NODE_ENV === 'development';
+  export let status, error;
+  const dev = process.env.NODE_ENV === "development";
 </script>
 
-<style>
-	h1, p {
-		margin: 0 auto;
-	}
-
-	h1 {
-		font-size: 2.8em;
-		font-weight: 700;
-		margin: 0 0 0.5em 0;
-	}
-
-	p {
-		margin: 1em auto;
-	}
-
-	@media (min-width: 480px) {
-		h1 {
-			font-size: 4em;
-		}
-	}
-</style>
-
 <svelte:head>
-	<title>{status}</title>
+  <title>{status}</title>
 </svelte:head>
 
-<h1>{status}</h1>
+<div class="container">
+  <div class="center">
+    <h1>{status}</h1>
 
-<p>{error.message}</p>
+    <h2>Nous n'avons pas trouve cette page :(</h2>
 
-{#if dev && error.stack}
-	<pre>{error.stack}</pre>
-{/if}
+	<a href="/">Retournez a l'acceuil</a>
+
+    {#if dev && error.stack}
+      <pre>{error.stack}</pre>
+    {/if}
+  </div>
+</div>
+
+<style lang="scss">
+  @import "./../styles/settings";
+  .container {
+    min-height: 500px;
+    display: flex;
+	justify-content: center;
+    align-items: center;
+	.center{
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+	}
+    h1 {
+      font-size: 5em;
+    }
+	a{
+		padding: 1rem 0;
+		color: $orange;
+	}
+  }
+</style>
