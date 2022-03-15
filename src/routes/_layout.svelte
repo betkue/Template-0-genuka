@@ -1,10 +1,10 @@
 <script>
   import Footer from "../components/footer.svelte";
   import Navigation from "../components/navigation.svelte";
-import Panier from "../components/panier.svelte";
+  import Panier from "../components/panier.svelte";
 </script>
 
-<Navigation/>
+<Navigation />
 
 <main>
   <slot />

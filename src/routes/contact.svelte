@@ -1,7 +1,6 @@
 <script>
   import { onMount } from "svelte";
-  let phone;
-  let email;
+  let phone,email;
 
   const url = "https://dashboard.genuka.com/api/2021-10/companies/details/468";
 

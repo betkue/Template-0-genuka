@@ -1,16 +1,18 @@
 <script>
   import { onMount } from "svelte";
+
   let name;
   let description;
   let logo;
   let phone;
   let email;
-
   const url = "https://dashboard.genuka.com/api/2021-10/companies/details/468";
   //const url = "https://dashboard.genuka.com/api/2021-10/companies/byurl?url=http://localhost:2974"
   onMount(async function () {
     const response = await fetch(url);
     const data = await response.json();
+    email = data.email;
+    phone = data.phone;
     name = data.name;
     description = data.description;
     logo = data.logo;
@@ -22,9 +24,9 @@
 <div class="footer">
   <div class="container">
     <div class="footer-left">
-      <h3>Nos contacts</h3>
-      <h4>{email}</h4>
-      <h4>{phone}</h4>
+      <h3>Contact</h3>
+      <p><a class="f-icon email" href="mailto:{email}">{email}</a></p>
+      <p><a class="f-icon phone" href="tel:{phone}">{phone}</a></p>
     </div>
     <div class="footer-center">
       <div class="w-logo">
@@ -80,6 +82,21 @@
 <style lang="scss">
   @import "./../styles/settings";
   @import url("https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@200&family=Lora:wght@500;700&family=Montserrat:wght@400;500;700&display=swap");
+  
+  p>a.f-icon {
+    color: rgba(#fff, 0.75) ;
+  }
+  .f-icon::before {
+    font-family: "Material Icons";
+    padding: 0 15px 0 0;
+    font-size: 1em;
+  }
+  .f-icon.email::before {
+    content: "\e0be";
+  }
+  .f-icon.phone::before {
+    content: "\e0b0";
+  }
   .attribution strong {
     font-family: "Montserrat", sans-serif;
     letter-spacing: normal;
@@ -108,12 +125,13 @@
     align-items: center;
     width: 100%;
     padding: 0 135px;
+    position: relative;
     .container {
       width: 100%;
       padding: 45px 0 160px;
       display: flex;
-      justify-content: space-between; 
-      >div {
+      justify-content: space-between;
+      > div {
         width: auto;
       }
     }
@@ -123,10 +141,16 @@
         color: $orange;
       }
     }
+    &-left {
+      h3 {
+        font-size: 32px;
+        margin: 0 0 20px 0;
+      }
+    }
     &-center {
       display: flex;
       flex-direction: column;
-      gap: 15px;
+      gap: 30px;
       img {
         width: 50px;
         height: 50px;
@@ -138,7 +162,7 @@
         color: $orange;
       }
       p {
-        color: rgba( #fff, .75);
+        color: rgba(#fff, 0.75);
         max-width: 350px;
       }
     }
@@ -164,7 +188,7 @@
   }
   .footer-right p {
     padding: 15px 0 0;
-    color: rgba( #fff, .75);
+    color: rgba(#fff, 0.75);
   }
   .footer-right label {
     overflow: hidden;
@@ -181,7 +205,7 @@
     font-weight: 500;
     padding: 17px;
     background: transparent;
-    width:calc(100% - 46px);
+    width: calc(100% - 46px);
   }
   .footer-right input::placeholder {
     color: #000;
@@ -202,7 +226,7 @@
     .footer {
       padding: 0 100px;
     }
-    .container{
+    .container {
       gap: 20px;
     }
   }
@@ -210,7 +234,6 @@
     .footer {
       padding: 0 20px;
     }
-    
   }
   @media (max-width: 700px) {
     .footer {
@@ -226,7 +249,5 @@
     .footer {
       padding: 0 40px;
     }
-    
-    
   }
 </style>

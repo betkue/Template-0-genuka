@@ -1,11 +1,11 @@
 <script>
   import { beforeUpdate, onMount } from "svelte";
   import Produit from "../components/produit.svelte";
-
   let produits = [];
   let produitsFilter = produits;
   let collections = [];
   let loaders = [1, 2, 3, 4, 5];
+  let currency;
 
   let nextPage;
   let previousPage;
@@ -85,6 +85,7 @@
           name={produit.name}
           price={produit.price}
           collections={produit.collections}
+          currency ={currency}
         />
       {:else}
         {#each loaders as loader}
