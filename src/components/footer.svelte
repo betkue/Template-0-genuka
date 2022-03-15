@@ -3,6 +3,8 @@
   let name;
   let description;
   let logo;
+  let phone;
+  let email;
 
   const url = "https://dashboard.genuka.com/api/2021-10/companies/details/468";
   //const url = "https://dashboard.genuka.com/api/2021-10/companies/byurl?url=http://localhost:2974"
@@ -12,13 +14,17 @@
     name = data.name;
     description = data.description;
     logo = data.logo;
+    phone = data.phone;
+    email = data.email;
   });
 </script>
 
 <div class="footer">
   <div class="container">
     <div class="footer-left">
-      <h3>HORAIRES DE TRAVAIL</h3>
+      <h3>Nos contacts</h3>
+      <h4>{email}</h4>
+      <h4>{phone}</h4>
     </div>
     <div class="footer-center">
       <div class="w-logo">

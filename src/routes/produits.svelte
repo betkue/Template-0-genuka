@@ -1,5 +1,5 @@
 <script>
-  import { onMount } from "svelte";
+  import { beforeUpdate, onMount } from "svelte";
   import Produit from "../components/produit.svelte";
 
   let produits = [];
@@ -7,18 +7,23 @@
   let collections = [];
   let loaders = [1, 2, 3, 4, 5];
 
-  const url = "https://dashboard.genuka.com/api/2021-10/companies/468/products";
-  const urlCollections =
-    "https://dashboard.genuka.com/api/2021-10/companies/468/collections";
+  let nextPage;
+  let previousPage;
+
+  $: page = 1;
 
   onMount(async function () {
+    const url = `https://dashboard.genuka.com/api/2021-10/companies/468/products?page=${page}`;
     const response = await fetch(url);
     const data = await response.json();
     produits = data.data;
     produitsFilter = produits;
+    nextPage = data.links.next;
+    previousPage = data.links.prev;
   });
 
   onMount(async function () {
+    const urlCollections = `https://dashboard.genuka.com/api/2021-10/companies/468/collections`;
     const response = await fetch(urlCollections);
     const data = await response.json();
     collections = data.data;
@@ -35,6 +40,28 @@
     );
     produitsFilter = produitsCollections;
     console.log(produitsCollections);
+  }
+
+  async function callPreviousPage() {
+    page--;
+    const url = `https://dashboard.genuka.com/api/2021-10/companies/468/products?page=${page}`;
+    const response = await fetch(url);
+    const data = await response.json();
+    produits = data.data;
+    produitsFilter = produits;
+    nextPage = data.links.next;
+    previousPage = data.links.prev;
+  }
+
+  async function callNextPage() {
+    page++;
+    const url = `https://dashboard.genuka.com/api/2021-10/companies/468/products?page=${page}`;
+    const response = await fetch(url);
+    const data = await response.json();
+    produits = data.data;
+    produitsFilter = produits;
+    nextPage = data.links.next;
+    previousPage = data.links.prev;
   }
 </script>
 
@@ -65,7 +92,15 @@
         {/each}
       {/each}
     </div>
-    <h3>{produitsFilter.length} produits affichés</h3>
+    <h3 class="number-product">{produitsFilter.length} produits affichés</h3>
+    <div class="container-pages">
+      {#if !(previousPage == null)}
+        <button on:click={callPreviousPage}>Précédent</button>
+      {/if}
+      {#if !(nextPage == null)}
+        <button on:click={callNextPage}>Suivant</button>
+      {/if}
+    </div>
   </div>
 </div>
 
@@ -114,6 +149,25 @@
       justify-content: flex-start;
       flex-wrap: wrap;
     }
+
+    &-pages {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      button {
+        cursor: pointer;
+        padding: 1rem;
+        font-size: 16px;
+        border: solid 2px $orange;
+        background: $light;
+        color: $orange;
+      }
+    }
+  }
+
+  .number-product {
+    padding: 50px 0;
   }
 
   .loader {

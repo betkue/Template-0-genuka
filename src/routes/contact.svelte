@@ -25,7 +25,7 @@
       <h2>{phone}</h2>
       <h2>{email}</h2>
     </div>
-    <form action="">
+    <!-- <form action="">
       <div>
         <input type="text" placeholder="Nom *" id="name" name="name" required />
       </div>
@@ -42,7 +42,7 @@
         <textarea name="message" id="message" cols="30" rows="10" placeholder="Votre message *" required/>
       </div>
       <button>Envoyer</button>
-    </form>
+    </form> -->
   </div>
 </div>
 

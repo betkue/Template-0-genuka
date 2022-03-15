@@ -57,7 +57,7 @@
     flex-direction: column;
     box-shadow: 2px 0px 5px rgba($color: $darker, $alpha: 0.1);
     .center {
-      padding: 17.5px 0;
+      padding: 17.5px 0 0 0;
       width: 80%;
       display: flex;
       justify-content: space-between;
@@ -82,12 +82,17 @@
       position: relative;
       .search {
         width: 100%;
-        border: 1px solid $darker;
+        background: $lighter;
         padding: 1rem 15px;
         border-radius: 30px;
         outline: none;
         overflow: hidden;
         color: $darker;
+        transition: .3s ease;
+        &:focus{
+          background: $light;
+          border: 1px solid $darker;
+        }
       }
       .search-list{
         position: absolute;
@@ -98,7 +103,6 @@
       }
     }
     &-center {
-      border-top: 1px solid $gray;
       width: 100%;
       padding: 1rem 0;
       display: flex;
@@ -108,6 +112,7 @@
         a {
           text-transform: uppercase;
           padding: 1rem;
+          color: $darker;
           &:hover {
             color: $orange;
           }
@@ -126,6 +131,7 @@
         padding: 1rem;
         cursor: pointer;
         gap: 2.5px;
+        color: $darker;
         &:hover .auth {
           opacity: 1;
           transform: translate(0);
