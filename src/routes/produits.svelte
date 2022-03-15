@@ -86,13 +86,14 @@
       {/each}
     </div>
     <div class="container-products">
-      {#each produitsFilter as produit}
+      {#each produitsFilter as produit (produit.id)}
         <Produit
           photo={produit.medias[0].link}
           name={produit.name}
           price={produit.price}
           collections={produit.collections}
           currency ={currency}
+          id={produit.id}
         />
       {:else}
         {#each loaders as loader}
