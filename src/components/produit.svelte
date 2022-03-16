@@ -1,13 +1,15 @@
 <script>
   import { fade } from "svelte/transition";
+   import { createEventDispatcher } from "svelte";
   export let id, photo, currency, name, price, collections;
 
+  const dispatch = createEventDispatcher();
   function openProduct(){
-
+    dispatch("open-product", { id: id });
   }
 </script>
 
-<a href="/produits/{id}" class="card" on:click={openProduct} transition:fade>
+<a href="/produits/singleProduit" class="card" on:click={openProduct} transition:fade>
   
     <div class="content">
       <img src={photo} alt="produit" />
