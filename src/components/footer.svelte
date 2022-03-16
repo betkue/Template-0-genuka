@@ -36,7 +36,7 @@
 
       <p>{description}</p>
     </div>
-    <div class="footer-right">
+    <!-- <div class="footer-right">
       <div class="w-text">
         <h3>Newsletter</h3>
         <p>
@@ -50,7 +50,7 @@
         <input type="email" placeholder="Email" />
         <button type="submit">Go</button>
       </label>
-    </div>
+    </div> -->
   </div>
   <div class="attribution">
     <strong>
@@ -110,6 +110,7 @@
     left: 0;
     padding: 25px 0;
     color: $orange;
+    background: $light;
   }
   .attribution a {
     text-transform: none;

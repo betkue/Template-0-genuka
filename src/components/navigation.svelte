@@ -1,5 +1,6 @@
 <script>
   import { onMount } from "svelte";
+  import { fade } from "svelte/transition";
   let name, logo, textSearch;
 
   const url = "https://dashboard.genuka.com/api/2021-10/companies/details/468";
@@ -26,6 +27,10 @@
   //   console.log(result);
   // }
 
+  let booleanToggleMenu = false;
+  function toggleMenu() {
+    booleanToggleMenu = !booleanToggleMenu;
+  }
 </script>
 
 <nav class="navigation">
@@ -55,12 +60,30 @@
       </div>
       <a href="/panier"><img src="./icons/cart.svg" alt="cart" /></a>
     </div>
+    <img
+      src="./icons/burger.svg"
+      alt="burger"
+      class="burger"
+      on:click={toggleMenu}
+    />
   </div>
   <ul class="navigation-center">
     <li><a href="/">Acceuil</a></li>
     <li><a href="/produits">Produits</a></li>
     <li><a href="/contact">Contact</a></li>
   </ul>
+  {#if booleanToggleMenu}
+    <ul class="menu-burger" transition:fade>
+      <a href="/panier" class="burger-panier"
+        ><img src="./icons/cart.svg" alt="cart" /></a
+      >
+      <li><a href="/">Acceuil</a></li>
+      <li><a href="/produits">Produits</a></li>
+      <li><a href="/contact">Contact</a></li>
+      <a href="/inscription"><button class="register">Inscription</button></a>
+      <a href="/connexion"><button class="login">Connexion</button></a>
+    </ul>
+  {/if}
 </nav>
 
 <style lang="scss">
@@ -77,6 +100,11 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+    }
+
+    .burger {
+      cursor: pointer;
+      display: none;
     }
     &-left {
       display: flex;
@@ -175,6 +203,94 @@
             }
           }
         }
+      }
+    }
+    .menu-burger {
+      display: none;
+    }
+  }
+  @media only screen and (max-width: 800px) {
+    .navigation {
+      &-right {
+        .right-account {
+          span {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+  @media only screen and (max-width: 600px) {
+    .navigation {
+      .center {
+        padding: 15px;
+        width: 95%;
+      }
+      .burger {
+        display: block;
+      }
+
+      .menu-burger {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        background: $lighter;
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        z-index: 5;
+        width: 85%;
+        .burger-panier {
+          padding: 1rem 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        li {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-bottom: 1px solid $light;
+          a {
+            width: 100%;
+            padding: 1rem 0;
+            text-align: center;
+          }
+          &:hover {
+            background: $light;
+          }
+        }
+        a {
+          width: 100%;
+          border-bottom: 2px solid $light;
+          button {
+            cursor: pointer;
+            width: 100%;
+            padding: 1rem 0;
+            background: $orange;
+            color: $light;
+          }
+        }
+      }
+
+      &-center,
+      &-search,
+      &-right {
+        display: none;
+      }
+    }
+  }
+
+  @media only screen and (max-width: 310px) {
+    .navigation {
+      .center {
+        width: 99%;
+      }
+      .menu-burger {
+        width: 80%;
       }
     }
   }

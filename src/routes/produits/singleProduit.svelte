@@ -1,16 +1,13 @@
 <script>
-
 </script>
 
 <svelte:head>
-  <title></title>
+  <title />
 </svelte:head>
 
 <div class="container">
-
 </div>
 
 <style lang="scss">
-  @import "./../styles/settings";
-
+  @import "./../../styles/settings";
 </style>

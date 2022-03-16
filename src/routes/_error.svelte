@@ -11,7 +11,7 @@
   <div class="center">
     <h1>{status}</h1>
 
-    <h2>Nous n'avons pas trouve cette page :(</h2>
+    <h2>{error.message}</h2>
 
 	<a href="/">Retournez a l'acceuil</a>
 
