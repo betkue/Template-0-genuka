@@ -1,4 +1,7 @@
 <script context="module">
+
+  let idCompany = 468;
+
   export function preload(page, session) {
     const {id} = page.params;
     console.log(id);
@@ -13,7 +16,7 @@ export let id ;
 import { beforeUpdate, onMount } from "svelte";
 let produits, currentProduit, currency ;
   onMount(async function () {
-    const url = `https://dashboard.genuka.com/api/2021-10/companies/489/products?page`;
+    const url = `https://dashboard.genuka.com/api/2021-10/companies/${idCompany}/products?page`;
     const response = await fetch(url);
     const data = await response.json();
     produits = data.data;
@@ -24,7 +27,7 @@ let produits, currentProduit, currency ;
     });
   });
   onMount(async function () {
-    const urlCompagny = `https://dashboard.genuka.com/api/2021-10/companies/details/468`;
+    const urlCompagny = `https://dashboard.genuka.com/api/2021-10/companies/details/${idComapy}`;
     const response = await fetch(urlCompagny);
     const data = await response.json();
     currency = data.currency.symbol;

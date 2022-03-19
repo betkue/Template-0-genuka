@@ -1,6 +1,9 @@
 <script>
   import { beforeUpdate, onMount } from "svelte";
   import Produit from "../components/produit.svelte";
+
+  let idCompany = 468;
+
   let produits = [];
   let produitsFilter = produits;
   let collections = [];
@@ -13,7 +16,7 @@
   $: page = 1;
 
   onMount(async function () {
-    const url = `https://dashboard.genuka.com/api/2021-10/companies/489/products?page=${page}`;
+    const url = `https://dashboard.genuka.com/api/2021-10/companies/${idCompany}/products?page=${page}`;
     const response = await fetch(url);
     const data = await response.json();
     produits = data.data;
@@ -23,14 +26,14 @@
   });
 
   onMount(async function () {
-    const urlCollections = `https://dashboard.genuka.com/api/2021-10/companies/489/collections`;
+    const urlCollections = `https://dashboard.genuka.com/api/2021-10/companies/${idCompany}/collections`;
     const response = await fetch(urlCollections);
     const data = await response.json();
     collections = data.data;
   });
 
   onMount(async function () {
-    const urlCompagny = `https://dashboard.genuka.com/api/2021-10/companies/details/489`;
+    const urlCompagny = `https://dashboard.genuka.com/api/2021-10/companies/details/${idCompany}`;
     const response = await fetch(urlCompagny);
     const data = await response.json();
     currency = data.currency.symbol;
@@ -51,7 +54,7 @@
 
   async function callPreviousPage() {
     page--;
-    const url = `https://dashboard.genuka.com/api/2021-10/companies/489/products?page=${page}`;
+    const url = `https://dashboard.genuka.com/api/2021-10/companies/${idCompany}/products?page=${page}`;
     const response = await fetch(url);
     const data = await response.json();
     produits = data.data;
@@ -62,7 +65,7 @@
 
   async function callNextPage() {
     page++;
-    const url = `https://dashboard.genuka.com/api/2021-10/companies/489/products?page=${page}`;
+    const url = `https://dashboard.genuka.com/api/2021-10/companies/${idCompany}/products?page=${page}`;
     const response = await fetch(url);
     const data = await response.json();
     produits = data.data;
