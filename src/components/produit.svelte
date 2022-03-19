@@ -1,36 +1,38 @@
 <script>
   import { fade } from "svelte/transition";
-   import { createEventDispatcher } from "svelte";
+  import { createEventDispatcher } from "svelte";
   export let id, photo, currency, name, price, collections;
 
-  const dispatch = createEventDispatcher();
-  function openProduct(){
-    dispatch("open-product", { id: id });
-  }
+  // const dispatch = createEventDispatcher();
+  // function openProduct() {
+  //   dispatch("open-product", { id: id });
+  // }
 </script>
 
-<a href="/produits/singleProduit" class="card" on:click={openProduct} transition:fade>
-  
-    <div class="content">
-      <img src={photo} alt="produit" />
-      <button>{collections}</button>
-      <div class="card-footer">
-        <h2>{name}</h2>
-        <h3>{price} {currency}</h3>
-      </div>
+<a
+  href="/produits/{`${id}`}"
+  class="card"
+  transition:fade
+>
+  <div class="content">
+    <img src={photo} alt="produit" />
+    <button>{collections}</button>
+    <div class="card-footer">
+      <h2>{name}</h2>
+      <h3>{price} {currency}</h3>
     </div>
-  
+  </div>
 </a>
 
 <style lang="scss">
   @import "./../styles/settings";
 
   .card {
-    width: calc(100% / 3);
+    width: calc((100% - 60px) / 3);
     cursor: pointer;
     border-radius: 10px;
-    transition: .3s ease;
-    &:hover{
+    transition: 0.3s ease;
+    &:hover {
       background: $lighter;
     }
     .content {

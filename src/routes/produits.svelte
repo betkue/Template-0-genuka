@@ -166,6 +166,7 @@
       display: flex;
       justify-content: flex-start;
       flex-wrap: wrap;
+      gap: 75px 30px;
     }
 
     &-pages {

@@ -24,11 +24,12 @@ $light: #fff;
 
 a {
     text-decoration: none;
-    color: inherit;
 }
 
 span {
     display: inline-block;
+    font-weight: inherit !important;
+    font-size: inherit;
 }
 li {
     list-style: none;

@@ -23,19 +23,19 @@
 
 <div class="footer">
   <div class="container">
-    <div class="footer-left">
-      <h3>Contact</h3>
-      <p><a class="f-icon email" href="mailto:{email}">{email}</a></p>
-      <p><a class="f-icon phone" href="tel:{phone}">{phone}</a></p>
-    </div>
     <div class="footer-center">
       <div class="w-logo">
         <img src={logo} alt="logo" />
         <h3>{name}</h3>
       </div>
-
       <p>{description}</p>
     </div>
+    <div class="footer-left">
+      <h3>Contact</h3>
+      <p><a class="f-icon email" href="mailto:{email}">{email}</a></p>
+      <p><a class="f-icon phone" href="tel:{phone}">{phone}</a></p>
+    </div>
+    
     <!-- <div class="footer-right">
       <div class="w-text">
         <h3>Newsletter</h3>
@@ -110,7 +110,6 @@
     left: 0;
     padding: 25px 0;
     color: $orange;
-    background: $light;
   }
   .attribution a {
     text-transform: none;
