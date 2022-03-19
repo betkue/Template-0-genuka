@@ -27,7 +27,7 @@ let produits, currentProduit, currency ;
     });
   });
   onMount(async function () {
-    const urlCompagny = `https://dashboard.genuka.com/api/2021-10/companies/details/${idComapy}`;
+    const urlCompagny = `https://dashboard.genuka.com/api/2021-10/companies/details/${idCompany}`;
     const response = await fetch(urlCompagny);
     const data = await response.json();
     currency = data.currency.symbol;

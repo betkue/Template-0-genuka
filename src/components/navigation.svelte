@@ -6,7 +6,7 @@
   
   let name, logo, textSearch;
 
-  const url = `https://dashboard.genuka.com/api/2021-10/companies/details/${idComapny}`;
+  const url = `https://dashboard.genuka.com/api/2021-10/companies/details/${idCompany}`;
 
   onMount(async function () {
     const response = await fetch(url);
