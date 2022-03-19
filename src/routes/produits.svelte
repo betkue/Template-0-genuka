@@ -13,7 +13,7 @@
   $: page = 1;
 
   onMount(async function () {
-    const url = `https://dashboard.genuka.com/api/2021-10/companies/468/products?page=${page}`;
+    const url = `https://dashboard.genuka.com/api/2021-10/companies/489/products?page=${page}`;
     const response = await fetch(url);
     const data = await response.json();
     produits = data.data;
@@ -23,15 +23,15 @@
   });
 
   onMount(async function () {
-    const urlCollections = `https://dashboard.genuka.com/api/2021-10/companies/468/collections`;
+    const urlCollections = `https://dashboard.genuka.com/api/2021-10/companies/489/collections`;
     const response = await fetch(urlCollections);
     const data = await response.json();
     collections = data.data;
   });
 
   onMount(async function () {
-    const url = `https://dashboard.genuka.com/api/2021-10/companies/details/468`;
-    const response = await fetch(url);
+    const urlCompagny = `https://dashboard.genuka.com/api/2021-10/companies/details/489`;
+    const response = await fetch(urlCompagny);
     const data = await response.json();
     currency = data.currency.symbol;
   });
@@ -51,7 +51,7 @@
 
   async function callPreviousPage() {
     page--;
-    const url = `https://dashboard.genuka.com/api/2021-10/companies/468/products?page=${page}`;
+    const url = `https://dashboard.genuka.com/api/2021-10/companies/489/products?page=${page}`;
     const response = await fetch(url);
     const data = await response.json();
     produits = data.data;
@@ -62,7 +62,7 @@
 
   async function callNextPage() {
     page++;
-    const url = `https://dashboard.genuka.com/api/2021-10/companies/468/products?page=${page}`;
+    const url = `https://dashboard.genuka.com/api/2021-10/companies/489/products?page=${page}`;
     const response = await fetch(url);
     const data = await response.json();
     produits = data.data;

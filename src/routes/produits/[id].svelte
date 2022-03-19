@@ -1,20 +1,19 @@
 <script context="module">
   export function preload(page, session) {
-    const {id} = page.params
-    console.log(id)
-  return {id}
+    const {id} = page.params;
+    console.log(id);
+  return {id};
 
   }
 
 </script>
 
 <script>
-export let id 
+export let id ;
 import { beforeUpdate, onMount } from "svelte";
-let produits = [] 
-let currentProduit = []
-onMount(async function () {
-    const url = `https://dashboard.genuka.com/api/2021-10/companies/468/products`;
+let produits, currentProduit, currency ;
+  onMount(async function () {
+    const url = `https://dashboard.genuka.com/api/2021-10/companies/489/products?page`;
     const response = await fetch(url);
     const data = await response.json();
     produits = data.data;
@@ -22,13 +21,18 @@ onMount(async function () {
       if(id == produit.id) {
         currentProduit = produits[index]
       }
-    })
-    console.log(currentProduit, currentProduit.name)
+    });
+  });
+  onMount(async function () {
+    const urlCompagny = `https://dashboard.genuka.com/api/2021-10/companies/details/468`;
+    const response = await fetch(urlCompagny);
+    const data = await response.json();
+    currency = data.currency.symbol;
   });
 </script>
 
 <svelte:head>
-  <title />
+  <title>Produits</title>
 </svelte:head>
 
 <section class="l-product-page">
@@ -37,17 +41,42 @@ onMount(async function () {
       <div class="w-2-half-wrapper">
         <div class="w-gallery product-page">
           <div class="w-img product-page primary">
-            <img src="{currentProduit.medias[0].link}" alt="" />
+            {#if (currentProduit != undefined)}
+            <img src="{currentProduit.medias[0].link}" alt="">
+            {:else}
+            <span>Loading...</span>
+            {/if}
           </div>
         </div>
         <div class="w-text product-page">
-          <h1 class="product-name"><span>{currentProduit.name}</span></h1>
-          <p class="product-description"><span>{currentProduit.description}</span></p>
+          <h1 class="product-name">
+            {#if (currentProduit != undefined)}
+                <span>{currentProduit.name}</span>
+            {:else}
+                <span>Loading...</span>
+            {/if}
+          </h1>
+          <div class="product-description">
+            {#if (currentProduit != undefined)}
+                {@html currentProduit.description}
+            {:else}
+                <span>Loading...</span>
+            {/if}
+          </div>
           <div class="w-product-price">
-            <div class="product-discounted_price"><span></span></div>
-            <div class="product-reduction"><span></span></div>
-            <!-- <?= "-" . ($product['data'][$productGetId]['price']-$product['data'][$productGetId]['discounted_price'])*100/$product['data'][$productGetId]['price'] . "%" ?> -->
-            <div class="product-price"><span></span></div>
+            <div class="product-discounted_price">
+              {#if (currentProduit != undefined  )}
+                <span>{currentProduit.discounted_price} {currency}</span>
+            {:else}
+                <span>Loading...</span>
+            {/if}
+            </div>
+            {#if (currentProduit != undefined)}
+                {#if currentProduit.comparaison_price != 0 } 
+                <div class="product-reduction"><span>- {(currentProduit.price - currentProduit.discounted_price)*100/currentProduit.price}%</span></div>
+                <div class="product-price"><span>{currentProduit.price}</span></div>
+                {/if}
+            {/if}
           </div>
           <div class="c-add-to-cart">
             <div class="w-add-to-cart-input">
@@ -85,7 +114,7 @@ onMount(async function () {
         padding: 0 210px;
     }
     .l-tb {
-        padding: 150px 0;
+        padding: 50px 0 100px;
     }
 }
   .w-2-half-wrapper {
@@ -127,7 +156,9 @@ onMount(async function () {
     }
 }
   .w-gallery {
+    align-self: center;
     padding: 0 50px 0 0;
+    margin: 50px 0 0;
 }
 .product-name {
     padding: 15px 0 0;
