@@ -7,7 +7,7 @@
 
 <script>
   export let id;
-  let idCompany = 489; // 489
+  let idCompany = 468; // 489 - 468
   import { beforeUpdate, onMount } from "svelte";
   let produits, currentProduit, currency, currentProduitIndex;
 
@@ -172,13 +172,15 @@
     position: relative;
     border-radius: 15px;
     img {
+      cursor: pointer;
       position: absolute;
       top: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
+      transition: .3s ease;
       &:hover {
-        transform: scale(1.2);
+        transform: scale(1.1);
       }
     }
   }
