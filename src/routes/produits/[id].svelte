@@ -1,6 +1,4 @@
 <script context="module">
-
-
   export function preload(page, session) {
     const { id } = page.params;
     return { id };
@@ -9,23 +7,19 @@
 
 <script>
   export let id;
-
-  let idCompany = 489; // 489
-
+  let idCompany = 468; // 489 - 468
   import { beforeUpdate, onMount } from "svelte";
   let produits, currentProduit, currency, currentProduitIndex;
-  
+
   onMount(async function () {
-    const url = `https://dashboard.genuka.com/api/2021-10/companies/${idCompany}/products`; 
+    const url = `https://dashboard.genuka.com/api/2021-10/companies/${idCompany}/products`;
     const response = await fetch(url);
     const data = await response.json();
     produits = data.data;
     produits.forEach((produit, index) => {
       if (id == produit.id) {
         currentProduit = produits[index];
-
-        currentProduitIndex = index
-
+        currentProduitIndex = index;
       }
     });
   });
@@ -35,37 +29,40 @@
     const data = await response.json();
     currency = data.currency.symbol;
   });
-
   //Add to cart
-  let dataAdd = 0
-  let qty = 0
-    function increment() {
-        if (dataAdd < 9) {
-            dataAdd++
-        }
+  let dataAdd = 0;
+  let qty = 0;
+  function increment() {
+    if (dataAdd < 9) {
+      dataAdd++;
     }
-    function decrement() {
-        if (dataAdd > 0) {
-            dataAdd--
-        }
+  }
+  function decrement() {
+    if (dataAdd > 0) {
+      dataAdd--;
     }
-    function addTocart() {
-      if(localStorage.getItem(currentProduitIndex) ) {
-        qty = parseInt(JSON.parse(localStorage.getItem(currentProduitIndex)).quantity) + parseInt(dataAdd)
-      } else {
-        qty = parseInt(dataAdd)
-      }
-        localStorage.setItem(
-          currentProduitIndex,
-            `{
+  }
+  function addTocart() {
+    if (localStorage.getItem(currentProduitIndex)) {
+      qty =
+        parseInt(
+          JSON.parse(localStorage.getItem(currentProduitIndex)).quantity
+        ) + parseInt(dataAdd);
+    } else {
+      qty = parseInt(dataAdd);
+    }
+    localStorage.setItem(
+      currentProduitIndex,
+      `{
                 "id":${currentProduit.id},
                 "price":${currentProduit.discounted_price},
                 "quantity":${parseInt(qty)},
                 "add_to_cart_date": "",
                 "note":"",   
                 "complement": ""
-            }`);
-    }
+            }`
+    );
+  }
 </script>
 
 <svelte:head>
@@ -112,11 +109,12 @@
               {#if currentProduit.comparaison_price != 0}
                 <div class="product-reduction">
                   <span
-                    >- {Math.round(((currentProduit.price -
-                      currentProduit.discounted_price) *
-                      100) /
-                      currentProduit.price)}%</span
-
+                    >- {Math.round(
+                      ((currentProduit.price -
+                        currentProduit.discounted_price) *
+                        100) /
+                        currentProduit.price
+                    )}%</span
                   >
                 </div>
                 <div class="product-price">
@@ -128,9 +126,7 @@
           <div class="c-add-to-cart">
             <div class="w-add-to-cart-input">
               <div class="minus" on:click={decrement}><span>-</span></div>
-              <div
-                class="add-to-cart-input"
-              >
+              <div class="add-to-cart-input">
                 <span>{dataAdd}</span>
               </div>
               <div class="plus" on:click={increment}><span>+</span></div>
@@ -176,13 +172,15 @@
     position: relative;
     border-radius: 15px;
     img {
+      cursor: pointer;
       position: absolute;
       top: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
+      transition: .3s ease;
       &:hover {
-        transform: scale(1.2);
+        transform: scale(1.1);
       }
     }
   }
@@ -191,10 +189,10 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 11px;
-      align-items: stretch;
-      gap: 0;
-      padding: 0 10px 0 70px;
-      margin: 50px 0 0;
+    align-items: stretch;
+    gap: 0;
+    padding: 0 10px 0 70px;
+    margin: 50px 0 0;
   }
   .w-gallery {
     align-self: center;
@@ -220,7 +218,6 @@
     justify-content: center;
     > div {
       display: inline-flex;
-
     }
   }
   .product-discounted_price {
@@ -229,7 +226,6 @@
       font-weight: 700;
     }
   }
-
   .product-reduction {
     font-size: 16px;
     padding: 2.5px 7.5px;
@@ -287,7 +283,6 @@
       }
     }
   }
-
   // Responsive
   @media (max-width: 1200px) {
     .l-product-page {
@@ -306,15 +301,14 @@
       }
     }
     .w-2-half-wrapper {
-      gap :25px;
-      >div {
+      gap: 25px;
+      > div {
         width: 100%;
       }
     }
-    .w-2-half-wrapper{
+    .w-2-half-wrapper {
       flex-direction: column;
       align-items: center;
-      
     }
     .w-gallery {
       padding: 0;
@@ -323,27 +317,23 @@
       display: flex;
       align-items: center;
       justify-content: flex-start;
-      width:100%;
+      width: 100%;
     }
     .product-price {
-      margin:  0 0 0 auto;
+      margin: 0 0 0 auto;
     }
     .c-add-to-cart {
       flex-direction: column;
       align-items: center;
       button {
-        margin :0;
-      width: 100%;
-
-        
+        margin: 0;
+        width: 100%;
       }
-
     }
     .w-img {
       width: 100%;
       padding: 0 0 100%;
       border-radius: 0px !important;
-
       img {
         height: auto;
         width: 100%;
