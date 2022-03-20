@@ -1,9 +1,12 @@
 <script>
   import { onMount } from "svelte";
   import { fade } from "svelte/transition";
+
+  let idCompany = 468;
+  
   let name, logo, textSearch;
 
-  const url = "https://dashboard.genuka.com/api/2021-10/companies/details/468";
+  const url = `https://dashboard.genuka.com/api/2021-10/companies/details/${idCompany}`;
 
   onMount(async function () {
     const response = await fetch(url);
