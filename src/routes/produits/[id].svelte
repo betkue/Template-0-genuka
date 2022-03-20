@@ -1,25 +1,25 @@
 <script context="module">
-  let idCompany = 468;
-
   export function preload(page, session) {
     const { id } = page.params;
-    console.log(id);
     return { id };
   }
 </script>
 
 <script>
   export let id;
+  let idCompany = 489; // 489
   import { beforeUpdate, onMount } from "svelte";
-  let produits, currentProduit, currency;
+  let produits, currentProduit, currency, currentProduitIndex;
+
   onMount(async function () {
-    const url = `https://dashboard.genuka.com/api/2021-10/companies/${idCompany}/products?page`;
+    const url = `https://dashboard.genuka.com/api/2021-10/companies/${idCompany}/products`;
     const response = await fetch(url);
     const data = await response.json();
     produits = data.data;
     produits.forEach((produit, index) => {
       if (id == produit.id) {
         currentProduit = produits[index];
+        currentProduitIndex = index;
       }
     });
   });
@@ -29,6 +29,40 @@
     const data = await response.json();
     currency = data.currency.symbol;
   });
+  //Add to cart
+  let dataAdd = 0;
+  let qty = 0;
+  function increment() {
+    if (dataAdd < 9) {
+      dataAdd++;
+    }
+  }
+  function decrement() {
+    if (dataAdd > 0) {
+      dataAdd--;
+    }
+  }
+  function addTocart() {
+    if (localStorage.getItem(currentProduitIndex)) {
+      qty =
+        parseInt(
+          JSON.parse(localStorage.getItem(currentProduitIndex)).quantity
+        ) + parseInt(dataAdd);
+    } else {
+      qty = parseInt(dataAdd);
+    }
+    localStorage.setItem(
+      currentProduitIndex,
+      `{
+                "id":${currentProduit.id},
+                "price":${currentProduit.discounted_price},
+                "quantity":${parseInt(qty)},
+                "add_to_cart_date": "",
+                "note":"",   
+                "complement": ""
+            }`
+    );
+  }
 </script>
 
 <svelte:head>
@@ -75,10 +109,12 @@
               {#if currentProduit.comparaison_price != 0}
                 <div class="product-reduction">
                   <span
-                    >- {((currentProduit.price -
-                      currentProduit.discounted_price) *
-                      100) /
-                      currentProduit.price}%</span
+                    >- {Math.round(
+                      ((currentProduit.price -
+                        currentProduit.discounted_price) *
+                        100) /
+                        currentProduit.price
+                    )}%</span
                   >
                 </div>
                 <div class="product-price">
@@ -89,19 +125,13 @@
           </div>
           <div class="c-add-to-cart">
             <div class="w-add-to-cart-input">
-              <div class="minus"><span>-</span></div>
-              <div
-                data-qty="0"
-                data-id=""
-                data-index=""
-                data-price=""
-                class="add-to-cart-input"
-              >
-                <span>0</span>
+              <div class="minus" on:click={decrement}><span>-</span></div>
+              <div class="add-to-cart-input">
+                <span>{dataAdd}</span>
               </div>
-              <div class="plus"><span>+</span></div>
+              <div class="plus" on:click={increment}><span>+</span></div>
             </div>
-            <button class="btn-add-to-cart"
+            <button class="btn-add-to-cart" on:click={addTocart}
               ><span>Ajouter au panier</span></button
             >
           </div>
@@ -133,7 +163,6 @@
     }
   }
   .w-img {
-    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -148,9 +177,8 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: .3s ease;
       &:hover {
-        transform: scale(1.1);
+        transform: scale(1.2);
       }
     }
   }
@@ -159,12 +187,10 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 11px;
-    &.product-page {
-      align-items: stretch;
-      gap: 0;
-      padding: 0 10px 0 70px;
-      margin: 50px 0 0;
-    }
+    align-items: stretch;
+    gap: 0;
+    padding: 0 10px 0 70px;
+    margin: 50px 0 0;
   }
   .w-gallery {
     align-self: center;
@@ -193,7 +219,10 @@
     }
   }
   .product-discounted_price {
-    font-size: 28px;
+    span {
+      font-size: 28px;
+      font-weight: 700;
+    }
   }
   .product-reduction {
     font-size: 16px;
@@ -249,6 +278,93 @@
       cursor: pointer;
       &:hover {
         background: rgba(#000, 0.05);
+      }
+    }
+  }
+  // Responsive
+  @media (max-width: 1200px) {
+    .l-product-page {
+      .l-rl {
+        padding: 0 75px;
+      }
+    }
+  }
+  @media (max-width: 1000px) {
+    .l-product-page {
+      .l-rl {
+        padding: 0 100px;
+      }
+      .l-tb {
+        padding: 50px 0 100px;
+      }
+    }
+    .w-2-half-wrapper {
+      gap: 25px;
+      > div {
+        width: 100%;
+      }
+    }
+    .w-2-half-wrapper {
+      flex-direction: column;
+      align-items: center;
+    }
+    .w-gallery {
+      padding: 0;
+    }
+    .w-product-price {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      width: 100%;
+    }
+    .product-price {
+      margin: 0 0 0 auto;
+    }
+    .c-add-to-cart {
+      flex-direction: column;
+      align-items: center;
+      button {
+        margin: 0;
+        width: 100%;
+      }
+    }
+    .w-img {
+      width: 100%;
+      padding: 0 0 100%;
+      border-radius: 0px !important;
+      img {
+        height: auto;
+        width: 100%;
+        border-radius: 0;
+      }
+    }
+    .w-text {
+      align-items: stretch;
+      padding: 0 25px;
+      margin: 0;
+    }
+    .w-add-to-cart-input {
+      height: 50px;
+      width: 100%;
+    }
+  }
+  @media (max-width: 700px) {
+    .l-product-page {
+      .l-rl {
+        padding: 0 25px;
+      }
+      .l-tb {
+        padding: 0 0 50px;
+      }
+    }
+  }
+  @media (max-width: 500px) {
+    .l-product-page {
+      .l-rl {
+        padding: 0 10px;
+      }
+      .l-tb {
+        padding: 0;
       }
     }
   }

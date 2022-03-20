@@ -1,20 +1,25 @@
 <script>
+
+export let  index, photo, currency, name, price;
+ function delProduct() {
+    localStorage.removeItem(index)
+ }
 </script>
 
 <div class="w-bag-items c-br">
     <div class="w-img">
         <div class="c-img c-br">
-            <img src="" alt="" />
+            <img src="{photo}" alt="" />
         </div>
     </div>
     <div class="w-bag-item-content">
         <div class="w-bag-item-description">
-            <strong class="bag-item-price"><span>1000 FCFA</span></strong>
-            <h3 class="bag-item-name"><span>Title</span></h3>
+            <strong class="bag-item-price"><span>{price} {currency}</span></strong>
+            <h3 class="bag-item-name"><span>{name}</span></h3>
         </div>
     </div>
 
-    <div class="w-bag-item-cross c-br" />
+    <div class="w-bag-item-cross c-br" on:click={delProduct} />
 </div>
 
 <style lang="scss">
