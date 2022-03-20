@@ -10,6 +10,8 @@
         const data = await response.json();
         currency = data.currency.symbol;
     });
+    let localstorage = [];
+    localstorage = localStorage
 </script>
 
 <section class="l-cart">
@@ -21,8 +23,12 @@
                         <span>Mon panier</span>
                     </h3>
                     <div class="w-bag-items-list">
-                        <ProduitPanier />
-                        <ProduitPanier />
+                        {#each localstorage as product}
+                        <ProduitPanier 
+                         
+                        />
+                        {/each}
+                        
                     </div>
                     <div class="w-bag-sub-total c-br">
                         <p>

@@ -1,26 +1,27 @@
 <script context="module">
 
-  let idCompany = 468;
 
   export function preload(page, session) {
     const { id } = page.params;
-    console.log(id);
     return { id };
   }
 </script>
 
 <script>
   export let id;
+  let idCompany = 489; // 489
+
   import { beforeUpdate, onMount } from "svelte";
-  let produits, currentProduit, currency;
+  let produits, currentProduit, currency, currentProduitIndex;
   onMount(async function () {
-    const url = `https://dashboard.genuka.com/api/2021-10/companies/${idCompany}/products?page`;
+    const url = `https://dashboard.genuka.com/api/2021-10/companies/${idCompany}/products`; 
     const response = await fetch(url);
     const data = await response.json();
     produits = data.data;
     produits.forEach((produit, index) => {
       if (id == produit.id) {
         currentProduit = produits[index];
+        currentProduitIndex = index
       }
     });
   });
@@ -30,6 +31,37 @@
     const data = await response.json();
     currency = data.currency.symbol;
   });
+
+  //Add to cart
+  let dataAdd = 0
+  let qty = 0
+    function increment() {
+        if (dataAdd < 9) {
+            dataAdd++
+        }
+    }
+    function decrement() {
+        if (dataAdd > 0) {
+            dataAdd--
+        }
+    }
+    function addTocart() {
+      if(localStorage.getItem(currentProduitIndex) ) {
+        qty = parseInt(JSON.parse(localStorage.getItem(currentProduitIndex)).quantity) + parseInt(dataAdd)
+      } else {
+        qty = parseInt(dataAdd)
+      }
+        localStorage.setItem(
+          currentProduitIndex,
+            `{
+                "id":${currentProduit.id},
+                "price":${currentProduit.discounted_price},
+                "quantity":${parseInt(qty)},
+                "add_to_cart_date": "",
+                "note":"",   
+                "complement": ""
+            }`);
+    }
 </script>
 
 <svelte:head>
@@ -76,10 +108,10 @@
               {#if currentProduit.comparaison_price != 0}
                 <div class="product-reduction">
                   <span
-                    >- {((currentProduit.price -
+                    >- {Math.round(((currentProduit.price -
                       currentProduit.discounted_price) *
                       100) /
-                      currentProduit.price}%</span
+                      currentProduit.price)}%</span
                   >
                 </div>
                 <div class="product-price">
@@ -90,19 +122,15 @@
           </div>
           <div class="c-add-to-cart">
             <div class="w-add-to-cart-input">
-              <div class="minus"><span>-</span></div>
+              <div class="minus" on:click={decrement}><span>-</span></div>
               <div
-                data-qty="0"
-                data-id=""
-                data-index=""
-                data-price=""
                 class="add-to-cart-input"
               >
-                <span>0</span>
+                <span>{dataAdd}</span>
               </div>
-              <div class="plus"><span>+</span></div>
+              <div class="plus" on:click={increment}><span>+</span></div>
             </div>
-            <button class="btn-add-to-cart"
+            <button class="btn-add-to-cart" on:click={addTocart}
               ><span>Ajouter au panier</span></button
             >
           </div>
