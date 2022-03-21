@@ -8,7 +8,7 @@
 <script>
   export let id;
   let idCompany = 489; // 489
-  import { cartTable } from "../store.js" 
+  import { cartTable } from "../src/stores.js" 
   import {  onMount } from "svelte";
   let produits, currentProduit, currency, currentProduitIndex;
   onMount(async function () {
