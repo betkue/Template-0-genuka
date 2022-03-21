@@ -1,5 +1,8 @@
 <script>
-  let email,password,company_id,fromApi,result
+  let email, tel, password;
+  let fromApi = true;
+  let company_id = 468;
+  let result = null;
 
   async function connect() {
     const res = await fetch(
@@ -12,6 +15,9 @@
           company_id,
           fromApi,
         }),
+        headers: {
+          "content-type": "application/json",
+        },
       }
     );
 
@@ -24,13 +30,14 @@
 <div class="container">
   <div class="center">
     <h1>Connexion</h1>
-    <form action="">
+    <div class="form">
       <div>
         <input
           type="email"
           placeholder="Votre adresse email *"
           id="email"
           name="email"
+          bind:value={email}
           required
         />
       </div>
@@ -40,13 +47,14 @@
           placeholder="Votre mot de passe *"
           id="password"
           name="password"
+          bind:value={password}
           required
         />
       </div>
-      <button on:click={connect}>Connexion</button>
+      <button type="button" on:click={connect}>Connexion</button>
       <a href="/password_forgotten">Mot de passe oublié ?</a>
       <a href="/inscription">Pas encore de compte ? Inscrivez-vous.</a>
-    </form>
+    </div>
   </div>
 </div>
 
@@ -68,7 +76,7 @@
     h1 {
       padding: 1rem;
     }
-    form {
+    .form {
       padding: 1rem;
       width: 100%;
       background: $lighter;
@@ -111,16 +119,16 @@
     }
   }
   @media only screen and (max-width: 1200px) {
-    .container{
-      .center{
+    .container {
+      .center {
         width: 60%;
       }
     }
   }
 
-   @media only screen and (max-width: 500px) {
-    .container{
-      .center{
+  @media only screen and (max-width: 500px) {
+    .container {
+      .center {
         width: 90%;
       }
     }

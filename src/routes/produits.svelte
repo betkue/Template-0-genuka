@@ -1,5 +1,5 @@
 <script>
-  import { beforeUpdate, onMount } from "svelte";
+  import { beforeUpdate, afterUpdate, onMount } from "svelte";
   import Produit from "../components/produit.svelte";
 
   let idCompany = 468; // 489 - 468
@@ -95,7 +95,7 @@
           name={produit.name}
           price={produit.price}
           collections={produit.collections}
-          currency ={currency}
+          {currency}
           id={produit.id}
         />
       {:else}
@@ -118,7 +118,6 @@
 
 <style lang="scss">
   @import "./../styles/settings";
-
   .container {
     display: flex;
     justify-content: center;
@@ -138,11 +137,11 @@
       align-items: center;
       justify-content: flex-start;
       overflow-x: scroll;
-      &::-webkit-scrollbar{
+      &::-webkit-scrollbar {
         height: 2px;
         background: transparent;
       }
-      &::-webkit-scrollbar-thumb{
+      &::-webkit-scrollbar-thumb {
         background: $gray;
       }
       button {
@@ -209,8 +208,8 @@
     }
   }
   @media only screen and (max-width: 1210px) {
-    .container{
-      .center{
+    .container {
+      .center {
         width: 90%;
       }
     }
