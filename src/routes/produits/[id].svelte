@@ -10,7 +10,7 @@
 
 
   let idCompany = 489; // 489
-  import { cartTable } from "../src/stores.js" 
+  import { cartTable } from "./../../store/stores" 
   import {  onMount } from "svelte";
 
   let produits, currentProduit, currency, currentProduitIndex;
@@ -180,7 +180,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: .3s ease;
+      transition: 0.3s ease;
       &:hover {
         transform: scale(1.1);
       }
