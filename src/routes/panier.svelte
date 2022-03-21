@@ -1,17 +1,18 @@
 <script>
     import { onMount } from "svelte";
-    import ProduitPanier from "../components/produit-panier.svelte";
-    let currency;
-    const url =
-        "https://dashboard.genuka.com/api/2021-10/companies/details/468";
-    //const url = "https://dashboard.genuka.com/api/2021-10/companies/byurl?url=http://localhost:2974"
+    // import ProduitPanier from "../components/produit-panier.svelte";
+    
+    let currency ;
+    let idCompany = 489;
+    const url =`https://dashboard.genuka.com/api/2021-10/companies/details/${idCompany}`;
     onMount(async function () {
         const response = await fetch(url);
         const data = await response.json();
         currency = data.currency.symbol;
     });
-    let localstorage = [];
-    localstorage = localStorage
+
+
+   
 </script>
 
 <section class="l-cart">
@@ -23,11 +24,7 @@
                         <span>Mon panier</span>
                     </h3>
                     <div class="w-bag-items-list">
-                        {#each localstorage as product}
-                        <ProduitPanier 
-                         
-                        />
-                        {/each}
+                   
                         
                     </div>
                     <div class="w-bag-sub-total c-br">

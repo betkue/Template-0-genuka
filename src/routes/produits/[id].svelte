@@ -1,6 +1,4 @@
 <script context="module">
-
-
   export function preload(page, session) {
     const { id } = page.params;
     return { id };
@@ -10,8 +8,8 @@
 <script>
   export let id;
   let idCompany = 489; // 489
-
-  import { beforeUpdate, onMount } from "svelte";
+  import { cartTable } from "../store.js" 
+  import {  onMount } from "svelte";
   let produits, currentProduit, currency, currentProduitIndex;
   onMount(async function () {
     const url = `https://dashboard.genuka.com/api/2021-10/companies/${idCompany}/products`; 
@@ -45,22 +43,23 @@
             dataAdd--
         }
     }
+    console.table(cartTable)
+
     function addTocart() {
-      if(localStorage.getItem(currentProduitIndex) ) {
-        qty = parseInt(JSON.parse(localStorage.getItem(currentProduitIndex)).quantity) + parseInt(dataAdd)
+      if(cartTable[currentProduitIndex] != undefined ) {
+        qty = parseInt(cartTable[currentProduitIndex].quantity) + parseInt(dataAdd)
       } else {
         qty = parseInt(dataAdd)
       }
-        localStorage.setItem(
-          currentProduitIndex,
-            `{
-                "id":${currentProduit.id},
-                "price":${currentProduit.discounted_price},
-                "quantity":${parseInt(qty)},
+        cartTable[currentProduitIndex] = {
+                "id":currentProduit.id,
+                "price":currentProduit.discounted_price,
+                "quantity":parseInt(qty),
                 "add_to_cart_date": "",
                 "note":"",   
                 "complement": ""
-            }`);
+            }
+            console.table(cartTable)
     }
 </script>
 
