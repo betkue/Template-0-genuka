@@ -23,7 +23,8 @@
 
     const json = await res.json();
     result = JSON.stringify(json);
-    console.log(result);
+    console.log(result.length
+    );
   }
 </script>
 
