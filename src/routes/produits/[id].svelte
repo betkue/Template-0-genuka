@@ -7,10 +7,12 @@
 
 <script>
   export let id;
+
   let idCompany = 489; // 489
   import { cartTable } from "../src/stores.js" 
   import {  onMount } from "svelte";
   let produits, currentProduit, currency, currentProduitIndex;
+  
   onMount(async function () {
     const url = `https://dashboard.genuka.com/api/2021-10/companies/${idCompany}/products`; 
     const response = await fetch(url);
@@ -19,7 +21,9 @@
     produits.forEach((produit, index) => {
       if (id == produit.id) {
         currentProduit = produits[index];
+
         currentProduitIndex = index
+
       }
     });
   });
@@ -111,6 +115,7 @@
                       currentProduit.discounted_price) *
                       100) /
                       currentProduit.price)}%</span
+
                   >
                 </div>
                 <div class="product-price">
@@ -214,6 +219,7 @@
     justify-content: center;
     > div {
       display: inline-flex;
+
     }
   }
   .product-discounted_price {
@@ -222,6 +228,7 @@
       font-weight: 700;
     }
   }
+
   .product-reduction {
     font-size: 16px;
     padding: 2.5px 7.5px;
