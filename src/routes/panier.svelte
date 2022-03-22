@@ -9,10 +9,7 @@
         const response = await fetch(url);
         const data = await response.json();
         currency = data.currency.symbol;
-    });
-
-
-   
+    })
 </script>
 
 <section class="l-cart">

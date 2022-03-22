@@ -1,12 +1,6 @@
 <script>
   import { fade } from "svelte/transition";
-  import { createEventDispatcher } from "svelte";
-  export let id, photo, currency, name, price, collections;
-
-  // const dispatch = createEventDispatcher();
-  // function openProduct() {
-  //   dispatch("open-product", { id: id });
-  // }
+  export let id, currency, name, price, collections;
 </script>
 
 <a
@@ -15,7 +9,7 @@
   transition:fade
 >
   <div class="content">
-    <img src={photo} alt="produit" />
+    <!-- <img src={photo} alt="produit" /> -->
     <button>{collections}</button>
     <div class="card-footer">
       <h2>{name}</h2>

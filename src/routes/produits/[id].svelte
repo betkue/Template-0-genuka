@@ -8,10 +8,9 @@
 <script>
   export let id;
 
-
   let idCompany = 489; // 489
-  import { cartTable } from "./../../store/stores" 
-  import {  onMount } from "svelte";
+  // import { store } from "../../store/stores";
+  import { onMount } from "svelte";
 
   let produits, currentProduit, currency, currentProduitIndex;
 
@@ -27,12 +26,15 @@
       }
     });
   });
+
+
   onMount(async function () {
     const urlCompagny = `https://dashboard.genuka.com/api/2021-10/companies/details/${idCompany}`;
     const response = await fetch(urlCompagny);
     const data = await response.json();
     currency = data.currency.symbol;
   });
+
   //Add to cart
   let dataAdd = 0;
   let qty = 0;
@@ -45,25 +47,24 @@
     if (dataAdd > 0) {
       dataAdd--;
     }
+  }
 
-    console.table(cartTable)
-
-    function addTocart() {
-      if(cartTable[currentProduitIndex] != undefined ) {
-        qty = parseInt(cartTable[currentProduitIndex].quantity) + parseInt(dataAdd)
-      } else {
-        qty = parseInt(dataAdd)
-      }
-        cartTable[currentProduitIndex] = {
-                "id":currentProduit.id,
-                "price":currentProduit.discounted_price,
-                "quantity":parseInt(qty),
-                "add_to_cart_date": "",
-                "note":"",   
-                "complement": ""
-            }
-            console.table(cartTable)
+  function addTocart() {
+    if (cartTable[currentProduitIndex] != undefined) {
+      qty =mparseInt(cartTable[currentProduitIndex].quantity) + parseInt(dataAdd);
+    } else {
+      qty = parseInt(dataAdd);
     }
+    cartTable[currentProduitIndex] = {
+      id: currentProduit.id,
+      price: currentProduit.discounted_price,
+      quantity: parseInt(qty),
+      add_to_cart_date: "",
+      note: "",
+      complement: "",
+    };
+  }
+  // console.log($store.length);
 
 </script>
 

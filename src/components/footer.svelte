@@ -1,13 +1,13 @@
 <script>
   import { onMount } from "svelte";
+  let idCompany = 489;
 
   let name;
   let description;
   let logo;
   let phone;
   let email;
-  const url = "https://dashboard.genuka.com/api/2021-10/companies/details/468";
-  //const url = "https://dashboard.genuka.com/api/2021-10/companies/byurl?url=http://localhost:2974"
+  const url = `https://dashboard.genuka.com/api/2021-10/companies/details/${idCompany}`;
   onMount(async function () {
     const response = await fetch(url);
     const data = await response.json();

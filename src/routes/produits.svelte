@@ -2,7 +2,7 @@
   import { beforeUpdate, afterUpdate, onMount } from "svelte";
   import Produit from "../components/produit.svelte";
 
-  let idCompany = 468; // 489 - 468
+  let idCompany = 489; // 489 - 468
 
   let produits = [];
   let produitsFilter = produits;
