@@ -9,8 +9,8 @@
   export let id;
 
 
-  let idCompany = 489; // 489
-  import { cartTable } from "./../../store/stores" 
+  let idCompany = 468; // 489
+ // import { cartTable } from "./../../store/stores" 
   import {  onMount } from "svelte";
 
   let produits, currentProduit, currency, currentProduitIndex;
@@ -45,8 +45,10 @@
     if (dataAdd > 0) {
       dataAdd--;
     }
+  }
 
-    console.table(cartTable)
+    /*
+      console.table(cartTable)
 
     function addTocart() {
       if(cartTable[currentProduitIndex] != undefined ) {
@@ -64,6 +66,7 @@
             }
             console.table(cartTable)
     }
+    */
 
 </script>
 
