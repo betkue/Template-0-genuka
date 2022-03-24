@@ -2,15 +2,20 @@
     import { onMount } from "svelte";
     import ProduitPanier from "../components/produit-panier.svelte";
     import { Memoire } from "../store/data.js";
+    let cart
+    cart = []
 
-    let currency,  cart
+    if (process.browser) {
+        Object.values(localStorage).forEach((element,index) => { // Object.values(localStorage) = []
+            cart[index] = JSON.parse(Object.values(localStorage)[index])
+        });
+    }
+
+    let currency;
     onMount(async function () {
-
         currency = await Memoire.fetchCompany();
         currency = currency.currency.symbol;
-        console.log(cart)
     });
-    cart = Memoire.cart
 </script>
 
 <section class="l-cart">
@@ -28,6 +33,7 @@
                         name={items.name}
                         currency={currency}
                         price={items.price}
+                        index={items.id}
                         />
                         {/each}
                     </div>
