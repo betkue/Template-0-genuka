@@ -8,41 +8,35 @@
 <script>
   export let id;
 
-  let idCompany = 489; // 489
-  // import { store } from "../../store/stores";
   import { onMount } from "svelte";
+  import { Memoire } from "../../store/data.js";
 
   let produits, currentProduit, currency, currentProduitIndex;
-
   onMount(async function () {
-    const url = `https://dashboard.genuka.com/api/2021-10/companies/${idCompany}/products`;
-    const response = await fetch(url);
-    const data = await response.json();
-    produits = data.data;
+    produits = await Memoire.fetchProducts();
+    produits = produits.data;
     produits.forEach((produit, index) => {
       if (id == produit.id) {
         currentProduit = produits[index];
         currentProduitIndex = index;
       }
     });
+    currency = await Memoire.fetchCompany();
+    currency = currency.currency.symbol;
+    console.log(Memoire.cart)
   });
 
-
-  onMount(async function () {
-    const urlCompagny = `https://dashboard.genuka.com/api/2021-10/companies/details/${idCompany}`;
-    const response = await fetch(urlCompagny);
-    const data = await response.json();
-    currency = data.currency.symbol;
-  });
 
   //Add to cart
-  let dataAdd = 0;
-  let qty = 0;
+  let dataAdd = 0,
+    qty = 0
+
   function increment() {
     if (dataAdd < 9) {
       dataAdd++;
     }
   }
+  
   function decrement() {
     if (dataAdd > 0) {
       dataAdd--;
@@ -50,13 +44,16 @@
   }
 
   function addTocart() {
-    if (cartTable[currentProduitIndex] != undefined) {
-      qty =mparseInt(cartTable[currentProduitIndex].quantity) + parseInt(dataAdd);
+    if (Memoire.cart[`${currentProduitIndex}`] != undefined) {
+      qty =
+        parseInt(Memoire.cart[`${currentProduitIndex}`].quantity) + parseInt(dataAdd);
     } else {
       qty = parseInt(dataAdd);
     }
-    cartTable[currentProduitIndex] = {
+    Memoire.cart[`${currentProduitIndex}`] = {
       id: currentProduit.id,
+      name:currentProduit.name,
+      thumb : currentProduit.medias[0].link,
       price: currentProduit.discounted_price,
       quantity: parseInt(qty),
       add_to_cart_date: "",
@@ -64,7 +61,8 @@
       complement: "",
     };
   }
-  // console.log($store.length);
+    console.log(Memoire.cart)
+  }
 
 </script>
 

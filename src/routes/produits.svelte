@@ -1,7 +1,6 @@
 <script>
   import { beforeUpdate, afterUpdate, onMount } from "svelte";
   import Produit from "../components/produit.svelte";
-
   let idCompany = 489; // 489 - 468
 
   let produits = [];
@@ -23,6 +22,7 @@
     produitsFilter = produits;
     nextPage = data.links.next;
     previousPage = data.links.prev;
+
   });
 
   onMount(async function () {

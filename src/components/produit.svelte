@@ -1,6 +1,7 @@
 <script>
   import { fade } from "svelte/transition";
   export let id, currency, name, price, collections;
+
 </script>
 
 <a

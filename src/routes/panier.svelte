@@ -1,15 +1,16 @@
 <script>
     import { onMount } from "svelte";
-    // import ProduitPanier from "../components/produit-panier.svelte";
-    
-    let currency ;
-    let idCompany = 489;
-    const url =`https://dashboard.genuka.com/api/2021-10/companies/details/${idCompany}`;
+    import ProduitPanier from "../components/produit-panier.svelte";
+    import { Memoire } from "../store/data.js";
+
+    let currency,  cart
     onMount(async function () {
-        const response = await fetch(url);
-        const data = await response.json();
-        currency = data.currency.symbol;
-    })
+
+        currency = await Memoire.fetchCompany();
+        currency = currency.currency.symbol;
+        console.log(cart)
+    });
+    cart = Memoire.cart
 </script>
 
 <section class="l-cart">
@@ -21,8 +22,14 @@
                         <span>Mon panier</span>
                     </h3>
                     <div class="w-bag-items-list">
-                   
-                        
+                        {#each cart as items}
+                        <ProduitPanier 
+                        photo={items.thumb}
+                        name={items.name}
+                        currency={currency}
+                        price={items.price}
+                        />
+                        {/each}
                     </div>
                     <div class="w-bag-sub-total c-br">
                         <p>
@@ -68,7 +75,7 @@
     .l-cart {
         color: $darker;
         .l-rl {
-            padding: 0 calc((100vw - 960px)/2);
+            padding: 0 calc((100vw - 960px) / 2);
         }
         .l-tb {
             padding: 150px 0;

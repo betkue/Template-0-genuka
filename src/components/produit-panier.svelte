@@ -1,9 +1,7 @@
 <script>
 
-export let  index, photo, currency, name, price;
- function delProduct() {
-    localStorage.removeItem(index)
- }
+export let  photo, currency, name, price;
+ 
 </script>
 
 <div class="w-bag-items c-br">
@@ -19,7 +17,7 @@ export let  index, photo, currency, name, price;
         </div>
     </div>
 
-    <div class="w-bag-item-cross c-br" on:click={delProduct} />
+    <div class="w-bag-item-cross c-br" />
 </div>
 
 <style lang="scss">
