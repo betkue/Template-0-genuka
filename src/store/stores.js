@@ -1,1 +1,1 @@
-export default cartTable = []
+// default cartTable = []

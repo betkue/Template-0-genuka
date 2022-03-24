@@ -60,6 +60,7 @@
     };
     console.log(Memoire.cart)
   }
+
 </script>
 
 <svelte:head>
