@@ -2,17 +2,12 @@
   import { onMount } from "svelte";
   import { fade } from "svelte/transition";
 
-  let idCompany = 468;
-  
-  let name, logo, textSearch;
-
-  const url = `https://dashboard.genuka.com/api/2021-10/companies/details/${idCompany}`;
-
+  import { Memoire } from "../store/data.js";
+  let company, logo, name;
   onMount(async function () {
-    const response = await fetch(url);
-    const data = await response.json();
-    name = data.name;
-    logo = data.logo;
+    company = await Memoire.fetchCompany();
+    name = company.name;
+    logo = company.logo;
   });
 
   // const urlSearch = `https://dashboard.genuka.com/api/2021-10/companies/468/products?search=Mac`;

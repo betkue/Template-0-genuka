@@ -7,6 +7,7 @@
   // function openProduct() {
   //   dispatch("open-product", { id: id });
   // }
+ 
 </script>
 
 <a
