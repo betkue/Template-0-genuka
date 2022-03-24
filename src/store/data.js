@@ -1,7 +1,8 @@
+
+
 export const Memoire = {
     idCompany: 489,
     lastLink:"",
-    cart : [],
     fetchCompany: async function compagny() {
         const response = await fetch(
             `https://dashboard.genuka.com/api/2021-10/companies/details/${this.idCompany}`

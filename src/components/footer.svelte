@@ -1,5 +1,6 @@
 <script>
   import { onMount } from "svelte";
+
   import { Memoire } from "../store/data.js";
   let company, logo, name, description, email, phone;
   onMount(async function () {

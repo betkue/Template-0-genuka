@@ -7,60 +7,57 @@
 
 <script>
   export let id;
+
+  
   import { onMount } from "svelte";
   import { Memoire } from "../../store/data.js";
-
-  let produits, currentProduit, currency, currentProduitIndex;
+  let produits, currentProduit, currency;
   onMount(async function () {
     produits = await Memoire.fetchProducts();
     produits = produits.data;
     produits.forEach((produit, index) => {
       if (id == produit.id) {
         currentProduit = produits[index];
-        currentProduitIndex = index;
       }
     });
     currency = await Memoire.fetchCompany();
     currency = currency.currency.symbol;
-    console.log(Memoire.cart)
   });
 
   //Add to cart
   let dataAdd = 0,
-    qty = 0
+    qty = 0;
 
   function increment() {
     if (dataAdd < 9) {
       dataAdd++;
     }
   }
-  
+
   function decrement() {
     if (dataAdd > 0) {
       dataAdd--;
     }
   }
-
   function addTocart() {
-    if (Memoire.cart[`${currentProduitIndex}`] != undefined) {
-      qty =
-        parseInt(Memoire.cart[`${currentProduitIndex}`].quantity) + parseInt(dataAdd);
-    } else {
-      qty = parseInt(dataAdd);
+      if(localStorage.getItem(currentProduit.id) ) {
+        qty = parseInt(JSON.parse(localStorage.getItem(currentProduit.id)).quantity) + parseInt(dataAdd)
+      } else {
+        qty = parseInt(dataAdd)
+      }
+        localStorage.setItem(
+          currentProduit.id,
+            `{
+                "id":${currentProduit.id},
+                "price":${currentProduit.discounted_price},
+                "quantity":${parseInt(qty)},
+                "add_to_cart_date": "",
+                "note":"",   
+                "complement": "",
+                "thumb": "${currentProduit.medias[0].link}",
+                "name": "${currentProduit.name}"
+            }`);
     }
-    Memoire.cart[`${currentProduitIndex}`] = {
-      id: currentProduit.id,
-      name:currentProduit.name,
-      thumb : currentProduit.medias[0].link,
-      price: currentProduit.discounted_price,
-      quantity: parseInt(qty),
-      add_to_cart_date: "",
-      note: "",
-      complement: "",
-    };
-    console.log(Memoire.cart)
-  }
-
 </script>
 
 <svelte:head>
