@@ -23,9 +23,59 @@
 
     const json = await res.json();
     result = JSON.stringify(json);
-    console.log(result.length
-    );
+    console.log(result.length);
   }
+
+  const axios = require("axios");
+
+  const login = (email, password) => {
+    const data = JSON.stringify({
+      email: "leonelngoya@gmail.com",
+      password: "qwerty",
+      fromApi: true,
+    });
+
+    const config = {
+      method: "post",
+      url: "https://dashboard.genuka.com/api/2021-10/clients/login",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: data,
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log("LOGIN_SUCCESS");
+        return getUser(response.data.access_token);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  const getUser = (token) => {
+    const config = {
+      method: "get",
+      url: "https://dashboard.genuka.com/api/2021-10/user",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log("GET_USER", response.data);
+        return response.data;
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  // const resultLogin = login('+237699576276', '12345678');
+
+  login("leonelngoya@gmail.com", "qwerty");
 </script>
 
 <div class="container">
@@ -95,6 +145,10 @@
           outline: none;
           border-radius: 5px;
           padding: 1rem;
+          background: $light;
+          &:focus{
+            background: $light;
+          }
         }
       }
       button {
