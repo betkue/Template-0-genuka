@@ -38,6 +38,13 @@
                 class="collection"
                 style="width:calc(100% / {collections.length});"
               >
+              {#each products as produit}
+                {#if produit.collections[0] == collection.name}
+                <div class="c-img" style="height:calc(100% / 3);">
+                  <img src="{produit.medias[0].link}" alt=""/>
+                </div>
+                {/if}
+              {/each}
                 <strong class="f-vertical">{collection.name}</strong>
                 <strong class="f-horizontal">{collection.name}</strong>
               </div>
@@ -124,42 +131,52 @@
   }
   .w-collections-hero {
     display: flex;
+    overflow: hidden;
     gap: 10px;
     justify-content: space-between;
   }
   .collection {
     height: 80vh;
     border-radius: 10px;
-    background: $orange;
     transition: 0.3s ease-out;
     cursor: pointer;
     position: relative;
+    overflow: clip;
     color: $light;
+    strong {
+      font-size: 24px;
+      mix-blend-mode: difference;
+    }
     .f-vertical {
       position: absolute;
       bottom: 20px;
       left: 5px;
-      font-size: 16px;
       writing-mode: sideways-lr;
     }
     .f-horizontal {
       position: absolute;
       white-space: nowrap;
       bottom: 20px;
-      font-size: 16px;
       left: 50%;
       opacity: 0;
       transform: translateX(-50%);
     }
     &:hover {
       width: 100% !important;
-      background: $darker;
       .f-vertical {
         opacity: 0;
       }
       .f-horizontal {
         opacity: 1;
       }
+    }
+  }
+  .c-img {
+   transform: rotate(-10px);    
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
   }
   .w--flex {
