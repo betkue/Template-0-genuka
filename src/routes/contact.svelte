@@ -1,14 +1,14 @@
 <script>
   import { onMount } from "svelte";
-  let phone,email
-
-  const url = "https://dashboard.genuka.com/api/2021-10/companies/details/468";
-
+  import { Memoire } from "../store/data.js";
+  let company, logo, name, description, email, phone;
   onMount(async function () {
-    const response = await fetch(url);
-    const data = await response.json();
-    phone = data.phone;
-    email = data.email;
+    company = await Memoire.fetchCompany();
+    name = company.name;
+    logo = company.logo;
+    description = company.description;
+    email = company.email;
+    phone = company.phone;
   });
 </script>
 
@@ -20,9 +20,9 @@
   <div class="center">
     <div class="container-contact">
       <h1>Contactez nous</h1>
-
-      <h2>{phone}</h2>
-      <h2>{email}</h2>
+          <br>
+      <h2><a href="tel:+{phone}">{phone}</a></h2>
+      <h2><a href="mailto:{email}">{email}</a></h2>
     </div>
     <!-- <form action="">
       <div>

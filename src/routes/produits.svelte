@@ -94,7 +94,7 @@
           name={produit.name}
           price={produit.price}
           collections={produit.collections}
-          {currency}
+          currency={currency}
           discounted_price={produit.discounted_price}
           medias={produit.medias}
           id={produit.id}

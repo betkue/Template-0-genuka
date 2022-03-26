@@ -10,7 +10,6 @@
     description = company.description;
     email = company.email;
     phone = company.phone;
-    
   });
 </script>
 
@@ -28,22 +27,6 @@
       <p><a class="f-icon email" href="mailto:{email}">{email}</a></p>
       <p><a class="f-icon phone" href="tel:{phone}">{phone}</a></p>
     </div>
-
-    <!-- <div class="footer-right">
-      <div class="w-text">
-        <h3>Newsletter</h3>
-        <p>
-          <span
-            >Ne manquez plus nos offres et promotions. Inscrivez-vous à notre
-            newsletter en enregistrant votre email/ numéro de téléphone</span
-          >
-        </p>
-      </div>
-      <label>
-        <input type="email" placeholder="Email" />
-        <button type="submit">Go</button>
-      </label>
-    </div> -->
   </div>
   <div class="attribution">
     <strong>
