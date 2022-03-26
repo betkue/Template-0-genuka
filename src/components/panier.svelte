@@ -1,5 +1,18 @@
 <script>
-    export let countPanier;
+  let countPanier = 0;
+
+  let cart = [];
+
+  if (process.browser) {
+    Object.values(localStorage).forEach((element, index) => {
+      // Object.values(localStorage) = []
+      cart[index] = JSON.parse(Object.values(localStorage)[index]);
+    });
+  }
+
+  cart.forEach((element) => {
+    countPanier += element.quantity;
+  });
 </script>
 
 <a href="/panier">
