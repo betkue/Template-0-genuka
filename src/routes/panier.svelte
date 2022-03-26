@@ -15,7 +15,7 @@
   let totalPrice = 0;
 
   cart.forEach(element => {
-     totalPrice += element.price
+     totalPrice += element.price * element.quantity;
   });
 
   let currency;
