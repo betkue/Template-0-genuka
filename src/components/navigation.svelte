@@ -99,7 +99,7 @@
     align-items: center;
     flex-direction: column;
     box-shadow: 2px 0px 5px rgba($color: $darker, $alpha: 0.1);
-    padding: 10px 0 ;
+    padding: 10px 0;
 
     .center {
       width: 80%;
@@ -215,7 +215,13 @@
       display: none;
     }
   }
-  @media only screen and (max-width: 800px) {
+
+  @media only screen and (max-width: 1000px) {
+    .navigation-search {
+      display: none;
+    }
+  }
+  @media only screen and (max-width: 905px) {
     .navigation {
       &-right {
         .right-account {
@@ -226,7 +232,7 @@
       }
     }
   }
-  @media only screen and (max-width: 600px) {
+  @media only screen and (max-width: 780px) {
     .navigation {
       .center {
         padding: 15px;
