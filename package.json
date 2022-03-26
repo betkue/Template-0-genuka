@@ -9,9 +9,11 @@
     "start": "node __sapper__/build"
   },
   "dependencies": {
+    "axios": "^0.26.1",
     "compression": "^1.7.1",
     "polka": "next",
     "sirv": "^1.0.0",
+    "svelte-local-storage-store": "^0.2.6",
     "xhr2": "^0.2.1"
   },
   "devDependencies": {

@@ -7,59 +7,56 @@
 
 <script>
   export let id;
-  let idCompany = 468; // 489 - 468
-  import { beforeUpdate, onMount } from "svelte";
-  let produits, currentProduit, currency, currentProduitIndex;
 
+  import { onMount } from "svelte";
+  import { Memoire } from "../../store/data.js";
+  let produits, currentProduit, currency;
   onMount(async function () {
-    const url = `https://dashboard.genuka.com/api/2021-10/companies/${idCompany}/products`;
-    const response = await fetch(url);
-    const data = await response.json();
-    produits = data.data;
+    produits = await Memoire.fetchProducts();
+    produits = produits.data;
     produits.forEach((produit, index) => {
       if (id == produit.id) {
         currentProduit = produits[index];
-        currentProduitIndex = index;
       }
     });
+    currency = await Memoire.fetchCompany();
+    currency = currency.currency.symbol;
   });
-  onMount(async function () {
-    const urlCompagny = `https://dashboard.genuka.com/api/2021-10/companies/details/${idCompany}`;
-    const response = await fetch(urlCompagny);
-    const data = await response.json();
-    currency = data.currency.symbol;
-  });
+
   //Add to cart
-  let dataAdd = 0;
-  let qty = 0;
+  let dataAdd = 0,
+    qty = 0;
+
   function increment() {
     if (dataAdd < 9) {
       dataAdd++;
     }
   }
+
   function decrement() {
     if (dataAdd > 0) {
       dataAdd--;
     }
   }
   function addTocart() {
-    if (localStorage.getItem(currentProduitIndex)) {
+    if (localStorage.getItem(currentProduit.id)) {
       qty =
-        parseInt(
-          JSON.parse(localStorage.getItem(currentProduitIndex)).quantity
-        ) + parseInt(dataAdd);
+        parseInt(JSON.parse(localStorage.getItem(currentProduit.id)).quantity) +
+        parseInt(dataAdd);
     } else {
       qty = parseInt(dataAdd);
     }
     localStorage.setItem(
-      currentProduitIndex,
+      currentProduit.id,
       `{
                 "id":${currentProduit.id},
                 "price":${currentProduit.discounted_price},
                 "quantity":${parseInt(qty)},
                 "add_to_cart_date": "",
                 "note":"",   
-                "complement": ""
+                "complement": "",
+                "thumb": "${currentProduit.medias[0].link}",
+                "name": "${currentProduit.name}"
             }`
     );
   }
@@ -178,7 +175,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: .3s ease;
+      transition: 0.3s ease;
       &:hover {
         transform: scale(1.1);
       }

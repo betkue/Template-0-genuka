@@ -1,23 +1,16 @@
 <script>
   import { onMount } from "svelte";
 
-  let name;
-  let description;
-  let logo;
-  let phone;
-  let email;
-  const url = "https://dashboard.genuka.com/api/2021-10/companies/details/468";
-  //const url = "https://dashboard.genuka.com/api/2021-10/companies/byurl?url=http://localhost:2974"
+  import { Memoire } from "../store/data.js";
+  let company, logo, name, description, email, phone;
   onMount(async function () {
-    const response = await fetch(url);
-    const data = await response.json();
-    email = data.email;
-    phone = data.phone;
-    name = data.name;
-    description = data.description;
-    logo = data.logo;
-    phone = data.phone;
-    email = data.email;
+    company = await Memoire.fetchCompany();
+    name = company.name;
+    logo = company.logo;
+    description = company.description;
+    email = company.email;
+    phone = company.phone;
+    
   });
 </script>
 
@@ -35,7 +28,7 @@
       <p><a class="f-icon email" href="mailto:{email}">{email}</a></p>
       <p><a class="f-icon phone" href="tel:{phone}">{phone}</a></p>
     </div>
-    
+
     <!-- <div class="footer-right">
       <div class="w-text">
         <h3>Newsletter</h3>
@@ -54,27 +47,20 @@
   </div>
   <div class="attribution">
     <strong>
-      created by 
-      <a
-        rel="noopener"
-        href="https://twitter.com/ln_dev7"
-        target="_blank"
+      created by
+      <a rel="noopener" href="https://twitter.com/ln_dev7" target="_blank"
         ><span> @LN </span></a
       >
       X
       <a
         rel="noopener"
         href="https://twitter.com/la2spaille?t=DKdFp3xhoD0HMBn9TGa6Rw&amp;s=09"
-        target="_blank"
-        ><span> @La2spaille </span></a
+        target="_blank"><span> @La2spaille </span></a
       >
-      - Boutique propulsée par <a
-        rel="noopener"
-        href="https://www.genuka.com"
-        target="_blank"
-      >
-        Genuka </a
-      > . Version 1.1.4
+      - Boutique propulsée par
+      <a rel="noopener" href="https://www.genuka.com" target="_blank">
+        Genuka
+      </a> . Version 1.1.4
     </strong>
   </div>
 </div>
@@ -82,9 +68,9 @@
 <style lang="scss">
   @import "./../styles/settings";
   @import url("https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@200&family=Lora:wght@500;700&family=Montserrat:wght@400;500;700&display=swap");
-  
-  p>a.f-icon {
-    color: rgba(#fff, 0.75) ;
+
+  p > a.f-icon {
+    color: rgba(#fff, 0.75);
   }
   .f-icon::before {
     font-family: "Material Icons";

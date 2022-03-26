@@ -1,8 +1,7 @@
 <script>
   import { beforeUpdate, afterUpdate, onMount } from "svelte";
   import Produit from "../components/produit.svelte";
-
-  let idCompany = 468; // 489 - 468
+  let idCompany = 489; // 489 - 468
 
   let produits = [];
   let produitsFilter = produits;
@@ -96,6 +95,8 @@
           price={produit.price}
           collections={produit.collections}
           {currency}
+          discounted_price={produit.discounted_price}
+          medias={produit.medias}
           id={produit.id}
         />
       {:else}
