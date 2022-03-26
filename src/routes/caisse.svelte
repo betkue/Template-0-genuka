@@ -51,7 +51,7 @@
             ><a href="/caisse">FINALISER LE PAIEMENT</a></button
           >
         </div>
-        <!-- <div class="w-bag-items">
+        <div class="w-bag-items">
           <h3 class="c-header bag-items c-br">
             <span>ADRESSE DE LIVRAISON</span>
           </h3>
@@ -63,7 +63,7 @@
               <strong>Sous-total</strong><span>{totalPrice}</span>
             </p>
           </div>
-        </div> -->
+        </div>
       </div>
     </div>
   </div>

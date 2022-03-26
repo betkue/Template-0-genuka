@@ -1,7 +1,7 @@
 
 
 export const Memoire = {
-    idCompany: 489,
+    idCompany: 489,  //468 - 489
     lastLink:"",
     fetchCompany: async function compagny() {
         const response = await fetch(
@@ -15,6 +15,12 @@ export const Memoire = {
         );
         return await response.json();
     },
+    fetchCollections: async function product() {
+        const response = await fetch(
+            `https://dashboard.genuka.com/api/2021-10/companies/${this.idCompany}/collections`
+        );
+        return await response.json();
+    }
     
 }
 

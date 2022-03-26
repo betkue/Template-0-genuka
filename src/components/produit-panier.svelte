@@ -3,7 +3,7 @@
     const dispatch = createEventDispatcher();
     export let photo, currency, name, price, index;
   function supprDep() {
-    let booleanDelProduct = false;
+    // let booleanDelProduct = false;
     dispatch("supp-product", { id: index });
     localStorage.removeItem(index);
   }
@@ -14,7 +14,6 @@
     // }
 </script>
 
-{#if booleanDelProduct == false}
  <div class="w-bag-items c-br id{index}">
     <div class="w-img  c-br ">
         <div class="c-img c-br">
@@ -46,7 +45,6 @@
         >
     </div>
  </div>
-{/if}
 
 <style lang="scss">
   // c : component

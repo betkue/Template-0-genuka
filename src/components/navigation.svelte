@@ -2,6 +2,8 @@
   import { onMount } from "svelte";
   import { fade } from "svelte/transition";
 
+  let idCompany = 489;
+
   import { Memoire } from "../store/data.js";
   let company, logo, name;
   onMount(async function () {
@@ -10,20 +12,23 @@
     logo = company.logo;
   });
 
-  // const urlSearch = `https://dashboard.genuka.com/api/2021-10/companies/468/products?search=Mac`;
+  let textSearch;
+  async function searchProduct() {
+    const res = await fetch(
+      `https://dashboard.genuka.com/api/2021-10/companies/${idCompany}/products/search/?q=${textSearch}`,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          textSearch,
+        }),
+        headers: {
+          "content-type": "application/json",
+        },
+      }
+    );
 
-  // async function search() {
-  //   const res = await fetch(urlSearch, {
-  //     method: "POST",
-  //     body: JSON.stringify({
-  //       textSearch,
-  //     }),
-  //   });
-
-  //   const json = await res.json();
-  //   result = JSON.stringify(json);
-  //   console.log(result);
-  // }
+    const json = await res.json();
+  }
 
   let booleanToggleMenu = false;
   function toggleMenu() {
@@ -48,6 +53,8 @@
         name="search"
         class="search"
         placeholder="Cherchez un produit ... "
+        on:input={searchProduct}
+        bind:value={textSearch}
       />
       <div class="search-list" />
     </div>
@@ -75,7 +82,7 @@
       <a href="/panier" class="burger-panier"
         ><img src="./icons/cart.svg" alt="cart" /></a
       >
-      <li><a href="/home">Acceuil</a></li>
+      <li><a href="/">Acceuil</a></li>
       <li><a href="/produits">Produits</a></li>
       <li><a href="/contact">Contact</a></li>
       <a href="/inscription"><button class="register">Inscription</button></a>
