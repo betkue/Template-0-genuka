@@ -22,7 +22,6 @@
     produitsFilter = produits;
     nextPage = data.links.next;
     previousPage = data.links.prev;
-
   });
 
   onMount(async function () {
@@ -96,6 +95,8 @@
           price={produit.price}
           collections={produit.collections}
           {currency}
+          discounted_price={produit.discounted_price}
+          medias={produit.medias}
           id={produit.id}
         />
       {:else}

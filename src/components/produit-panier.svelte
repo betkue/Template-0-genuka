@@ -2,16 +2,20 @@
     import { createEventDispatcher } from "svelte";
     const dispatch = createEventDispatcher();
     export let photo, currency, name, price, index;
+  function supprDep() {
     let booleanDelProduct = false;
-    function delProduct() {
-        localStorage.removeItem(index);
-        dispatch("delete", "detail value");
-        booleanDelProduct = true;
-    }
+    dispatch("supp-product", { id: index });
+    localStorage.removeItem(index);
+  }
+    // function delProduct() {
+    //     localStorage.removeItem(index);
+    //     dispatch("delete", "detail value");
+    //     booleanDelProduct = true;
+    // }
 </script>
 
 {#if booleanDelProduct == false}
-<div class="w-bag-items c-br id{index}">
+ <div class="w-bag-items c-br id{index}">
     <div class="w-img  c-br ">
         <div class="c-img c-br">
             <img src={photo} alt="" />
@@ -25,8 +29,7 @@
             <h3 class="bag-item-name"><span>{name}</span></h3>
         </div>
     </div>
-
-    <div class="w-bag-item-cross c-br" on:click={delProduct}>
+    <div class="w-bag-item-cross c-br" on:click={supprDep}>
         <svg
             class="svg-inline icon-delete"
             role="img"
@@ -42,75 +45,75 @@
             /></svg
         >
     </div>
-</div>
+ </div>
 {/if}
 
 <style lang="scss">
-    // c : component
-    // w : wrapper
-    // cta : call to action (btn/input)
-    // -br : border-radius; -sp : space-between
-    .c-br {
-        background: #eff3f1;
-        border-radius: 10px;
+  // c : component
+  // w : wrapper
+  // cta : call to action (btn/input)
+  // -br : border-radius; -sp : space-between
+  .c-br {
+    background: #eff3f1;
+    border-radius: 10px;
+  }
+  .w-img {
+    width: 25%;
+    overflow: clip;
+  }
+  .c-img {
+    position: relative;
+    padding-bottom: 100%;
+    background: #fff;
+    img {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      object-fit: cover;
     }
-    .w-img {
-        width: 25%;
-        overflow: clip;
+  }
+  .w-bag-items {
+    display: flex;
+    padding: 20px 30px;
+    gap: 20px;
+    span {
+      color: #000;
     }
-    .c-img {
-        position: relative;
-        padding-bottom: 100%;
-        background: #fff;
-        img {
-            position: absolute;
-            left: 0;
-            right: 0;
-            top: 0;
-            bottom: 0;
-            object-fit: cover;
-        }
+  }
+  .w-bag-item-content {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .w-bag-item-description {
+    display: flex;
+    flex-direction: column;
+    gap: 12.5px;
+    strong {
+      span {
+        font-weight: 700;
+        letter-spacing: 1.7px;
+        font-size: 16px;
+      }
     }
-    .w-bag-items {
-        display: flex;
-        padding: 20px 30px;
-        gap: 20px;
-        span {
-            color: #000;
-        }
+    h3 {
+      span {
+        font-size: 15.75px;
+      }
     }
-    .w-bag-item-content {
-        width: 70%;
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-    }
-    .w-bag-item-description {
-        display: flex;
-        flex-direction: column;
-        gap: 12.5px;
-        strong {
-            span {
-                font-weight: 700;
-                letter-spacing: 1.7px;
-                font-size: 16px;
-            }
-        }
-        h3 {
-            span {
-                font-size: 15.75px;
-            }
-        }
-    }
+  }
 
-    .w-bag-item-cross {
-        cursor: pointer;
-        width: 32px;
-        height: 32px;
-        background: #fff;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 10px 20px 0 0;
-    }
+  .w-bag-item-cross {
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px 20px 0 0;
+  }
 </style>

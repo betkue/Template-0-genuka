@@ -13,7 +13,7 @@
 
     <h2>{error.message}</h2>
 
-	<a href="/">Retournez a l'acceuil</a>
+	<a href="/produits">Decouvrez nos produits</a>
 
     {#if dev && error.stack}
       <pre>{error.stack}</pre>

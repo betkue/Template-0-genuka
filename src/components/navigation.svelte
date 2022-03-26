@@ -70,13 +70,12 @@
       on:click={toggleMenu}
     />
   </div>
-  
   {#if booleanToggleMenu}
     <ul class="menu-burger" transition:fade>
       <a href="/panier" class="burger-panier"
         ><img src="./icons/cart.svg" alt="cart" /></a
       >
-      <li><a href="/">Acceuil</a></li>
+      <li><a href="/home">Acceuil</a></li>
       <li><a href="/produits">Produits</a></li>
       <li><a href="/contact">Contact</a></li>
       <a href="/inscription"><button class="register">Inscription</button></a>
