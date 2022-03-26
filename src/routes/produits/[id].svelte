@@ -8,7 +8,6 @@
 <script>
   export let id;
 
-  
   import { onMount } from "svelte";
   import { Memoire } from "../../store/data.js";
   let produits, currentProduit, currency;
@@ -40,14 +39,16 @@
     }
   }
   function addTocart() {
-      if(localStorage.getItem(currentProduit.id) ) {
-        qty = parseInt(JSON.parse(localStorage.getItem(currentProduit.id)).quantity) + parseInt(dataAdd)
-      } else {
-        qty = parseInt(dataAdd)
-      }
-        localStorage.setItem(
-          currentProduit.id,
-            `{
+    if (localStorage.getItem(currentProduit.id)) {
+      qty =
+        parseInt(JSON.parse(localStorage.getItem(currentProduit.id)).quantity) +
+        parseInt(dataAdd);
+    } else {
+      qty = parseInt(dataAdd);
+    }
+    localStorage.setItem(
+      currentProduit.id,
+      `{
                 "id":${currentProduit.id},
                 "price":${currentProduit.discounted_price},
                 "quantity":${parseInt(qty)},
@@ -56,8 +57,9 @@
                 "complement": "",
                 "thumb": "${currentProduit.medias[0].link}",
                 "name": "${currentProduit.name}"
-            }`);
-    }
+            }`
+    );
+  }
 </script>
 
 <svelte:head>
