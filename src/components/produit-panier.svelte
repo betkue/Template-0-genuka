@@ -2,13 +2,16 @@
   import { createEventDispatcher } from "svelte";
   export let photo, currency, name, price, index, quantity;
 
-  const dispatch = createEventDispatcher();
-  function supprDep() {
-    dispatch("supp-product", { id: index });
-  }
- 
+    const dispatch = createEventDispatcher();
+    function supprDep() {
+      dispatch("supp-product", { id: index});
+    }
+
+//   let isDelete = false;
+
 //   function delProduct() {
 //     localStorage.removeItem(index);
+//     isDelete = true;
 //   }
 </script>
 

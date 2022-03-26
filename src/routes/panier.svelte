@@ -13,9 +13,8 @@
   }
 
   let totalPrice = 0;
-
-  cart.forEach(element => {
-     totalPrice += element.price * element.quantity;
+  cart.forEach((element) => {
+    totalPrice += element.price * element.quantity;
   });
 
   let currency;
@@ -27,12 +26,6 @@
   function delProduct(e) {
     alert("Produit retiré du panier");
     localStorage.removeItem(e.detail.id);
-    // if (process.browser) {
-    //   Object.values(localStorage).forEach((element, index) => {
-    //     // Object.values(localStorage) = []
-    //     cart[index] = JSON.parse(Object.values(localStorage)[index]);
-    //   });
-    // }
   }
 </script>
 
@@ -59,6 +52,8 @@
                 quantity={items.quantity}
                 on:supp-product={delProduct}
               />
+              
+              <!-- -->
             {/each}
           </div>
           <div class="w-bag-sub-total c-br">

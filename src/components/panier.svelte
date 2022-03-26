@@ -36,6 +36,7 @@
     align-items: center;
     border-radius: 50%;
     background: $orange;
+    box-shadow: rgba($color: $darker, $alpha: 0.3) 0 1px 10px 0;
     z-index: 2;
     .count {
       display: flex;
