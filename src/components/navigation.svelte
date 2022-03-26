@@ -117,12 +117,9 @@
       justify-content: center;
       align-items: center;
       img {
-        width: 50px;
         height: 50px;
-        border-radius: 50%;
         margin-right: 10px;
         object-fit: cover;
-        border: 1px solid $darker;
       }
     }
 
