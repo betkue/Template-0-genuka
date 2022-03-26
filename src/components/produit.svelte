@@ -51,8 +51,8 @@
     img {
       width: 100%;
       border-radius: 10px;
-      height: 300px;
       object-fit: cover;
+      aspect-ratio: 1/1;
     }
     .buttons {
       display: flex;

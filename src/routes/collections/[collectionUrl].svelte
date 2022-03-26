@@ -1,7 +1,18 @@
+<script context="module">
+  export function preload(page, session) {
+    const { collectionUrl } = page.params;
+    return { collectionUrl };
+  }
+</script>
+
 <script>
+  export let collectionUrl;
+
   import { beforeUpdate, afterUpdate, onMount } from "svelte";
-  import Produit from "../components/produit.svelte";
-  let idCompany = 489; // 489 - 468
+  import Produit from "../../components/produit.svelte";
+  import { Memoire } from "../../store/data.js";
+
+  let idCompany = Memoire.idCompany;
 
   let produits = [];
   let produitsFilter = produits;
@@ -19,7 +30,15 @@
     const response = await fetch(url);
     const data = await response.json();
     produits = data.data;
-    produitsFilter = produits;
+    if (collectionUrl == "all") {
+      produitsFilter = produits;
+    } else {
+      let currentCollection = collectionUrl;
+      const produitsCollections = produits.filter((produit) =>
+        produit.collections.includes(currentCollection)
+      );
+      produitsFilter = produitsCollections;
+    }
     nextPage = data.links.next;
     previousPage = data.links.prev;
   });
@@ -37,7 +56,14 @@
     const data = await response.json();
     currency = data.currency.symbol;
   });
+  // Depuis index.svelte
+  function showProductFromIndex() {
+    
+  }
+  showProductFromIndex()
+    
 
+  // Au clic
   function showAllProduct(e) {
     produitsFilter = produits;
   }
@@ -48,7 +74,6 @@
       produit.collections.includes(currentCollection)
     );
     produitsFilter = produitsCollections;
-    console.log(produitsCollections);
   }
 
   async function callPreviousPage() {
@@ -94,7 +119,7 @@
           name={produit.name}
           price={produit.price}
           collections={produit.collections}
-          currency={currency}
+          {currency}
           discounted_price={produit.discounted_price}
           medias={produit.medias}
           id={produit.id}
@@ -118,7 +143,7 @@
 </div>
 
 <style lang="scss">
-  @import "./../styles/settings";
+  @import "./src/styles/settings";
   .container {
     display: flex;
     justify-content: center;
@@ -165,6 +190,7 @@
     }
 
     &-products {
+      padding: 50px 0 0;
       width: 100%;
       display: flex;
       justify-content: flex-start;
@@ -194,9 +220,8 @@
 
   .loader {
     border-radius: 10px;
-    width: 200px;
-    height: 300px;
-    margin: 1rem;
+    width: calc((100% - 65px) / 3);
+    aspect-ratio: 1/1;
     background: $lighter;
     animation: loader 1s both infinite alternate;
     @keyframes loader {
@@ -216,4 +241,3 @@
     }
   }
 </style>
-
