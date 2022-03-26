@@ -36,6 +36,10 @@
   }
 </script>
 
+<svelte:head>
+  <title>Pannier</title>
+</svelte:head>
+
 <section class="l-cart">
   <div class="l-rl">
     <div class="l-tb">

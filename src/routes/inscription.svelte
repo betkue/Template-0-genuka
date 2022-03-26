@@ -72,6 +72,10 @@
   }
 </script>
 
+<svelte:head>
+  <title>Inscription</title>
+</svelte:head>
+
 <div class="container">
   <div class="center">
     <h1>Inscription</h1>
