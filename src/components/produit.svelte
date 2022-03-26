@@ -25,7 +25,7 @@
     <img src={photo} alt="produit" />
     <div class="buttons">
       <button>{collections}</button>
-      <button on:click|preventDefault={addTocart}>Ajouter au panier</button>
+      <button on:click|preventDefault|once={addTocart}>Ajouter au panier</button>
     </div>
     <div class="card-footer">
       <h2>{name}</h2>

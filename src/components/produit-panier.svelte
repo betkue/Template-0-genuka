@@ -1,6 +1,6 @@
 <script>
   import { createEventDispatcher } from "svelte";
-  export let photo, currency, name, price, index;
+  export let photo, currency, name, price, index, quantity;
 
   const dispatch = createEventDispatcher();
   function supprDep() {
@@ -22,6 +22,7 @@
     <div class="w-bag-item-description">
       <strong class="bag-item-price"><span>{price} {currency}</span></strong>
       <h3 class="bag-item-name"><span>{name}</span></h3>
+      <h3>{quantity}</h3>
     </div>
   </div>
 

@@ -52,6 +52,7 @@
                 {currency}
                 price={items.price}
                 index={items.id}
+                quantity={items.quantity}
                 on:supp-product={delProduct}
               />
             {/each}
