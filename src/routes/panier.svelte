@@ -2,19 +2,24 @@
     import { onMount } from "svelte";
     import ProduitPanier from "../components/produit-panier.svelte";
     import { Memoire } from "../store/data.js";
-    let cart
-    cart = []
+    let cart = [];
 
-    if (process.browser) {
-        Object.values(localStorage).forEach((element,index) => { // Object.values(localStorage) = []
-            cart[index] = JSON.parse(Object.values(localStorage)[index])
-        });
+    function cartTable() {
+        if (process.browser) {
+            cart = Object.values(localStorage)
+            cart.forEach((element, index) => {
+                cart[index] = JSON.parse(Object.values(localStorage)[index]);
+            });
+        }
     }
+    cartTable()
 
-    let currency;
+    let company, currency,shipping;
     onMount(async function () {
-        currency = await Memoire.fetchCompany();
-        currency = currency.currency.symbol;
+        company = await Memoire.fetchCompany();
+        currency = company.currency.symbol;
+        shipping = company.shipping_fee
+
     });
 </script>
 
@@ -26,15 +31,15 @@
                     <h3 class="c-header bag-items c-br">
                         <span>Mon panier</span>
                     </h3>
-                    <div class="w-bag-items-list">
+                    <div class="w-bag-items-list" >
                         {#each cart as items}
-                        <ProduitPanier 
-                        photo={items.thumb}
-                        name={items.name}
-                        currency={currency}
-                        price={items.price}
-                        index={items.id}
-                        />
+                            <ProduitPanier 
+                                photo={items.thumb}
+                                name={items.name}
+                                currency={currency}
+                                price={items.price}
+                                index={items.id}
+                            />
                         {/each}
                     </div>
                     <div class="w-bag-sub-total c-br">
@@ -52,7 +57,7 @@
                             <strong>Sous-total</strong><span>{currency}</span>
                         </p>
                         <p class="w-flex--sb">
-                            <strong>Livraison</strong><span>{currency}</span>
+                            <strong>Livraison</strong><span>{shipping} {currency}</span>
                         </p>
                     </div>
                     <button class="cta-btn"

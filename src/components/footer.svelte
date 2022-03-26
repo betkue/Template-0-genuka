@@ -10,7 +10,6 @@
     description = company.description;
     email = company.email;
     phone = company.phone;
-    
   });
 </script>
 

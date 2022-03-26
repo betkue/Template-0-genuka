@@ -37,6 +37,11 @@
       <img src={logo} alt="logo" />
       <h2>{name}</h2>
     </div>
+    <ul class="navigation-center">
+      <li><a href="/">Acceuil</a></li>
+      <li><a href="/produits">Produits</a></li>
+      <li><a href="/contact">Contact</a></li>
+    </ul>
     <div class="navigation-search">
       <input
         type="search"
@@ -65,11 +70,7 @@
       on:click={toggleMenu}
     />
   </div>
-  <ul class="navigation-center">
-    <li><a href="/">Acceuil</a></li>
-    <li><a href="/produits">Produits</a></li>
-    <li><a href="/contact">Contact</a></li>
-  </ul>
+  
   {#if booleanToggleMenu}
     <ul class="menu-burger" transition:fade>
       <a href="/panier" class="burger-panier"
@@ -92,8 +93,9 @@
     align-items: center;
     flex-direction: column;
     box-shadow: 2px 0px 5px rgba($color: $darker, $alpha: 0.1);
+    padding: 10px 0 ;
+
     .center {
-      padding: 17.5px 0 0 0;
       width: 80%;
       display: flex;
       justify-content: space-between;
@@ -119,7 +121,7 @@
     }
 
     &-search {
-      width: 40%;
+      flex: 1;
       position: relative;
       .search {
         width: 100%;
@@ -144,7 +146,7 @@
       }
     }
     &-center {
-      width: 100%;
+      margin: 0 40px;
       padding: 1rem 0;
       display: flex;
       align-items: center;
