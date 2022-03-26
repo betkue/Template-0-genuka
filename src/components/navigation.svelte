@@ -191,6 +191,7 @@
           position: absolute;
           left: 0;
           top: 50px;
+          z-index: 3;
           // box-shadow: 2px 2px 5px rgba($color: $darker, $alpha: .1);
           // background: $light;
           transition: 0.3s ease;
