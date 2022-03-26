@@ -99,6 +99,7 @@
     align-items: center;
     flex-direction: column;
     box-shadow: 2px 0px 5px rgba($color: $darker, $alpha: 0.1);
+    padding: 10px 0;
     .center {
       padding: 17.5px 0 0 0;
       width: 80%;
@@ -190,6 +191,7 @@
           position: absolute;
           left: 0;
           top: 50px;
+          z-index: 3;
           // box-shadow: 2px 2px 5px rgba($color: $darker, $alpha: .1);
           // background: $light;
           transition: 0.3s ease;
@@ -214,7 +216,13 @@
       display: none;
     }
   }
-  @media only screen and (max-width: 800px) {
+
+  @media only screen and (max-width: 1000px) {
+    .navigation-search {
+      display: none;
+    }
+  }
+  @media only screen and (max-width: 905px) {
     .navigation {
       &-right {
         .right-account {
@@ -225,7 +233,7 @@
       }
     }
   }
-  @media only screen and (max-width: 600px) {
+  @media only screen and (max-width: 780px) {
     .navigation {
       .center {
         padding: 15px;

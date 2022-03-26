@@ -6,13 +6,6 @@
     function supprDep() {
       dispatch("supp-product", { id: index});
     }
-
-//   let isDelete = false;
-
-//   function delProduct() {
-//     localStorage.removeItem(index);
-//     isDelete = true;
-//   }
 </script>
 
 <div class="w-bag-items c-br">
