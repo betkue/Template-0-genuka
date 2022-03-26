@@ -13,15 +13,41 @@
   }
 
   let totalPrice = 0;
-
   cart.forEach((element) => {
-    totalPrice += element.price;
+    totalPrice += element.price * element.quantity;
+  });
+  let shipping_fee = 0;
+  let total;
+  onMount(async function () {
+    shipping_fee = await Memoire.fetchCompany();
+    shipping_fee = shipping_fee.shipping_fee;
+    total = totalPrice + shipping_fee;
   });
 
   let currency;
   onMount(async function () {
     currency = await Memoire.fetchCompany();
     currency = currency.currency.symbol;
+
+    payment_modes = await Memoire.fetchCompany();
+
+    payment_modes = payment_modes.payment_modes.cash.full_name;
+  });
+
+  let payment_modes = [];
+  let cash;
+  let paypal;
+  let mobilemoney;
+  let mobilemoney_phone;
+  let paypal_link;
+  onMount(async function () {
+    payment_modes = await Memoire.fetchCompany();
+
+    cash = payment_modes.payment_modes.cash.full_name;
+    paypal = payment_modes.payment_modes.paypal.full_name;
+    paypal_link = payment_modes.payment_modes.paypal.link;
+    mobilemoney = payment_modes.payment_modes.mobilemoney.full_name;
+    mobilemoney_phone = payment_modes.payment_modes.mobilemoney.phone;
   });
 </script>
 
@@ -41,10 +67,22 @@
             <h4 class="w-flex--sb">
               Sélectionnez un mode paiement pour votre commande.
             </h4>
+            <div class="payment">
+              <div>
+                <span>{cash}</span>
+              </div>
+              <div>
+                <span>{paypal}</span>
+              </div>
+              <div>
+                <span>{mobilemoney}</span>
+                <span>{mobilemoney_phone}</span>
+              </div>
+            </div>
           </div>
           <div class="w-bag-total-detail">
             <h2 class="w-flex--sb">
-              <strong>TOTAL</strong><span>{totalPrice}</span>
+              <strong>TOTAL</strong><span>{total}</span>
             </h2>
           </div>
           <button class="cta-btn"
@@ -55,14 +93,8 @@
           <h3 class="c-header bag-items c-br">
             <span>ADRESSE DE LIVRAISON</span>
           </h3>
-          <div class="w-bag-items-list">
-            
-          </div>
-          <div class="w-bag-sub-total c-br">
-            <p>
-              <strong>Sous-total</strong><span>{totalPrice}</span>
-            </p>
-          </div>
+          <div class="w-bag-items-list" />
+          <div class="w-bag-sub-total c-br" />
         </div>
       </div>
     </div>
@@ -116,7 +148,7 @@
     &.bag-total {
       display: flex;
       justify-content: space-between;
-      padding: 0 0 24px 0;
+      padding: 24px 0;
       border-bottom: 1px solid #fff;
     }
   }
@@ -139,13 +171,42 @@
     position: sticky;
     top: 12px;
     padding: 24px 0;
-    &-detail{
+    &-detail {
       border-bottom: 1px solid #fff;
     }
     > * {
       margin: 0 30px;
     }
   }
+
+  .w-bag-total-detail{
+    padding-top: 10px;
+    padding-bottom: 20px;
+  }
+
+  .payment {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 15px 0;
+    div {
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      width: 30%;
+      padding: 10px;
+      background: $light;
+      border-radius: 10px;
+      span{
+        display: block;
+        text-align: center;
+        padding: 3px 0;
+      }
+    }
+  }
+
   .cta-btn {
     background: $orange;
     color: #fff;
@@ -156,6 +217,16 @@
       width: 100%;
       display: inline-block;
       padding: 15px;
+    }
+  }
+
+  @media only screen and (max-width: 730px) {
+    .payment{
+      flex-direction: column;
+      div{
+        width: 100%;
+        margin: 5px 0;
+      }
     }
   }
 </style>
