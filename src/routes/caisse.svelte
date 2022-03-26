@@ -68,16 +68,22 @@
               Sélectionnez un mode paiement pour votre commande.
             </h4>
             <div class="payment">
-              <div>
-                <span>{cash}</span>
-              </div>
-              <div>
-                <span>{paypal}</span>
-              </div>
-              <div>
-                <span>{mobilemoney}</span>
-                <span>{mobilemoney_phone}</span>
-              </div>
+              {#if !(cash === "")}
+                <div>
+                  <span>{cash}</span>
+                </div>
+              {/if}
+              {#if !(paypal === "")}
+                <div>
+                  <span>{paypal}</span>
+                </div>
+              {/if}
+              {#if !(mobilemoney === "")}
+                <div>
+                  <span>{mobilemoney}</span>
+                  <!-- <span>{mobilemoney_phone}</span> -->
+                </div>
+              {/if}
             </div>
           </div>
           <div class="w-bag-total-detail">
@@ -179,7 +185,7 @@
     }
   }
 
-  .w-bag-total-detail{
+  .w-bag-total-detail {
     padding-top: 10px;
     padding-bottom: 20px;
   }
@@ -199,10 +205,15 @@
       padding: 10px;
       background: $light;
       border-radius: 10px;
-      span{
+      transition: 0.3s ease;
+      span {
         display: block;
         text-align: center;
         padding: 3px 0;
+      }
+
+      &:hover {
+        box-shadow: rgba($color: $darker, $alpha: 0.3) 0 1px 10px 0;
       }
     }
   }
@@ -221,9 +232,9 @@
   }
 
   @media only screen and (max-width: 730px) {
-    .payment{
+    .payment {
       flex-direction: column;
-      div{
+      div {
         width: 100%;
         margin: 5px 0;
       }
