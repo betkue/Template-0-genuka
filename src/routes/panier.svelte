@@ -13,19 +13,31 @@
   }
 
   let totalPrice = 0;
-  cart.forEach((element) => {
-    totalPrice += element.price * element.quantity;
+
+  cart.forEach(element => {
+     totalPrice += element.price * element.quantity;
   });
 
   let currency;
+  let shipping_fee;
+  let total;
   onMount(async function () {
     currency = await Memoire.fetchCompany();
     currency = currency.currency.symbol;
+    shipping_fee = await Memoire.fetchCompany();
+    shipping_fee = shipping_fee.shipping_fee;
+    total = totalPrice + shipping_fee;
   });
 
   function delProduct(e) {
     alert("Produit retiré du panier");
     localStorage.removeItem(e.detail.id);
+    // if (process.browser) {
+    //   Object.values(localStorage).forEach((element, index) => {
+    //     // Object.values(localStorage) = []
+    //     cart[index] = JSON.parse(Object.values(localStorage)[index]);
+    //   });
+    // }
   }
 </script>
 
@@ -52,8 +64,6 @@
                 quantity={items.quantity}
                 on:supp-product={delProduct}
               />
-              
-              <!-- -->
             {/each}
           </div>
           <div class="w-bag-sub-total c-br">
@@ -64,14 +74,14 @@
         </div>
         <div class="w-bag-total c-br">
           <h3 class="c-header bag-total">
-            <span>Total</span> <span>{currency}</span>
+            <span>Total</span> <span>{total} {currency}</span>
           </h3>
           <div class="w-bag-total-detail">
             <p class="w-flex--sb">
               <strong>Sous-total</strong><span>{totalPrice}</span>
             </p>
             <p class="w-flex--sb">
-              <strong>Livraison</strong><span>{currency}</span>
+              <strong>Livraison</strong><span>{shipping_fee}</span>
             </p>
           </div>
           <button class="cta-btn"

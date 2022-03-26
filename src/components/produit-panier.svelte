@@ -1,14 +1,20 @@
 <script>
   import { createEventDispatcher } from "svelte";
+  const dispatch = createEventDispatcher();
   export let photo, currency, name, price, index, quantity;
-
-    const dispatch = createEventDispatcher();
-    function supprDep() {
-      dispatch("supp-product", { id: index});
-    }
+  function supprDep() {
+    // let booleanDelProduct = false;
+    dispatch("supp-product", { id: index });
+    localStorage.removeItem(index);
+  }
+  // function delProduct() {
+  //     localStorage.removeItem(index);
+  //     dispatch("delete", "detail value");
+  //     booleanDelProduct = true;
+  // }
 </script>
 
-<div class="w-bag-items c-br">
+<div class="w-bag-items c-br id{index}">
   <div class="w-img  c-br ">
     <div class="c-img c-br">
       <img src={photo} alt="" />
@@ -21,7 +27,6 @@
       <h3>{quantity}</h3>
     </div>
   </div>
-
   <div class="w-bag-item-cross c-br" on:click={supprDep}>
     <svg
       class="svg-inline icon-delete"
