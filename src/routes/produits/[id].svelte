@@ -39,7 +39,7 @@
     }
   }
   function addTocart() {
-    alerrt("Produit ajouté au panier");
+    alert("Produit ajouté au panier");
     if (localStorage.getItem(currentProduit.id)) {
       qty =
         parseInt(JSON.parse(localStorage.getItem(currentProduit.id)).quantity) +
