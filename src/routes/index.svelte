@@ -13,7 +13,6 @@
     name = company.name;
     logo = company.logo;
     description = company.description;
-    console.log(collections[0].name);
   });
 </script>
 
@@ -38,13 +37,15 @@
                 class="collection"
                 style="width:calc(100% / {collections.length});"
               >
-              {#each products as produit}
-                {#if produit.collections[0] == collection.name}
-                <div class="c-img" style="height:calc(100% / 3);">
-                  <img src="{produit.medias[0].link}" alt=""/>
-                </div>
-                {/if}
-              {/each}
+                {#each products as produit}
+                  {#if produit.collections[0] == collection.name}
+                    <a href="/collections/{collection.name}">
+                      <div class="c-img" style="height:calc(100% / 3);">
+                        <img src={produit.medias[0].link} alt="" />
+                      </div></a
+                    >
+                  {/if}
+                {/each}
                 <strong class="f-vertical">{collection.name}</strong>
                 <strong class="f-horizontal">{collection.name}</strong>
               </div>
@@ -60,31 +61,32 @@
     <div class="l-tb">
       <div class="w--flex">
         {#if collections != undefined && products != undefined}
-        {#each collections as collection}
-          <div class="w-collections">
-            <h3>{collection.name}</h3>
-            <div class="w--flex-sb">
-              {#each products as produit}
-                {#if produit.collections[0] == collection.name}
-                  <Produit
-                    photo={produit.medias[0].link}
-                    name={produit.name}
-                    price={produit.price}
-                    collections={produit.collections}
-                    {currency}
-                    discounted_price={produit.discounted_price}
-                    medias={produit.medias}
-                    id={produit.id}
-                  />
-                {/if}
-              {/each}
+          {#each collections as collection}
+            <div class="w-collections">
+              <h3>{collection.name}</h3>
+              <div class="w--flex-sb">
+                {#each products as produit}
+                  {#if produit.collections[0] == collection.name}
+                    <Produit
+                      photo={produit.medias[0].link}
+                      name={produit.name}
+                      price={produit.price}
+                      collections={produit.collections}
+                      {currency}
+                      discounted_price={produit.discounted_price}
+                      medias={produit.medias}
+                      id={produit.id}
+                    />
+                  {/if}
+                {/each}
+              </div>
             </div>
-          </div>
-        {/each}
-      {/if}
-      <a class="cta-all-products " href="/produits"><button>Decouvrez tous nos produits</button></a>
+          {/each}
+        {/if}
+        <a class="cta-all-products " href="/collections/Nike"
+          ><button>Decouvrez tous nos produits</button></a
+        >
       </div>
-     
     </div>
   </div>
 </section>
@@ -172,7 +174,7 @@
     }
   }
   .c-img {
-   transform: rotate(-10px);    
+    transform: rotate(-10px);
     img {
       width: 100%;
       height: 100%;

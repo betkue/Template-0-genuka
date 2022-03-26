@@ -44,7 +44,7 @@
     </div>
     <ul class="navigation-center">
       <li><a href="/">Acceuil</a></li>
-      <li><a href="/produits">Produits</a></li>
+      <li><a href="/collections/all">Produits</a></li>
       <li><a href="/contact">Contact</a></li>
     </ul>
     <div class="navigation-search">
