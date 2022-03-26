@@ -78,6 +78,10 @@
   // login("leonelngoya@gmail.com", "qwerty");
 </script>
 
+<svelte:head>
+  <title>Connexion</title>
+</svelte:head>
+
 <div class="container">
   <div class="center">
     <h1>Connexion</h1>
