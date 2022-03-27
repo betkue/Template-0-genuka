@@ -9,6 +9,7 @@
   export let collectionUrl;
 
   import { beforeUpdate, afterUpdate, onMount } from "svelte";
+import { each } from "svelte/internal";
   import Produit from "../../components/produit.svelte";
   import { Memoire } from "../../store/data.js";
 
@@ -42,26 +43,24 @@
     nextPage = data.links.next;
     previousPage = data.links.prev;
   });
-
+let pageTable= [],lastPage = 0
   onMount(async function () {
-    const urlCollections = `https://dashboard.genuka.com/api/2021-10/companies/${idCompany}/collections`;
-    const response = await fetch(urlCollections);
-    const data = await response.json();
-    collections = data.data;
+    const collectionsJson = await Memoire.fetchCollections()
+    const productsJson = await Memoire.fetchProducts()
+    lastPage = productsJson.meta.last_page
+    for(let i =0; i < lastPage;i++) {
+      pageTable[i] = i+1
+    }
+    console.log(lastPage, pageTable)
+    collections = collectionsJson.data;
+    currency = await Memoire.fetchCompany();
+    currency = currency.currency.symbol;
   });
 
-  onMount(async function () {
-    const urlCompagny = `https://dashboard.genuka.com/api/2021-10/companies/details/${idCompany}`;
-    const response = await fetch(urlCompagny);
-    const data = await response.json();
-    currency = data.currency.symbol;
-  });
+ 
   // Depuis index.svelte
-  function showProductFromIndex() {
-    
-  }
-  showProductFromIndex()
-    
+  function showProductFromIndex() {}
+  showProductFromIndex();
 
   // Au clic
   function showAllProduct(e) {
@@ -97,6 +96,17 @@
     nextPage = data.links.next;
     previousPage = data.links.prev;
   }
+ 
+  async function callPage(e) {
+    page= e.target.textContent;
+    const url = `https://dashboard.genuka.com/api/2021-10/companies/${idCompany}/products?page=${page}`;
+    const response = await fetch(url);
+    const data = await response.json();
+    produits = data.data;
+    produitsFilter = produits;
+    nextPage = data.links.next;
+    previousPage = data.links.prev;
+  }
 </script>
 
 <svelte:head>
@@ -106,39 +116,52 @@
 <div class="container">
   <div class="center">
     <h1>Nos produits</h1>
-    <div class="container-collections">
-      <button on:click={showAllProduct}>Tout voir</button>
-      {#each collections as collection}
-        <button on:click={showCollection}>{collection.name}</button>
-      {/each}
-    </div>
-    <div class="container-products">
-      {#each produitsFilter as produit (produit.id)}
-        <Produit
-          photo={produit.medias[0].link}
-          name={produit.name}
-          price={produit.price}
-          collections={produit.collections}
-          {currency}
-          discounted_price={produit.discounted_price}
-          medias={produit.medias}
-          id={produit.id}
-        />
-      {:else}
-        {#each loaders as loader}
-          <div class="loader" />
+    <div class="w--grid">
+      <div class="container-collections">
+        <h3>Filtrer par:</h3>
+        <button on:click={showAllProduct}>Tout voir</button>
+        {#each collections as collection}
+          <button on:click={showCollection}>{collection.name}</button>
         {/each}
-      {/each}
+      </div>
+      <div class="container-products">
+        {#each produitsFilter as produit (produit.id)}
+          <Produit
+            photo={produit.medias[0].link}
+            name={produit.name}
+            price={produit.price}
+            collections={produit.collections}
+            {currency}
+            discounted_price={produit.discounted_price}
+            medias={produit.medias}
+            id={produit.id}
+          />
+        {:else}
+          {#each loaders as loader}
+            <div class="loader" />
+          {/each}
+        {/each}
+      </div>
     </div>
+    
     <h3 class="number-product">{produitsFilter.length} produits affichés</h3>
-    <div class="container-pages">
-      {#if !(previousPage == null)}
-        <button on:click={callPreviousPage}>Précédent</button>
-      {/if}
-      {#if !(nextPage == null)}
-        <button on:click={callNextPage}>Suivant</button>
-      {/if}
-    </div>
+    {#if !(previousPage == null) || !(nextPage == null)}
+      <div class="w-pagination">
+        {#if !(previousPage == null)}
+          <button class="previous-page" on:click={callPreviousPage} />
+        {:else}
+          <button disabled class="previous-page" on:click={callPreviousPage} />
+        {/if}
+        {#each pageTable as page,i} 
+          <button class="i-page" on:click={callPage}>{pageTable[i]}</button>
+        {/each}
+        {#if !(nextPage == null)}
+          <button class="next-page" on:click={callNextPage} />
+        {:else}
+          <button disabled class="next-page" on:click={callNextPage} />
+        {/if}
+      </div>
+    {/if}
   </div>
 </div>
 
@@ -158,23 +181,19 @@
     }
 
     &-collections {
+      padding: 50px 0 0;
       width: 100%;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
-      overflow-x: scroll;
-      &::-webkit-scrollbar {
-        height: 2px;
-        background: transparent;
-      }
-      &::-webkit-scrollbar-thumb {
-        background: $gray;
-      }
+      position: sticky;
+      top: 0;
+      align-self: flex-start;
+      gap:10px;
       button {
         min-width: 150px;
         cursor: pointer;
         padding: 0.5rem 1rem;
-        margin: 1rem;
         font-size: 15px;
         background: $lighter;
         color: $darker;
@@ -182,9 +201,6 @@
         border-radius: 10px;
         &:hover {
           background: $light;
-        }
-        & + button {
-          margin-left: 5px;
         }
       }
     }
@@ -196,21 +212,6 @@
       justify-content: flex-start;
       flex-wrap: wrap;
       gap: 75px 30px;
-    }
-
-    &-pages {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      button {
-        cursor: pointer;
-        padding: 1rem;
-        font-size: 16px;
-        border: solid 2px $orange;
-        background: $light;
-        color: $orange;
-      }
     }
   }
 
@@ -239,5 +240,51 @@
         width: 90%;
       }
     }
+  }
+
+  .w-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    align-self: flex-end;
+    .i-page {
+      background:$orange;
+      color:$light;
+      height: 40px;
+      border-radius: 50%;
+
+    }
+    .next-page {
+      &::after {
+        content: "\e5e1";
+        transform: translate(-50%, -50%);
+      }
+    }
+    .previous-page {
+      &::after {
+        content: "\e5e0";
+        transform: translate(-25%, -50%);
+      }
+    }
+    button {
+      line-height: 1;
+      &::after {
+        font-size: 24px;
+        font-family: "Material Icons";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+      }
+      position: relative;
+      cursor: pointer;
+      width: 40px;
+      color: $orange;
+    }
+  }
+  .w--grid {
+    gap: 30px;
+    display :grid;
+    grid-template: auto/ auto 1fr;
   }
 </style>

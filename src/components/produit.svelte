@@ -38,6 +38,7 @@
   @import "./../styles/settings";
 
   .card {
+    min-width: calc((100% - 60px) / 3);
     width: calc((100% - 60px) / 3);
     cursor: pointer;
     border-radius: 10px;
