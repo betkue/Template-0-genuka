@@ -17,7 +17,7 @@
 </script>
 
 <svelte:head>
-  <title>Acceuil</title>
+  <title>{name}</title>
 </svelte:head>
 <section class="l-hero">
   <div class="l-rl">
@@ -83,7 +83,7 @@
             </div>
           {/each}
         {/if}
-        <a class="cta-all-products " href="/collections/Nike"
+        <a class="cta-all-products " href="/collections/all"
           ><button>Decouvrez tous nos produits</button></a
         >
       </div>
@@ -197,6 +197,8 @@
   .w--flex-sb {
     display: flex;
     justify-content: space-between;
+      overflow: hidden;
+      gap: 30px;
   }
   .cta-all-products {
     margin: 1rem;
