@@ -7,7 +7,7 @@
 
 <script>
   export let collectionUrl;
-
+  
   import { beforeUpdate, afterUpdate, onMount } from "svelte";
   import { each } from "svelte/internal";
   import Produit from "../../components/produit.svelte";
@@ -15,22 +15,26 @@
 
   let idCompany = Memoire.idCompany;
 
+
   let produits = [];
   let produitsFilter = produits;
   let collections = [];
   let loaders = [1, 2, 3, 4, 5];
   let currency;
 
+  let currentPage;
   let nextPage;
   let previousPage;
-
+  let collectionActive;
   $: page = 1;
 
   onMount(async function () {
     const url = `https://dashboard.genuka.com/api/2021-10/companies/${idCompany}/products?page=${page}`;
     const response = await fetch(url);
     const data = await response.json();
+    currentPage = data.meta.current_page;
     produits = data.data;
+
     if (collectionUrl == "all") {
       produitsFilter = produits;
     } else {
@@ -39,6 +43,7 @@
         produit.collections.includes(currentCollection)
       );
       produitsFilter = produitsCollections;
+      collectionActive = currentCollection;
     }
     nextPage = data.links.next;
     previousPage = data.links.prev;
@@ -52,15 +57,10 @@
     for (let i = 0; i < lastPage; i++) {
       pageTable[i] = i + 1;
     }
-    console.log(lastPage, pageTable);
     collections = collectionsJson.data;
     currency = await Memoire.fetchCompany();
     currency = currency.currency.symbol;
   });
-
-  // Depuis index.svelte
-  function showProductFromIndex() {}
-  showProductFromIndex();
 
   // Au clic
   function showAllProduct(e) {
@@ -73,6 +73,8 @@
       produit.collections.includes(currentCollection)
     );
     produitsFilter = produitsCollections;
+    collectionActive = currentCollection;
+     (() => window.scrollTo(0,100));
   }
 
   async function callPreviousPage() {
@@ -84,6 +86,7 @@
     produitsFilter = produits;
     nextPage = data.links.next;
     previousPage = data.links.prev;
+    requestAnimationFrame(() => window.scrollTo(0,100)); 
   }
 
   async function callNextPage() {
@@ -95,6 +98,7 @@
     produitsFilter = produits;
     nextPage = data.links.next;
     previousPage = data.links.prev;
+    requestAnimationFrame(() => window.scrollTo(0,100));
   }
 
   async function callPage(e) {
@@ -106,6 +110,7 @@
     produitsFilter = produits;
     nextPage = data.links.next;
     previousPage = data.links.prev;
+    requestAnimationFrame(() => window.scrollTo(0,100));
   }
 </script>
 
@@ -119,61 +124,91 @@
     <div class="w--grid">
       <div class="container-collections">
         <h3>Filtrer par:</h3>
-        <button on:click={showAllProduct}>Tout voir</button>
+        {#if produitsFilter == produits}
+          <button class="active" on:click={showAllProduct}>Tout voir</button>
+        {:else}
+          <button on:click={showAllProduct}>Tout voir</button>
+        {/if}
         {#each collections as collection}
-          <button on:click={showCollection}>{collection.name}</button>
+          {#if collectionActive == collection.name && !(produitsFilter == produits)}
+            <button class="active" on:click={showCollection}
+              >{collection.name}</button
+            >
+          {:else}
+            <button on:click={showCollection}>{collection.name}</button>
+          {/if}
         {/each}
       </div>
-      <div class="container-products">
-        {#each produitsFilter as produit (produit.id)}
-          <Produit
-            photo={produit.medias[0].link}
-            name={produit.name}
-            price={produit.price}
-            collections={produit.collections}
-            {currency}
-            discounted_price={produit.discounted_price}
-            medias={produit.medias}
-            id={produit.id}
-          />
-        {:else}
-          {#each loaders as loader}
-            <div class="loader" />
+      <div class="w--flex">
+        <div class="container-products">
+          {#each produitsFilter as produit (produit.id)}
+            <Produit
+              photo={produit.medias[0].link}
+              name={produit.name}
+              price={produit.price}
+              collections={produit.collections}
+              {currency}
+              discounted_price={produit.discounted_price}
+              medias={produit.medias}
+              id={produit.id}
+            />
+          {:else}
+            {#each loaders as loader}
+              <div class="loader" />
+            {/each}
           {/each}
-        {/each}
+        </div>
+        <h3 class="number-product">
+          {produitsFilter.length} produits affichés
+        </h3>
+        {#if !(previousPage == null) || !(nextPage == null)}
+          <div class="w-pagination">
+            {#if !(previousPage == null)}
+              <button class="previous-page" on:click={callPreviousPage} />
+            {:else}
+              <button
+                
+                class="previous-page disabled"
+                on:click={callPreviousPage}
+              />
+            {/if}
+            {#each pageTable as pages, i}
+              {#if page == pageTable[i]}
+                <button class="i-page active" on:click={callPage}
+                  >{pageTable[i]}</button
+                >
+              {:else}
+                <button class="i-page" on:click={callPage}
+                  >{pageTable[i]}</button
+                >
+              {/if}
+            {/each}
+            {#if !(nextPage == null)}
+              <button class="next-page" on:click={callNextPage} />
+            {:else}
+              <button  class="next-page disabled" on:click={callNextPage} />
+            {/if}
+          </div>
+        {/if}
       </div>
     </div>
-
-    <h3 class="number-product">{produitsFilter.length} produits affichés</h3>
-    {#if !(previousPage == null) || !(nextPage == null)}
-      <div class="w-pagination">
-        {#if !(previousPage == null)}
-          <button class="previous-page" on:click={callPreviousPage} />
-        {:else}
-          <button disabled class="previous-page" on:click={callPreviousPage} />
-        {/if}
-        {#each pageTable as page, i}
-          <button class="i-page" on:click={callPage}>{pageTable[i]}</button>
-        {/each}
-        {#if !(nextPage == null)}
-          <button class="next-page" on:click={callNextPage} />
-        {:else}
-          <button disabled class="next-page" on:click={callNextPage} />
-        {/if}
-      </div>
-    {/if}
   </div>
 </div>
 
 <style lang="scss">
-  @import "./../../styles/settings";
+  @import "./src/styles/settings";
+  h1 {
+    align-self: flex-start;
+    font-size: 80px;
+  }
+
   .container {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 2rem 0;
+    padding: 2rem 0 100px;
     .center {
-      width: 80%;
+      padding: 0 50px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -181,6 +216,10 @@
     }
 
     &-collections {
+      h3 {
+        align-self: flex-start;
+        margin: 0 0 10px;
+      }
       padding: 50px 0 0;
       width: 100%;
       display: flex;
@@ -197,10 +236,15 @@
         font-size: 15px;
         background: $lighter;
         color: $darker;
-        border: none;
+        border: 1.5px solid transparent;
         border-radius: 10px;
         &:hover {
           background: $light;
+          border: 1.5px solid $lighter;
+        }
+        &.active {
+          background: $light;
+          border: 1.5px solid $lighter;
         }
       }
     }
@@ -211,11 +255,12 @@
       display: flex;
       justify-content: flex-start;
       flex-wrap: wrap;
-      gap: 75px 30px;
+      gap: 30px;
     }
   }
 
   .number-product {
+    text-align: center;
     padding: 50px 0;
   }
 
@@ -249,10 +294,14 @@
     gap: 10px;
     align-self: flex-end;
     .i-page {
-      background: $orange;
-      color: $light;
+      color: $orange;
       height: 40px;
+      background: transparent;
       border-radius: 50%;
+      &.active {
+        background: $orange;
+        color: $light;
+      }
     }
     .next-page {
       &::after {
@@ -279,11 +328,15 @@
       cursor: pointer;
       width: 40px;
       color: $orange;
+      &.disabled {
+        visibility: hidden;
+      }
     }
   }
   .w--grid {
-    gap: 30px;
+    gap: 50px;
     display: grid;
+
     grid-template: auto/ auto 1fr;
   }
 </style>

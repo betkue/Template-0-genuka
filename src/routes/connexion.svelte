@@ -1,77 +1,44 @@
 <script>
-  import axios from "axios";
+  // import axios from "axios";
 
   let email, tel, password;
   let fromApi = true;
   let company_id = 468;
   let result = null;
 
-  // async function connect() {
-  //   const res = await fetch(
-  //     "https://dashboard.genuka.com/api/2021-10/clients/login",
-  //     {
-  //       method: "POST",
-  //       body: JSON.stringify({
-  //         email,
-  //         password,
-  //         company_id,
-  //         fromApi,
-  //       }),
-  //       headers: {
-  //         "content-type": "application/json",
-  //       },
-  //     }
-  //   );
+  async function login() {
+    const res = await fetch(
+      "https://dashboard.genuka.com/api/2021-10/clients/login",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          email,
+          password,
+          company_id,
+          fromApi,
+        }),
+        headers: {
+          "content-type": "application/json",
+        },
+      }
+    );
 
-  //   const json = await res.json();
-  //   result = JSON.stringify(json);
-  //   console.log(result.length);
-  // }
+    const result = await res.json();
+    return getUser(result.access_token);
+  }
 
-  const login = (email, password) => {
-    const data = JSON.stringify({
-      email,
-      password,
-      fromApi: true,
-    });
-
-    const config = {
-      method: "post",
-      url: "https://dashboard.genuka.com/api/2021-10/clients/login",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      data: data,
-    };
-
-    axios(config)
-      .then(function (response) {
-        console.log("LOGIN_SUCCESS");
-        return getUser(response.data.access_token);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
-
-  const getUser = (token) => {
-    const config = {
-      method: "get",
-      url: "https://dashboard.genuka.com/api/2021-10/user",
+  async function getUser(token) {
+    const res = await fetch("https://dashboard.genuka.com/api/2021-10/user", {
+      method: "GET",
       headers: {
         Authorization: "Bearer " + token,
       },
-    };
+    });
+    const result = await res.json();
+    console.log(result);
+  }
 
-    axios(config)
-      .then(function (response) {
-        console.log("GET_USER", response.data);
-        return response.data;
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
+  // la2spaille@gmail.com - qwertyuiop
 </script>
 
 <svelte:head>
@@ -103,7 +70,7 @@
         />
       </div>
       <button type="button" on:click={login}>Connexion</button>
-      <a href="/password_forgotten">Mot de passe oublié ?</a>
+      <!--<a href="/password_forgotten">Mot de passe oublié ?</a>-->
       <a href="/inscription">Pas encore de compte ? Inscrivez-vous.</a>
     </div>
   </div>
@@ -115,7 +82,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 2rem 0;
+    padding: 50px 0 100px;
     .center {
       width: 40%;
       display: flex;
@@ -128,6 +95,7 @@
       padding: 1rem;
     }
     .form {
+      border-radius: 10px;
       padding: 1rem;
       width: 100%;
       background: $lighter;
@@ -145,8 +113,8 @@
           outline: none;
           border-radius: 5px;
           padding: 1rem;
-          background: $light;a
-          &:focus{
+          background: $light;
+          a &:focus {
             background: $light;
           }
         }

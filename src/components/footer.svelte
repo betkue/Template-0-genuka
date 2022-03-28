@@ -6,7 +6,6 @@
   onMount(async function () {
     company = await Memoire.fetchCompany();
     name = company.name;
-    logo = company.logo;
     description = company.description;
     email = company.email;
     phone = company.phone;
@@ -17,7 +16,6 @@
   <div class="container">
     <div class="footer-center">
       <div class="w-logo">
-        <img src={logo} alt="logo" />
         <h3>{name}</h3>
       </div>
       <p>{description}</p>

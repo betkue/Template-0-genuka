@@ -3,25 +3,6 @@
   let fromApi = true;
   let company_id = 468;
   let result = null;
-/*  async function getUser(token,id){
-    http.Response response = await http.get(
-        Uri.parse(
-            "https://dashboard.genuka.com/api/2021-05/user?company_id="+id,
-        headers: {
-          "Authorization": "Bearer " + token,
-          "Accept": "application/json"
-        },
-      );
-      if (status reponse) {
-        //enregistrer l'utilisateru dans la bd local 
-        //return true
-        
-      } else {
-
-        //retur false
-         
-      }
-  }*/
   async function connect() {
     const res = await fetch(
       "https://dashboard.genuka.com/api/2021-10/clients/register",
@@ -42,32 +23,7 @@
       }
     );
 
-    const json = await res.json();
-   /** switch (res.status) {
-      case 200:
-      var token =  json.access_token ;
-
-        var response2 =      getUser(token , 468);
-
-       if (response2) {
-          //rediriger vers la page appropriée
-          //dans le fichier memoire prevoir une varriable qui va contenir le lien complet 
-          //vers la page appropriée
-       } else {
-         
-       }
-
-
-        
-        break;
-      case 400:
-
-      break;
-    
-      default:
-        break;
-    }*/
-    result = JSON.stringify(json);
+    const result = await res.json();
     console.log(result);
   }
 </script>
@@ -151,7 +107,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 2rem 0;
+    padding: 50px 0 100px;
     .center {
       width: 40%;
       display: flex;
@@ -165,6 +121,7 @@
     }
     .form {
       padding: 1rem;
+      border-radius: 10px;
       width: 100%;
       background: $lighter;
       display: flex;
