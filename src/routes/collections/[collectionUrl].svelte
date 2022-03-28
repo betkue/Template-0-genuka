@@ -167,13 +167,17 @@ let pageTable= [],lastPage = 0
 
 <style lang="scss">
   @import "./src/styles/settings";
+  h1{
+    align-self: flex-start;
+    font-size: 80px;
+  }
   .container {
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 2rem 0;
     .center {
-      width: 80%;
+      padding: 0 50px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -181,6 +185,9 @@ let pageTable= [],lastPage = 0
     }
 
     &-collections {
+      h3 {
+        align-self: flex-start;
+      }
       padding: 50px 0 0;
       width: 100%;
       display: flex;
@@ -197,10 +204,11 @@ let pageTable= [],lastPage = 0
         font-size: 15px;
         background: $lighter;
         color: $darker;
-        border: none;
+        border: 1.5px solid transparent;
         border-radius: 10px;
         &:hover {
           background: $light;
+          border: 1.5px solid $lighter;
         }
       }
     }
@@ -211,7 +219,7 @@ let pageTable= [],lastPage = 0
       display: flex;
       justify-content: flex-start;
       flex-wrap: wrap;
-      gap: 75px 30px;
+      gap: 30px;
     }
   }
 
@@ -283,7 +291,7 @@ let pageTable= [],lastPage = 0
     }
   }
   .w--grid {
-    gap: 30px;
+    gap: 50px;
     display :grid;
     grid-template: auto/ auto 1fr;
   }
