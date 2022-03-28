@@ -28,6 +28,7 @@
     );
 
     const json = await res.json();
+    console.log(json)
   }
 
   let booleanToggleMenu = false;
