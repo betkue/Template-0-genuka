@@ -151,7 +151,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 2rem 0;
+    padding: 50px 0 100px;
     .center {
       width: 40%;
       display: flex;
@@ -165,6 +165,7 @@
     }
     .form {
       padding: 1rem;
+      border-radius: 10px;
       width: 100%;
       background: $lighter;
       display: flex;

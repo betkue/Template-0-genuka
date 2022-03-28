@@ -43,6 +43,7 @@
     cursor: pointer;
     border-radius: 10px;
     transition: 0.3s ease;
+    border: 2px dashed $lighter ;
     &:hover {
       background: $lighter;
     }
@@ -59,7 +60,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin: 10px 0;
+      margin: 17.5px 0 ;
       button {
         color: $light;
         background: $gray;
@@ -77,9 +78,13 @@
     }
     &-footer {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
+      flex-direction: column;
+      gap: 10px;
+      h2 {
+        font-size: 20px;
+      }
       h3 {
+        font-size: 20px;
         color: $orange;
         font-weight: bold;
       }

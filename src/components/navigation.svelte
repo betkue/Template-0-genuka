@@ -102,7 +102,7 @@
     padding: 10px 0;
 
     .center {
-      width: 80%;
+      width: calc(100% - 100px);
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -125,7 +125,9 @@
 
     &-search {
       flex: 1;
+      max-width: 370px;
       position: relative;
+      margin: 0 -40px 0 0;
       .search {
         width: 100%;
         background: $lighter;
@@ -149,7 +151,7 @@
       }
     }
     &-center {
-      margin: 0 40px;
+      margin: 0 40px 0 -40px;
       padding: 1rem 0;
       display: flex;
       align-items: center;
