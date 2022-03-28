@@ -9,7 +9,7 @@
   export let collectionUrl;
 
   import { beforeUpdate, afterUpdate, onMount } from "svelte";
-import { each } from "svelte/internal";
+  import { each } from "svelte/internal";
   import Produit from "../../components/produit.svelte";
   import { Memoire } from "../../store/data.js";
 
@@ -43,21 +43,21 @@ import { each } from "svelte/internal";
     nextPage = data.links.next;
     previousPage = data.links.prev;
   });
-let pageTable= [],lastPage = 0
+  let pageTable = [],
+    lastPage = 0;
   onMount(async function () {
-    const collectionsJson = await Memoire.fetchCollections()
-    const productsJson = await Memoire.fetchProducts()
-    lastPage = productsJson.meta.last_page
-    for(let i =0; i < lastPage;i++) {
-      pageTable[i] = i+1
+    const collectionsJson = await Memoire.fetchCollections();
+    const productsJson = await Memoire.fetchProducts();
+    lastPage = productsJson.meta.last_page;
+    for (let i = 0; i < lastPage; i++) {
+      pageTable[i] = i + 1;
     }
-    console.log(lastPage, pageTable)
+    console.log(lastPage, pageTable);
     collections = collectionsJson.data;
     currency = await Memoire.fetchCompany();
     currency = currency.currency.symbol;
   });
 
- 
   // Depuis index.svelte
   function showProductFromIndex() {}
   showProductFromIndex();
@@ -96,9 +96,9 @@ let pageTable= [],lastPage = 0
     nextPage = data.links.next;
     previousPage = data.links.prev;
   }
- 
+
   async function callPage(e) {
-    page= e.target.textContent;
+    page = e.target.textContent;
     const url = `https://dashboard.genuka.com/api/2021-10/companies/${idCompany}/products?page=${page}`;
     const response = await fetch(url);
     const data = await response.json();
@@ -143,7 +143,7 @@ let pageTable= [],lastPage = 0
         {/each}
       </div>
     </div>
-    
+
     <h3 class="number-product">{produitsFilter.length} produits affichés</h3>
     {#if !(previousPage == null) || !(nextPage == null)}
       <div class="w-pagination">
@@ -152,7 +152,7 @@ let pageTable= [],lastPage = 0
         {:else}
           <button disabled class="previous-page" on:click={callPreviousPage} />
         {/if}
-        {#each pageTable as page,i} 
+        {#each pageTable as page, i}
           <button class="i-page" on:click={callPage}>{pageTable[i]}</button>
         {/each}
         {#if !(nextPage == null)}
@@ -171,6 +171,7 @@ let pageTable= [],lastPage = 0
     align-self: flex-start;
     font-size: 80px;
   }
+
   .container {
     display: flex;
     justify-content: center;
@@ -196,7 +197,7 @@ let pageTable= [],lastPage = 0
       position: sticky;
       top: 0;
       align-self: flex-start;
-      gap:10px;
+      gap: 10px;
       button {
         min-width: 150px;
         cursor: pointer;
@@ -257,11 +258,10 @@ let pageTable= [],lastPage = 0
     gap: 10px;
     align-self: flex-end;
     .i-page {
-      background:$orange;
-      color:$light;
+      background: $orange;
+      color: $light;
       height: 40px;
       border-radius: 50%;
-
     }
     .next-page {
       &::after {
@@ -293,6 +293,7 @@ let pageTable= [],lastPage = 0
   .w--grid {
     gap: 50px;
     display :grid;
+
     grid-template: auto/ auto 1fr;
   }
 </style>
