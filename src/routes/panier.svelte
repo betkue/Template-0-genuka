@@ -42,7 +42,7 @@
 </script>
 
 <svelte:head>
-  <title>Pannier</title>
+  <title>Panier</title>
 </svelte:head>
 
 <section class="l-cart">
