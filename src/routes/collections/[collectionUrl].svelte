@@ -1,0 +1,289 @@
+<script context="module">
+  export function preload(page, session) {
+    const { collectionUrl } = page.params;
+    return { collectionUrl };
+  }
+</script>
+
+<script>
+  export let collectionUrl;
+
+  import { beforeUpdate, afterUpdate, onMount } from "svelte";
+  import { each } from "svelte/internal";
+  import Produit from "../../components/produit.svelte";
+  import { Memoire } from "../../store/data.js";
+
+  let idCompany = Memoire.idCompany;
+
+  let produits = [];
+  let produitsFilter = produits;
+  let collections = [];
+  let loaders = [1, 2, 3, 4, 5];
+  let currency;
+
+  let nextPage;
+  let previousPage;
+
+  $: page = 1;
+
+  onMount(async function () {
+    const url = `https://dashboard.genuka.com/api/2021-10/companies/${idCompany}/products?page=${page}`;
+    const response = await fetch(url);
+    const data = await response.json();
+    produits = data.data;
+    if (collectionUrl == "all") {
+      produitsFilter = produits;
+    } else {
+      let currentCollection = collectionUrl;
+      const produitsCollections = produits.filter((produit) =>
+        produit.collections.includes(currentCollection)
+      );
+      produitsFilter = produitsCollections;
+    }
+    nextPage = data.links.next;
+    previousPage = data.links.prev;
+  });
+  let pageTable = [],
+    lastPage = 0;
+  onMount(async function () {
+    const collectionsJson = await Memoire.fetchCollections();
+    const productsJson = await Memoire.fetchProducts();
+    lastPage = productsJson.meta.last_page;
+    for (let i = 0; i < lastPage; i++) {
+      pageTable[i] = i + 1;
+    }
+    console.log(lastPage, pageTable);
+    collections = collectionsJson.data;
+    currency = await Memoire.fetchCompany();
+    currency = currency.currency.symbol;
+  });
+
+  // Depuis index.svelte
+  function showProductFromIndex() {}
+  showProductFromIndex();
+
+  // Au clic
+  function showAllProduct(e) {
+    produitsFilter = produits;
+  }
+
+  function showCollection(e) {
+    let currentCollection = e.target.textContent;
+    const produitsCollections = produits.filter((produit) =>
+      produit.collections.includes(currentCollection)
+    );
+    produitsFilter = produitsCollections;
+  }
+
+  async function callPreviousPage() {
+    page--;
+    const url = `https://dashboard.genuka.com/api/2021-10/companies/${idCompany}/products?page=${page}`;
+    const response = await fetch(url);
+    const data = await response.json();
+    produits = data.data;
+    produitsFilter = produits;
+    nextPage = data.links.next;
+    previousPage = data.links.prev;
+  }
+
+  async function callNextPage() {
+    page++;
+    const url = `https://dashboard.genuka.com/api/2021-10/companies/${idCompany}/products?page=${page}`;
+    const response = await fetch(url);
+    const data = await response.json();
+    produits = data.data;
+    produitsFilter = produits;
+    nextPage = data.links.next;
+    previousPage = data.links.prev;
+  }
+
+  async function callPage(e) {
+    page = e.target.textContent;
+    const url = `https://dashboard.genuka.com/api/2021-10/companies/${idCompany}/products?page=${page}`;
+    const response = await fetch(url);
+    const data = await response.json();
+    produits = data.data;
+    produitsFilter = produits;
+    nextPage = data.links.next;
+    previousPage = data.links.prev;
+  }
+</script>
+
+<svelte:head>
+  <title>Produits</title>
+</svelte:head>
+
+<div class="container">
+  <div class="center">
+    <h1>Nos produits</h1>
+    <div class="w--grid">
+      <div class="container-collections">
+        <h3>Filtrer par:</h3>
+        <button on:click={showAllProduct}>Tout voir</button>
+        {#each collections as collection}
+          <button on:click={showCollection}>{collection.name}</button>
+        {/each}
+      </div>
+      <div class="container-products">
+        {#each produitsFilter as produit (produit.id)}
+          <Produit
+            photo={produit.medias[0].link}
+            name={produit.name}
+            price={produit.price}
+            collections={produit.collections}
+            {currency}
+            discounted_price={produit.discounted_price}
+            medias={produit.medias}
+            id={produit.id}
+          />
+        {:else}
+          {#each loaders as loader}
+            <div class="loader" />
+          {/each}
+        {/each}
+      </div>
+    </div>
+
+    <h3 class="number-product">{produitsFilter.length} produits affichés</h3>
+    {#if !(previousPage == null) || !(nextPage == null)}
+      <div class="w-pagination">
+        {#if !(previousPage == null)}
+          <button class="previous-page" on:click={callPreviousPage} />
+        {:else}
+          <button disabled class="previous-page" on:click={callPreviousPage} />
+        {/if}
+        {#each pageTable as page, i}
+          <button class="i-page" on:click={callPage}>{pageTable[i]}</button>
+        {/each}
+        {#if !(nextPage == null)}
+          <button class="next-page" on:click={callNextPage} />
+        {:else}
+          <button disabled class="next-page" on:click={callNextPage} />
+        {/if}
+      </div>
+    {/if}
+  </div>
+</div>
+
+<style lang="scss">
+  @import "./../../styles/settings";
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 0;
+    .center {
+      width: 80%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-direction: column;
+    }
+
+    &-collections {
+      padding: 50px 0 0;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      align-self: flex-start;
+      gap: 10px;
+      button {
+        min-width: 150px;
+        cursor: pointer;
+        padding: 0.5rem 1rem;
+        font-size: 15px;
+        background: $lighter;
+        color: $darker;
+        border: none;
+        border-radius: 10px;
+        &:hover {
+          background: $light;
+        }
+      }
+    }
+
+    &-products {
+      padding: 50px 0 0;
+      width: 100%;
+      display: flex;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      gap: 75px 30px;
+    }
+  }
+
+  .number-product {
+    padding: 50px 0;
+  }
+
+  .loader {
+    border-radius: 10px;
+    width: calc((100% - 65px) / 3);
+    aspect-ratio: 1/1;
+    background: $lighter;
+    animation: loader 1s both infinite alternate;
+    @keyframes loader {
+      50% {
+        opacity: 0.5;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+  }
+  @media only screen and (max-width: 1210px) {
+    .container {
+      .center {
+        width: 90%;
+      }
+    }
+  }
+
+  .w-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    align-self: flex-end;
+    .i-page {
+      background: $orange;
+      color: $light;
+      height: 40px;
+      border-radius: 50%;
+    }
+    .next-page {
+      &::after {
+        content: "\e5e1";
+        transform: translate(-50%, -50%);
+      }
+    }
+    .previous-page {
+      &::after {
+        content: "\e5e0";
+        transform: translate(-25%, -50%);
+      }
+    }
+    button {
+      line-height: 1;
+      &::after {
+        font-size: 24px;
+        font-family: "Material Icons";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+      }
+      position: relative;
+      cursor: pointer;
+      width: 40px;
+      color: $orange;
+    }
+  }
+  .w--grid {
+    gap: 30px;
+    display: grid;
+    grid-template: auto/ auto 1fr;
+  }
+</style>

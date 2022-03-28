@@ -38,6 +38,7 @@
   @import "./../styles/settings";
 
   .card {
+    min-width: calc((100% - 60px) / 3);
     width: calc((100% - 60px) / 3);
     cursor: pointer;
     border-radius: 10px;
@@ -51,8 +52,8 @@
     img {
       width: 100%;
       border-radius: 10px;
-      height: 300px;
       object-fit: cover;
+      aspect-ratio: 1/1;
     }
     .buttons {
       display: flex;

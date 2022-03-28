@@ -93,7 +93,7 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    padding: 0 135px;
+    padding: 0 150px;
     position: relative;
     .container {
       width: 100%;
@@ -192,18 +192,12 @@
     cursor: pointer;
   }
   @media (max-width: 1050px) {
-    .footer {
-      padding: 0 100px;
-    }
+    
     .container {
       gap: 20px;
     }
   }
-  @media (max-width: 950px) {
-    .footer {
-      padding: 0 20px;
-    }
-  }
+  
   @media (max-width: 700px) {
     .footer {
       padding: 0 50px;
