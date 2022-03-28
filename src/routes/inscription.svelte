@@ -3,7 +3,7 @@
   let fromApi = true;
   let company_id = 468;
   let result = null;
-  async function connect() {
+  async function register() {
     const res = await fetch(
       "https://dashboard.genuka.com/api/2021-10/clients/register",
       {
@@ -24,8 +24,22 @@
     );
 
     const result = await res.json();
-    console.log(result);
+    return getUser(result.access_token);
   }
+
+  async function getUser(token) {
+    const res = await fetch("https://dashboard.genuka.com/api/2021-10/user", {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    });
+    
+    const infosUser = await res.json();
+    console.log(infosUser);
+  }
+
+  // la2spaille@gmail.com - qwertyuiop
 </script>
 
 <svelte:head>
@@ -95,11 +109,30 @@
           required
         />
       </div>
-      <button type="button" on:click={connect}>M'inscrire</button>
+      <button type="button" on:click={register}>M'inscrire</button>
       <a href="/connexion">Déjà un compte? Connectez-vous.</a>
     </div>
   </div>
 </div>
+
+<!--Utilisateur cree -->
+<!-- 
+    {
+"user": {
+"last_name": "NGOYA",
+"first_name": null,
+"email": "leonel.ngoya@facsciences-uy1.cm",
+"tel": 237699792037,
+"sex": null,
+"other": null,
+"id": 1536,
+"entreprise_id": 468
+},
+"access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxMyIsImp0aSI6IjYzNDM2YWRlYmYwZTcwMWZiZWY5ZDJhMzkxOGFkNWM1M2RjMDI4YjNmMzAzMTMxNWRhNTAzMGM2ZGUzMjk5NDQ3OTI2ZTcxMjUwZWVkNTBhIiwiaWF0IjoxNjQ3ODcyNTkwLCJuYmYiOjE2NDc4NzI1OTAsImV4cCI6MTY3OTQwODU5MCwic3ViIjoiMTUzNiIsInNjb3BlcyI6W119.QhnZ49W3a3TlOYttUpNjU0PYbYQ4DVy_Cn5LN3UGxXZeQQ47eodPyZSPj7aTzmsfAeKOjxJr8Oo0ZR7Ug9RFQAI2q6Ba3uBQeXYbPmM8bxX2p_5541cyFe2d8k156ynqTHNjMT8NZlVwYTmfqvFbfcLpPK8vY7qarqfGMJs7sVFrH5BJaCVfetIC-DLcmKTJpvF4quH5GSOA1kZcLMIDAZth_z4cUSHyn_sB9vIxsBKBbxAeXMGpsJFfxoi4WoG7Q8NIgwsosxFwNUvWgKgCl2WW9bqHJhcGDYt241J5V4CEyickqruCnC5pztHTwEiaMQwdoP8924pTccU3ujutqgEwKdAs79n3KvBT7EIJ19qQZFgOgVoijFZWHZCLivLSfD37QsqByhZO_vYEVLEEKIZzLzC_WWpJxZT3RIZ1AhXmGhIAX5Dis8hW_N-qxSInEnvj0rz_dbXjjIV8OBvPnyp12IT5Js4EPa7Da-d-wE6bZz30xL6CZnXyb9hDSUdYnXKtcvi462m3PBwf6N-GlSjqwWWIRj5GyhpjucIhau3DxFeLq99hHEN6vaLv3EcH3cq84zaajOA-7lBBSiACSnCdZ2bOGtCmltRgQiAvtZjOzevxStfL3rc76GHaBAPb7v1OE-7-ZNew3uJJTgUPQ176sIqmhc6DITqsg0FvwWg"
+}
+
+mot de passe : qwerty
+   -->
 
 <style lang="scss">
   @import "./../styles/settings";
@@ -179,24 +212,3 @@
     }
   }
 </style>
-
-
-
-<!--Utilisateur cree -->
-  <!-- 
-    {
-"user": {
-"last_name": "NGOYA",
-"first_name": null,
-"email": "leonel.ngoya@facsciences-uy1.cm",
-"tel": 237699792037,
-"sex": null,
-"other": null,
-"id": 1536,
-"entreprise_id": 468
-},
-"access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxMyIsImp0aSI6IjYzNDM2YWRlYmYwZTcwMWZiZWY5ZDJhMzkxOGFkNWM1M2RjMDI4YjNmMzAzMTMxNWRhNTAzMGM2ZGUzMjk5NDQ3OTI2ZTcxMjUwZWVkNTBhIiwiaWF0IjoxNjQ3ODcyNTkwLCJuYmYiOjE2NDc4NzI1OTAsImV4cCI6MTY3OTQwODU5MCwic3ViIjoiMTUzNiIsInNjb3BlcyI6W119.QhnZ49W3a3TlOYttUpNjU0PYbYQ4DVy_Cn5LN3UGxXZeQQ47eodPyZSPj7aTzmsfAeKOjxJr8Oo0ZR7Ug9RFQAI2q6Ba3uBQeXYbPmM8bxX2p_5541cyFe2d8k156ynqTHNjMT8NZlVwYTmfqvFbfcLpPK8vY7qarqfGMJs7sVFrH5BJaCVfetIC-DLcmKTJpvF4quH5GSOA1kZcLMIDAZth_z4cUSHyn_sB9vIxsBKBbxAeXMGpsJFfxoi4WoG7Q8NIgwsosxFwNUvWgKgCl2WW9bqHJhcGDYt241J5V4CEyickqruCnC5pztHTwEiaMQwdoP8924pTccU3ujutqgEwKdAs79n3KvBT7EIJ19qQZFgOgVoijFZWHZCLivLSfD37QsqByhZO_vYEVLEEKIZzLzC_WWpJxZT3RIZ1AhXmGhIAX5Dis8hW_N-qxSInEnvj0rz_dbXjjIV8OBvPnyp12IT5Js4EPa7Da-d-wE6bZz30xL6CZnXyb9hDSUdYnXKtcvi462m3PBwf6N-GlSjqwWWIRj5GyhpjucIhau3DxFeLq99hHEN6vaLv3EcH3cq84zaajOA-7lBBSiACSnCdZ2bOGtCmltRgQiAvtZjOzevxStfL3rc76GHaBAPb7v1OE-7-ZNew3uJJTgUPQ176sIqmhc6DITqsg0FvwWg"
-}
-
-mot de passe : qwerty
-   -->
