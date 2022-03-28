@@ -34,8 +34,8 @@
         Authorization: "Bearer " + token,
       },
     });
-    const result = await res.json();
-    console.log(result);
+    const infosUser = await res.json();
+    console.log(infosUser);
   }
 
   // la2spaille@gmail.com - qwertyuiop
