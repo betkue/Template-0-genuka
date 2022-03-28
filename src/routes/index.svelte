@@ -63,7 +63,7 @@
         {#if collections != undefined && products != undefined}
           {#each collections as collection}
             <div class="w-collections">
-              <h3>Nos {collection.name}</h3>
+              <h3>Collection | {collection.name}</h3>
               <div class="w--flex-sb">
                 {#each products as produit}
                   {#if produit.collections[0] == collection.name}
