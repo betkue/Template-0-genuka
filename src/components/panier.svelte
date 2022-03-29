@@ -1,4 +1,4 @@
-<script>
+<!-- <script>
   let countPanier = 0;
 
   let cart = [];
@@ -6,7 +6,9 @@
   if (process.browser) {
     Object.values(localStorage).forEach((element, index) => {
       // Object.values(localStorage) = []
-      cart[index] = JSON.parse(Object.values(localStorage)[index]);
+      if (element !== localStorage.getItem("token")) {
+        cart[index] = JSON.parse(Object.values(localStorage)[index]);
+      }
     });
   }
 
@@ -54,4 +56,4 @@
       font-weight: 500;
     }
   }
-</style>
+</style> -->
