@@ -36,6 +36,7 @@
     });
     
     const infosUser = await res.json();
+    localStorage.setItem("User", JSON.stringify(infosUser))
     console.log(infosUser);
   }
 

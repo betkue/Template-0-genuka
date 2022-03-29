@@ -2,8 +2,6 @@
   import { onMount } from "svelte";
   import { fade } from "svelte/transition";
 
-  let idCompany = 489;
-
   import { Memoire } from "../store/data.js";
   let company, logo, name;
   onMount(async function () {
@@ -28,12 +26,40 @@
     );
 
     const json = await res.json();
-    console.log(json)
+    console.log(json);
   }
 
   let booleanToggleMenu = false;
   function toggleMenu() {
     booleanToggleMenu = !booleanToggleMenu;
+  }
+
+  let infosUser,
+    userBoolean = false,
+    nameUser;
+  if (process.browser) {
+    (function userState() {
+      return getUser(localStorage.getItem("token"));
+    })();
+    async function getUser(token) {
+      const res = await fetch("https://dashboard.genuka.com/api/2021-10/user", {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
+      infosUser = await res.json();
+      nameUser = infosUser.last_name;
+      console.log(infosUser);
+      if (localStorage.getItem("token") != null) {
+        userBoolean = true;
+      } else {
+        userBoolean = false;
+      }
+    }
+  }
+  function deconnect() {
+    localStorage.removeItem('token')
   }
 </script>
 
@@ -61,12 +87,21 @@
     </div>
     <div class="navigation-right">
       <div class="right-account">
-        <img src="./icons/account.svg" alt="cart" /><span>Mon compte</span>
+        <img src="./icons/account.svg" alt="cart" />
+        {#if userBoolean}
+          <span>Bonjour, {nameUser}</span>
+        {:else}
+          <span>Mon compte</span>
+        {/if}
         <div class="auth">
-          <a href="/inscription"
-            ><button class="register">Inscription</button></a
-          >
-          <a href="/connexion"><button class="login">Connexion</button></a>
+          {#if userBoolean}
+          <a href="/compte"><button class="register">Mon compte</button></a>
+          <a href="/#"><button class="login" on:click="{deconnect}">Déconnexion</button></a>
+        {:else}
+        <a href="/inscription"><button class="register">Inscription</button></a>
+        <a href="/connexion"><button class="login">Connexion</button></a>
+        {/if}
+          
         </div>
       </div>
       <a href="/panier"><img src="./icons/cart.svg" alt="cart" /></a>

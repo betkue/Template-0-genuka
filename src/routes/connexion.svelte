@@ -24,6 +24,8 @@
     );
 
     const result = await res.json();
+    localStorage.setItem("token", result.access_token)
+
     return getUser(result.access_token);
   }
 
@@ -35,7 +37,7 @@
       },
     });
     const infosUser = await res.json();
-    console.log(infosUser);
+
   }
 
   // la2spaille@gmail.com - qwertyuiop
