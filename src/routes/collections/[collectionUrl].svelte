@@ -196,7 +196,7 @@
 </div>
 
 <style lang="scss">
-  @import "./src/styles/settings";
+  @import "./../../styles/settings";
   h1 {
     align-self: flex-start;
     font-size: 80px;
