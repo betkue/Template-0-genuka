@@ -90,6 +90,9 @@
             ><a href="/caisse">PROCEDER AU PAIMENT</a></button
           >
         </div>
+        <button class="cta-btn"
+            ><a href="/caisse">PROCEDER AU PAIMENT</a></button
+          >
       </div>
     </div>
   </div>

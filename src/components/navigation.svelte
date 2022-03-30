@@ -4,6 +4,7 @@
 
   import { Memoire } from "../store/data.js";
   let company, logo, name;
+  let idCompany = 489;
   onMount(async function () {
     company = await Memoire.fetchCompany();
     name = company.name;
@@ -21,6 +22,7 @@
         }),
         headers: {
           "content-type": "application/json",
+         // Authorization: "Bearer " + token,
         },
       }
     );
@@ -119,7 +121,7 @@
         ><img src="./icons/cart.svg" alt="cart" /></a
       >
       <li><a href="/">Acceuil</a></li>
-      <li><a href="/produits">Produits</a></li>
+      <li><a href="/collections/all">Produits</a></li>
       <li><a href="/contact">Contact</a></li>
       <a href="/inscription"><button class="register">Inscription</button></a>
       <a href="/connexion"><button class="login">Connexion</button></a>

@@ -24,6 +24,7 @@
     );
 
     const result = await res.json();
+    
     return getUser(result.access_token);
   }
 

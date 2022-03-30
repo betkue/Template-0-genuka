@@ -1,4 +1,4 @@
-<!-- <script>
+<script>
   let countPanier = 0;
 
   let cart = [];
@@ -56,4 +56,4 @@
       font-weight: 500;
     }
   }
-</style> -->
+</style>
