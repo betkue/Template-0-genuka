@@ -1,11 +1,14 @@
 <script>
-  // import axios from "axios";
+import { Memoire } from "../store/data";
+
+
 
   let email, tel, password;
   let fromApi = true;
   let company_id = 468;
   let result = null;
 
+<<<<<<< Updated upstream
   async function login() {
     const res = await fetch(
       "https://dashboard.genuka.com/api/2021-10/clients/login",
@@ -24,6 +27,8 @@
     );
 
     const result = await res.json();
+    localStorage.setItem("token", result.access_token)
+
     return getUser(result.access_token);
   }
 
@@ -35,10 +40,39 @@
       },
     });
     const infosUser = await res.json();
-    console.log(infosUser);
+
   }
 
   // la2spaille@gmail.com - qwertyuiop
+=======
+
+  async function connexion() {
+    const res = await fetch(
+      "https://dashboard.genuka.com/api/2021-10/clients/login",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          email,
+          password,
+          company_id,
+          fromApi,
+        }),
+        headers: {
+          "content-type": "application/json",
+        },
+      }
+    );
+
+    const json = await res.json();
+    if(json.status == undefined) {
+      Memoire.User = json.user
+      localStorage.setItem(Memoire.User.id, Memoire.User)
+      
+    }
+    console.log(json, json.status, Memoire)
+  
+  }
+>>>>>>> Stashed changes
 </script>
 
 <svelte:head>
@@ -69,8 +103,13 @@
           required
         />
       </div>
+<<<<<<< Updated upstream
       <button type="button" on:click={login}>Connexion</button>
       <!--<a href="/password_forgotten">Mot de passe oublié ?</a>-->
+=======
+      <button type="button" on:click={connexion}>Connexion</button>
+      <a href="/password_forgotten">Mot de passe oublié ?</a>
+>>>>>>> Stashed changes
       <a href="/inscription">Pas encore de compte ? Inscrivez-vous.</a>
     </div>
   </div>

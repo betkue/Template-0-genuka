@@ -1,7 +1,6 @@
-
-
 export const Memoire = {
     idCompany: 489,  //468 - 489
+    User: {},
     lastLink:"",
     fetchCompany: async function compagny() {
         const response = await fetch(
