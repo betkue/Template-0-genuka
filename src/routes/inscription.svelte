@@ -3,13 +3,7 @@
   let fromApi = true;
   let company_id = 468;
   let result = null;
-<<<<<<< Updated upstream
   async function register() {
-=======
-  import { Memoire } from "../store/data.js";
-
-  async function inscription() {
->>>>>>> Stashed changes
     const res = await fetch(
       "https://dashboard.genuka.com/api/2021-10/clients/register",
       {
@@ -29,7 +23,6 @@
       }
     );
 
-<<<<<<< Updated upstream
     const result = await res.json();
     return getUser(result.access_token);
   }
@@ -45,14 +38,6 @@
     const infosUser = await res.json();
     localStorage.setItem("User", JSON.stringify(infosUser))
     console.log(infosUser);
-=======
-    const json = await res.json();
-    if(json.status == 200) {
-      Memoire.User = json
-      localStorage.setItem(Memoire.User.id, Memoire.User)
-    }
-  
->>>>>>> Stashed changes
   }
 
   // la2spaille@gmail.com - qwertyuiop
@@ -125,11 +110,7 @@
           required
         />
       </div>
-<<<<<<< Updated upstream
       <button type="button" on:click={register}>M'inscrire</button>
-=======
-      <button type="button" on:click={inscription}>M'inscrire</button>
->>>>>>> Stashed changes
       <a href="/connexion">Déjà un compte? Connectez-vous.</a>
     </div>
   </div>
