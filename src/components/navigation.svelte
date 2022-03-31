@@ -57,9 +57,40 @@
         userBoolean = false;
       }
     }
+
+    document.addEventListener("registerEvent", () => {
+      setTimeout(() => {
+        if (localStorage.getItem("token") != null) {
+          userBoolean = true;
+        } else {
+          userBoolean = false;
+        }
+      }, 5000);
+    });
+
+    document.addEventListener("loginEvent", (e) => {
+      console.log(localStorage.getItem("token"));
+      setTimeout(() => {
+        console.log(localStorage.getItem("token"));
+
+        if (localStorage.getItem("token") != null) {
+          userBoolean = true;
+        } else {
+          userBoolean = false;
+        }
+      }, 5000);
+    });
   }
+
   function deconnect() {
-    localStorage.removeItem('token')
+    localStorage.removeItem("token");
+    setTimeout(() => {
+      if (localStorage.getItem("token") != null) {
+        userBoolean = true;
+      } else {
+        userBoolean = false;
+      }
+    }, 100);
   }
 </script>
 
@@ -95,13 +126,17 @@
         {/if}
         <div class="auth">
           {#if userBoolean}
-          <a href="/compte"><button class="register">Mon compte</button></a>
-          <a href="/#"><button class="login" on:click="{deconnect}">Déconnexion</button></a>
-        {:else}
-        <a href="/inscription"><button class="register">Inscription</button></a>
-        <a href="/connexion"><button class="login">Connexion</button></a>
-        {/if}
-          
+            <a href="/compte"><button class="register">Mon compte</button></a>
+            <a href="/#"
+              ><button class="login" on:click={deconnect}>Déconnexion</button
+              ></a
+            >
+          {:else}
+            <a href="/inscription"
+              ><button class="register">Inscription</button></a
+            >
+            <a href="/connexion"><button class="login">Connexion</button></a>
+          {/if}
         </div>
       </div>
       <a href="/panier"><img src="./icons/cart.svg" alt="cart" /></a>

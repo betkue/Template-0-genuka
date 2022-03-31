@@ -1,12 +1,19 @@
 <script>
+import { custom_event } from "svelte/internal";
+
+
   // import axios from "axios";
 
   let email, tel, password;
   let fromApi = true;
   let company_id = 468;
   let result = null;
-
+  function event() {
+    let loginEvent = new CustomEvent('loginEvent')
+    document.dispatchEvent(loginEvent)
+  }
   async function login() {
+    
     const res = await fetch(
       "https://dashboard.genuka.com/api/2021-10/clients/login",
       {
@@ -24,6 +31,7 @@
     );
 
     const result = await res.json();
+    localStorage.setItem("token", result.access_token)
     return getUser(result.access_token);
   }
 
@@ -69,7 +77,7 @@
           required
         />
       </div>
-      <button type="button" on:click={login}>Connexion</button>
+      <button type="button" on:click={login} on:click={event}>Connexion</button>
       <!--<a href="/password_forgotten">Mot de passe oublié ?</a>-->
       <a href="/inscription">Pas encore de compte ? Inscrivez-vous.</a>
     </div>
