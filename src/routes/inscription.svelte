@@ -4,6 +4,8 @@
   let company_id = 468;
   let result = null;
   async function register() {
+    let registerEvent = new CustomEvent('registerEvent')
+    document.dispatchEvent(registerEvent)
     const res = await fetch(
       "https://dashboard.genuka.com/api/2021-10/clients/register",
       {
@@ -24,6 +26,7 @@
     );
 
     const result = await res.json();
+    localStorage.setItem("token", result.access_token)
     return getUser(result.access_token);
   }
 
