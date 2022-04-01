@@ -1,12 +1,16 @@
 <script>
+import { custom_event } from "svelte/internal";
   // import axios from "axios";
-
   let email, tel, password;
   let fromApi = true;
   let company_id = 468;
   let result = null;
-
+  function event() {
+    let loginEvent = new CustomEvent('loginEvent')
+    document.dispatchEvent(loginEvent)
+  }
   async function login() {
+    
     const res = await fetch(
       "https://dashboard.genuka.com/api/2021-10/clients/login",
       {
@@ -22,12 +26,10 @@
         },
       }
     );
-
     const result = await res.json();
-    
+    localStorage.setItem("token", result.access_token)
     return getUser(result.access_token);
   }
-
   async function getUser(token) {
     const res = await fetch("https://dashboard.genuka.com/api/2021-10/user", {
       method: "GET",
@@ -38,7 +40,6 @@
     const infosUser = await res.json();
     console.log(infosUser);
   }
-
   // la2spaille@gmail.com - qwertyuiop
 </script>
 
@@ -70,7 +71,7 @@
           required
         />
       </div>
-      <button type="button" on:click={login}>Connexion</button>
+      <button type="button" on:click={login} on:click={event}>Connexion</button>
       <!--<a href="/password_forgotten">Mot de passe oublié ?</a>-->
       <a href="/inscription">Pas encore de compte ? Inscrivez-vous.</a>
     </div>
@@ -91,7 +92,6 @@
       align-items: center;
       justify-content: space-between;
     }
-
     h1 {
       padding: 1rem;
     }
@@ -104,7 +104,6 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-
       div {
         width: 100%;
         margin: 1rem;
@@ -149,7 +148,6 @@
       }
     }
   }
-
   @media only screen and (max-width: 500px) {
     .container {
       .center {

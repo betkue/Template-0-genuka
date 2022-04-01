@@ -199,7 +199,7 @@
   @import "./../../styles/settings";
   h1 {
     align-self: flex-start;
-    font-size: 80px;
+    font-size: 40px;
   }
 
   .container {

@@ -4,17 +4,45 @@
   let cart = [];
 
   if (process.browser) {
+    document.addEventListener("addTocartEvent", () => {
+      countPanier = 0
+      setTimeout(() => {
+        Object.values(localStorage).forEach((element, index) => {
+        if (element !== localStorage.getItem("token")) {
+          cart[index] = JSON.parse(Object.values(localStorage)[index]);
+        }
+      });
+        cart.forEach((element) => {
+        countPanier += element.quantity;
+      });
+      }, 100);
+    });
+    document.addEventListener("addTocartEventFromProduit", () => {
+      countPanier = 0
+      setTimeout(() => {
+        Object.values(localStorage).forEach((element, index) => {
+        if (element !== localStorage.getItem("token")) {
+          cart[index] = JSON.parse(Object.values(localStorage)[index]);
+        }
+      });
+        cart.forEach((element) => {
+        countPanier += element.quantity;
+      });
+      }, 100);
+    });
+  }
+
+  if (process.browser) {
     Object.values(localStorage).forEach((element, index) => {
-      // Object.values(localStorage) = []
       if (element !== localStorage.getItem("token")) {
         cart[index] = JSON.parse(Object.values(localStorage)[index]);
       }
     });
+   
   }
-
   cart.forEach((element) => {
-    countPanier += element.quantity;
-  });
+      countPanier += element.quantity;
+    });
 </script>
 
 <a href="/panier">

@@ -1,15 +1,33 @@
 <script>
   import { fade } from "svelte/transition";
-  export let id, currency, name, price, collections, photo, discounted_price, medias;
-
+  export let id,
+    currency,
+    name,
+    price,
+    collections,
+    photo,
+    discounted_price,
+    medias;
+  let qty;
   function addTocart() {
+    let addTocartEventFromProduit = new CustomEvent(
+      "addTocartEventFromProduit"
+    );
+
+    document.dispatchEvent(addTocartEventFromProduit);
     alert("Produit ajouté au panier");
+    if (localStorage.getItem(id)) {
+      qty =
+        parseInt(JSON.parse(localStorage.getItem(id)).quantity) + parseInt(1);
+    } else {
+      qty = parseInt(1);
+    }
     localStorage.setItem(
       id,
       `{
                 "id":${id},
                 "price":${discounted_price},
-                "quantity": 1,
+                "quantity": ${qty},
                 "add_to_cart_date": "",
                 "note":"",   
                 "complement": "",
@@ -25,7 +43,8 @@
     <img src={photo} alt="produit" />
     <div class="buttons">
       <button>{collections}</button>
-      <button on:click|preventDefault|once={addTocart}>Ajouter au panier</button>
+      <button on:click|preventDefault|once={addTocart}>Ajouter au panier</button
+      >
     </div>
     <div class="card-footer">
       <h2>{name}</h2>
@@ -43,7 +62,7 @@
     cursor: pointer;
     border-radius: 10px;
     transition: 0.3s ease;
-    border: 2px dashed $lighter ;
+    border: 2px dashed $lighter;
     &:hover {
       background: $lighter;
     }
@@ -60,7 +79,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin: 17.5px 0 ;
+      margin: 17.5px 0;
       button {
         color: $light;
         background: $gray;

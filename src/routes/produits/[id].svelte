@@ -38,7 +38,15 @@
       dataAdd--;
     }
   }
+
+  // cobst addTocartEvent 
+  if(process.browser){
+
+  }
   function addTocart() {
+    let addTocartEvent = new CustomEvent('addTocartEvent')
+
+    document.dispatchEvent(addTocartEvent)
     alert("Produit ajouté au panier");
     if (localStorage.getItem(currentProduit.id)) {
       qty =
