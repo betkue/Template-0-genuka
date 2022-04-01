@@ -23,7 +23,7 @@
   <div class="l-rl">
     <div class="l-tb">
       <div class="w--grid">
-        <div class="w-compagy">
+        <div class="w-compagny">
           <div class="w-logo">
             <img src={logo} alt="logo" />
             <h1>{name}</h1>
@@ -116,7 +116,7 @@
     grid-template: auto / 1fr 60%;
     gap: 30px;
   }
-  .w-compagy {
+  .w-compagny {
     align-self: center;
     padding: 0 0 50px;
     display: flex;
@@ -214,6 +214,17 @@
       transition: 0.3s ease;
       &:hover {
         background: $darker;
+      }
+    }
+  }
+  @media only screen and (max-width: 700px) {
+    .w--grid {
+      grid-template-columns: auto;
+      .w-compagny{
+
+      }
+      .w-collections-hero{
+        height: 50vh;
       }
     }
   }

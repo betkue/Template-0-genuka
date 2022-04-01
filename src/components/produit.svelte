@@ -109,14 +109,27 @@
       }
     }
   }
-  @media only screen and (max-width: 1000px) {
+
+  @media only screen and (max-width: 1150px) {
     .card {
-      width: 50%;
+      min-width: calc((100% - 60px) / 2);
+      width: calc((100% - 60px) / 2);
     }
   }
-  @media only screen and (max-width: 600px) {
+  @media only screen and (max-width: 700px) {
     .card {
-      width: 90%;
+      width: 100%;
+      min-width: 100%;
     }
   }
+  // @media only screen and (max-width: 1000px) {
+  //   .card {
+  //     width: 50%;
+  //   }
+  // }
+  // @media only screen and (max-width: 600px) {
+  //   .card {
+  //     width: 90%;
+  //   }
+  // }
 </style>

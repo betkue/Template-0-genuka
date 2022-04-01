@@ -7,14 +7,13 @@
 
 <script>
   export let collectionUrl;
-  
+
   import { beforeUpdate, afterUpdate, onMount } from "svelte";
   import { each } from "svelte/internal";
   import Produit from "../../components/produit.svelte";
   import { Memoire } from "../../store/data.js";
 
   let idCompany = Memoire.idCompany;
-
 
   let produits = [];
   let produitsFilter = produits;
@@ -74,7 +73,7 @@
     );
     produitsFilter = produitsCollections;
     collectionActive = currentCollection;
-     (() => window.scrollTo(0,100));
+    () => window.scrollTo(0, 100);
   }
 
   async function callPreviousPage() {
@@ -86,7 +85,7 @@
     produitsFilter = produits;
     nextPage = data.links.next;
     previousPage = data.links.prev;
-    requestAnimationFrame(() => window.scrollTo(0,100)); 
+    requestAnimationFrame(() => window.scrollTo(0, 100));
   }
 
   async function callNextPage() {
@@ -98,7 +97,7 @@
     produitsFilter = produits;
     nextPage = data.links.next;
     previousPage = data.links.prev;
-    requestAnimationFrame(() => window.scrollTo(0,100));
+    requestAnimationFrame(() => window.scrollTo(0, 100));
   }
 
   async function callPage(e) {
@@ -110,7 +109,7 @@
     produitsFilter = produits;
     nextPage = data.links.next;
     previousPage = data.links.prev;
-    requestAnimationFrame(() => window.scrollTo(0,100));
+    requestAnimationFrame(() => window.scrollTo(0, 100));
   }
 </script>
 
@@ -167,7 +166,6 @@
               <button class="previous-page" on:click={callPreviousPage} />
             {:else}
               <button
-                
                 class="previous-page disabled"
                 on:click={callPreviousPage}
               />
@@ -186,7 +184,7 @@
             {#if !(nextPage == null)}
               <button class="next-page" on:click={callNextPage} />
             {:else}
-              <button  class="next-page disabled" on:click={callNextPage} />
+              <button class="next-page disabled" on:click={callNextPage} />
             {/if}
           </div>
         {/if}
@@ -199,7 +197,7 @@
   @import "./../../styles/settings";
   h1 {
     align-self: flex-start;
-    font-size: 80px;
+    font-size: 40px;
   }
 
   .container {
@@ -338,5 +336,38 @@
     display: grid;
 
     grid-template: auto/ auto 1fr;
+  }
+
+  @media only screen and (max-width: 960px) {
+    .container {
+      .center {
+        width: 95%;
+      }
+
+      .w--flex {
+        width: 100%;
+      }
+    }
+  }
+
+  @media only screen and (max-width: 880px) {
+    .container {
+      .center {
+        width: 95%;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .w--grid {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      &-collections {
+        position: static;
+      }
+    }
   }
 </style>

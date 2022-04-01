@@ -1,9 +1,6 @@
 <script>
 import { custom_event } from "svelte/internal";
-
-
   // import axios from "axios";
-
   let email, tel, password;
   let fromApi = true;
   let company_id = 468;
@@ -29,12 +26,10 @@ import { custom_event } from "svelte/internal";
         },
       }
     );
-
     const result = await res.json();
     localStorage.setItem("token", result.access_token)
     return getUser(result.access_token);
   }
-
   async function getUser(token) {
     const res = await fetch("https://dashboard.genuka.com/api/2021-10/user", {
       method: "GET",
@@ -45,7 +40,6 @@ import { custom_event } from "svelte/internal";
     const infosUser = await res.json();
     console.log(infosUser);
   }
-
   // la2spaille@gmail.com - qwertyuiop
 </script>
 
@@ -98,7 +92,6 @@ import { custom_event } from "svelte/internal";
       align-items: center;
       justify-content: space-between;
     }
-
     h1 {
       padding: 1rem;
     }
@@ -111,7 +104,6 @@ import { custom_event } from "svelte/internal";
       flex-direction: column;
       align-items: center;
       justify-content: center;
-
       div {
         width: 100%;
         margin: 1rem;
@@ -156,7 +148,6 @@ import { custom_event } from "svelte/internal";
       }
     }
   }
-
   @media only screen and (max-width: 500px) {
     .container {
       .center {
