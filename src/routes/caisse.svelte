@@ -240,4 +240,22 @@
       }
     }
   }
+
+  @media  only screen and (max-width: 700px) {
+    .w--grid{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      .w-bag-total.c-br{
+        position: static;
+        width: 100%;
+      }
+
+      .w-bag-items{
+        position: static;
+      }
+    }
+  }
 </style>
